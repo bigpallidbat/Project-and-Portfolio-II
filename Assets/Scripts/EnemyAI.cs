@@ -81,7 +81,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     void FaceTarget()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        //transform.rotation = Rot; snap code
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
 

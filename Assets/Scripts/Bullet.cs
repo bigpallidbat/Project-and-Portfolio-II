@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] int speed;
     [SerializeField] int DestroyTime;
+
     // Start is called before the first frame update
     void Start()
     {

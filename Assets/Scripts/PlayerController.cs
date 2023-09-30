@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour, IDamage
     private void Start()
     {
         HPMax = HP;
-        //controller = gameObject.AddComponent<CharacterController>();
         spawnPlayer();
     }
 
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Movement();
         if (Input.GetButton("Shoot") && !isShooting) StartCoroutine(shoot());
-        //Debug.Log(playerVelocity);
     }
 
     void Sprint()
@@ -69,20 +67,13 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpedTimes = 0;
         }
 
-        //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         move = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
 
         controller.Move(move * Time.deltaTime * playerSpeed);
 
-        //if (move != Vector3.zero)
-        //{
-        //    gameObject.transform.forward = move;
-        //}
-
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && jumpedTimes < JumpMax)
         {
-            //playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             playerVelocity.y = jumpHeight;
             jumpedTimes++;
         }
@@ -105,7 +96,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 damgable.takeDamage(shootDamage);
             }
             else AudioRando.PlayRandomClip(PlayerSounds, Miss);
-            //Instantiate(cube, hit.point, transform.rotation);
         }
 
         yield return new WaitForSeconds(shootRate);

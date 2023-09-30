@@ -9,7 +9,8 @@ public class AudioRando : MonoBehaviour
         if (clips.Length < 2)
         {
             source.Play();
-        }// checks to make sure there is more then one.
+        }
+        // checks to make sure there is more then one.
 
         source.pitch = Random.Range(pitchmin, pitchmax);
 
