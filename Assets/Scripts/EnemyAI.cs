@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     //[SerializeField] GameObject Player;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
+    //[SerializeField] Transform headPos;//uncomment when needed
     Vector3 PlayerDir;
 
     [Header("----- Enemy States -----")]
@@ -18,6 +19,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public int Hp;
     [SerializeField] int Speed;
     [SerializeField] int TargetFaceSpeed;
+    //[SerializeField] float animSpeed;//uncomment when needed
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
@@ -83,6 +85,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
+
+    /*public void physics(Vector3 dir)
+    {
+        agent.velocity += dir;   // uncomment when need
+    }*/
 
     public void OnTriggerEnter(Collider other) { if (other.CompareTag("Player")) playerInRange = true; }
     public void OnTriggerExit(Collider other) { if (other.CompareTag("Player")) playerInRange = false; }
