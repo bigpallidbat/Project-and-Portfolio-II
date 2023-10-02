@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool groundedPlayer;
     private Vector3 move;
     private int jumpedTimes;
-    bool isSprinting = false;
-    bool isShooting = false;
+    bool isSprinting;
+    bool isShooting;
     private void Start()
     {
         HPMax = HP;
