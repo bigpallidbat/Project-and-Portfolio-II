@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     //[SerializeField] GameObject Player;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
-    //[SerializeField] Transform headPos;//uncomment when needed
+    [SerializeField] Transform headPos;
     Vector3 PlayerDir;
 
     [Header("----- Enemy States -----")]
@@ -19,7 +19,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     public int Hp;
     [SerializeField] int Speed;
     [SerializeField] int TargetFaceSpeed;
-    //[SerializeField] float animSpeed;//uncomment when needed
+    [SerializeField] int viewAngle;
+    [SerializeField] int shootAngle;
+    [SerializeField] float animSpeed;//uncomment when needed
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
@@ -27,6 +29,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] float ShootDamage;
     public bool isShooting = false;
     bool playerInRange = false;
+    float angleToPlayer;
 
     Color Mcolor;
     // Start is called before the first frame update
@@ -43,14 +46,32 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * Speed);
 
-        if (playerInRange)
+        if (playerInRange && CanSeePlayer())
         {
             //PlayerDir = GameManager.Instance
-            PlayerDir = gameManager.Instance.player.transform.position - transform.position;
-            if (agent.remainingDistance < agent.stoppingDistance) FaceTarget();
-            agent.SetDestination(gameManager.Instance.player.transform.position);
-            if (!isShooting) StartCoroutine(Shoot());
+            //agent.SetDestination(GameManager.Instance.player.transform.position);
+            //if (!isShooting) StartCoroutine(Shoot());
         }
+    }
+    bool CanSeePlayer()
+    {
+        PlayerDir = gameManager.Instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(PlayerDir, transform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, PlayerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                agent.SetDestination(gameManager.Instance.player.transform.position);
+                if (agent.remainingDistance < agent.stoppingDistance)
+                    FaceTarget();
+
+                if (angleToPlayer <= shootAngle && !isShooting) StartCoroutine(Shoot());
+                return true;
+            }
+        }
+        return false;
     }
 
     IEnumerator Shoot()
