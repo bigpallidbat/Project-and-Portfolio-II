@@ -11,6 +11,7 @@ public class sceneManager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 

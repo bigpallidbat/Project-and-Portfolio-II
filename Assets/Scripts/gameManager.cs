@@ -82,4 +82,9 @@ public class gameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    public void sendDoor(int doornum)
+    {
+        playerSpawnPoint.transform.position = Vector3.zero;
+    }
 }
