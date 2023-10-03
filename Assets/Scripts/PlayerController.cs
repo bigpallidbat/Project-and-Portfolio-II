@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void spawnPlayer()
     {
         HP = HPMax;
-        UpdatePlayerUI();
+       // UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         controller.enabled = true;
@@ -121,6 +121,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void UpdatePlayerUI()
     {
-        gameManager.Instance.PlayerHpBar.fillAmount = (float)HP / HPMax;
+       // gameManager.Instance.PlayerHpBar.fillAmount = (float)HP / HPMax;
     }
 }
