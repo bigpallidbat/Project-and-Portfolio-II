@@ -14,10 +14,10 @@ public class sceneManager : MonoBehaviour
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void loadScene(int sceneNum)
+    public void loadScene(int sceneNum, int doorNum)
     {
         SceneManager.LoadScene(sceneNum);
-        SceneManager.UnloadSceneAsync(sceneIndex);
+       // SceneManager.UnloadSceneAsync(sceneIndex);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 

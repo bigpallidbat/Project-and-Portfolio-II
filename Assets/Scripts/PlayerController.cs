@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(1, 3)][SerializeField] int JumpMax;
     [Range(8, 30)][SerializeField] float jumpHeight;
     [Range(-40f, -9.81f)][SerializeField] float gravityValue;
+    [Range(1,10)][SerializeField] int Stamina;
+    int maxStam;
 
 
     [Header("----- Gun States -----")]
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private void Start()
     {
         HPMax = HP;
+        maxStam = Stamina;
         spawnPlayer();
     }
 
@@ -113,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void spawnPlayer()
     {
         HP = HPMax;
-       // UpdatePlayerUI();
+        UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         controller.enabled = true;
@@ -121,6 +124,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void UpdatePlayerUI()
     {
-       // gameManager.Instance.PlayerHpBar.fillAmount = (float)HP / HPMax;
+        gameManager.Instance.playerHpBar.fillAmount = (float)HP / HPMax;
+        gameManager.Instance.playerStamBar.fillAmount = (float)Stamina / maxStam;
     }
 }

@@ -16,7 +16,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    public Image PlayerHpBar;
+    public Image playerHpBar;
+    public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
 
     public bool isPaused;
