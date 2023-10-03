@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] string sceneName;
+    [SerializeField] int nextSceneIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,8 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            sceneManager.Instance.loadScene(sceneName);
+            SceneManager.LoadScene(nextSceneIndex);
+            //sceneManager.Instance.loadScene(nextSceneIndex);
         }
     }
 
