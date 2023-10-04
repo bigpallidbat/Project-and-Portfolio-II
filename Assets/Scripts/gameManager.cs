@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public PlayerController playerScript;
     public GameObject playerSpawnPoint;
+    public GameObject[] Doors;
+    public DoorController _DC;
 
     [Header("---------- UI ----------")]
     [SerializeField] GameObject menuActive;
@@ -23,7 +26,7 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOrig;
     int enemiesRemaining;
-
+    GameObject Door;
     // Start is called before the first frame update
     void Awake()
     {
@@ -83,8 +86,25 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void sendDoor(int doornum)
+    public void sendDoor(int doornum, GameObject obj)
     {
-        playerSpawnPoint.transform.position = Vector3.zero;
+        /*
+        Doors = GameObject.FindGameObjectsWithTag("Door");
+        for(int i = 0; i < Doors.Length;++i)
+        {
+            Door = Doors[i];
+            _DC = Door.GetComponent<DoorController>();
+            if(_DC.doorNumber == doornum)
+            {
+               // playerSpawnPoint.transform.position = _DC.doorSpawn.position;
+                break;
+            }
+        }
+        */
+        Door = obj;
+        _DC = Door.GetComponent<DoorController>();
+        playerSpawnPoint.transform.position = _DC.doorSpawn.position;
+        playerScript.spawnPlayer();
+        Debug.Log(playerSpawnPoint.transform.position);
     }
 }

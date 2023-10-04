@@ -15,10 +15,10 @@ public class sceneManager : MonoBehaviour
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void loadScene(int sceneNum, int doorNum)
+    public void loadScene(int sceneNum, int doorNum, GameObject obj)
     {
         SceneManager.LoadScene(sceneNum);
-       // SceneManager.UnloadSceneAsync(sceneIndex);
+        gameManager.Instance.sendDoor(doorNum, obj);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 

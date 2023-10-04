@@ -11,13 +11,12 @@ public class elevatorController : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] Animator anim;
 
-    private Transform elevatorOrigPos;
     private bool isRising;
 
     // Start is called before the first frame update
     void Start()
     {
-        elevatorOrigPos = transform;
+
     }
 
     // Update is called once per frame
