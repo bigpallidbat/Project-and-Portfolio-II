@@ -7,18 +7,21 @@ using UnityEngine.SceneManagement;
 public class sceneManager : MonoBehaviour
 {
     public static sceneManager Instance;
-    string sceneName;
+    int sceneIndex;
+    public static bool scenechange;
 
     private void Start()
     {
-        sceneName = SceneManager.GetActiveScene().name;
+        Instance = this;
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void loadScene(string scene)
+    public void loadScene(int sceneNum)
     {
-        SceneManager.LoadScene(scene);
-        SceneManager.UnloadSceneAsync(sceneName);
-        sceneName = SceneManager.GetActiveScene().name;
+       
+        scenechange = true;
+        SceneManager.LoadScene(sceneNum);
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void reloadScene()

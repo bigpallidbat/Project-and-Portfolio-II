@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,28 +10,43 @@ public class gameManager : MonoBehaviour
     [Header("----- player stuff ------")]
     public GameObject player;
     public PlayerController playerScript;
+    public GameObject[] SpawnPoints;
     public GameObject playerSpawnPoint;
+    public GameObject[] Doors;
+    public DoorController _DC;
 
     [Header("---------- UI ----------")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    public Image PlayerHpBar;
+    public Image playerHpBar;
+    public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
 
     public bool isPaused;
     float timeScaleOrig;
     int enemiesRemaining;
-
+    GameObject Door;
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerController>();
-        playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+        playerScript = player.GetComponent<PlayerController>();;
+         if (!sceneManager.scenechange)
+         {
+            playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");             
+         }
+         else if (sceneManager.scenechange)
+         {
+             sendDoor(DoorController.doorNumber);
+            sceneManager.scenechange = false;
+         }
+
+
+
     }
 
     // Update is called once per frame
@@ -81,4 +97,36 @@ public class gameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    public void sendDoor(int doornum)
+    {
+        if (findDoor(doornum))
+        {
+
+            sceneManager.scenechange = false;
+        }
+
+    }
+
+    bool findDoor(int doornum)
+    {
+        for (int i = 0; i < Doors.Length; ++i)
+        {
+            // Door = Doors[i];
+            _DC = Doors[i].GetComponent<DoorController>();
+            if (_DC.DN == doornum)
+            {
+                playerSpawnPoint = SpawnPoints[i];
+                return true;
+            }
+        }
+
+
+
+        return false;
+
+    }
+
+
+
 }

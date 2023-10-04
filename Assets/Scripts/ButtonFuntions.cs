@@ -24,4 +24,9 @@ public class ButtonFuntions : MonoBehaviour
         gameManager.Instance.stateUnpause();
         gameManager.Instance.playerScript.spawnPlayer();
     }
+
+    public void mainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

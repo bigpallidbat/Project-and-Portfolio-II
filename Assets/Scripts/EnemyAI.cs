@@ -9,29 +9,40 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     //[SerializeField] GameObject Player;
+    [SerializeField] Animator anim;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
-    //[SerializeField] Transform headPos;//uncomment when needed
+    [SerializeField] Transform headPos;
     Vector3 PlayerDir;
 
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
-    [SerializeField] int Speed;
+    [SerializeField] int dodgingSpeed;
     [SerializeField] int TargetFaceSpeed;
-    //[SerializeField] float animSpeed;//uncomment when needed
+    [SerializeField] int animChangeSpeed;
+    [SerializeField] int viewAngle;
+    [SerializeField] int shootAngle;
+    [SerializeField] float animSpeed;//uncomment when needed
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
-    [SerializeField] float ShootRate;
-    [SerializeField] float ShootDamage;
+    [SerializeField] float fireRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] int bulletSpeed;
+    [SerializeField] Bullet bScript;
     public bool isShooting = false;
     bool playerInRange = false;
+    float angleToPlayer;
 
     Color Mcolor;
     // Start is called before the first frame update
     void Start()
     {
+        
+        //bScript = bullet.GetComponent<Bullet>();
+        //bScript.damage = shootDamage;
+        //bScript.speed = bulletSpeed;
         Hp = MaxHp;
         Mcolor = model.material.color;
         gameManager.Instance.updateGameGoal(1);
@@ -41,33 +52,63 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        float agentVelo = agent.velocity.normalized.magnitude;
         //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * Speed);
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
 
-        if (playerInRange)
+        if (playerInRange && CanSeePlayer())
         {
             //PlayerDir = GameManager.Instance
-            PlayerDir = gameManager.Instance.player.transform.position - transform.position;
-            if (agent.remainingDistance < agent.stoppingDistance) FaceTarget();
-            agent.SetDestination(gameManager.Instance.player.transform.position);
-            if (!isShooting) StartCoroutine(Shoot());
+            //agent.SetDestination(GameManager.Instance.player.transform.position);
+            //if (!isShooting) StartCoroutine(Shoot());
         }
+
+        if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
+        else anim.SetBool("isMoving", false);
+    }
+    bool CanSeePlayer()
+    {
+        PlayerDir = gameManager.Instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(PlayerDir, transform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, PlayerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                agent.SetDestination(gameManager.Instance.player.transform.position);
+                if (agent.remainingDistance < agent.stoppingDistance)
+                    FaceTarget();
+
+                if (angleToPlayer <= shootAngle && !isShooting) StartCoroutine(Shoot());
+                return true;
+            }
+        }
+        return false;
     }
 
     IEnumerator Shoot()
     {
         isShooting = true;
-
-        Instantiate(bullet, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(ShootRate);
+        anim.SetTrigger("Attack");
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = shootDamage;
+        //bScript.damage = shootDamage;
+        //bScript.speed = bulletSpeed;
+        shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
+        Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
+        yield return new WaitForSeconds(fireRate);
         isShooting = false;
     }
 
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        anim.SetTrigger("Damaged");
         StartCoroutine(FlashDamage());
         if (Hp <= 0)
         {
+            anim.SetTrigger("death");
             Destroy(gameObject);
             gameManager.Instance.updateGameGoal(-1);
         }

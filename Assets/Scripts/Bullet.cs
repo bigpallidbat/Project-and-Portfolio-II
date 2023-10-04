@@ -8,8 +8,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] Rigidbody rb;
 
     [Header("----- Bullet stats -----")]
-    [SerializeField] int damage;
-    [SerializeField] int speed;
+     public int damage;
+     public int speed;
     [SerializeField] int DestroyTime;
 
     // Start is called before the first frame update
