@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     //[SerializeField] GameObject Player;
+    [SerializeField] Animator anim;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
@@ -17,8 +18,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
-    [SerializeField] int speed;
+    [SerializeField] int dodgingSpeed;
     [SerializeField] int TargetFaceSpeed;
+    [SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     [SerializeField] float animSpeed;//uncomment when needed
@@ -50,7 +52,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        float agentVelo = agent.velocity.normalized.magnitude;
         //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * Speed);
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
 
         if (playerInRange && CanSeePlayer())
         {
@@ -58,6 +62,9 @@ public class EnemyAI : MonoBehaviour, IDamage
             //agent.SetDestination(GameManager.Instance.player.transform.position);
             //if (!isShooting) StartCoroutine(Shoot());
         }
+
+        if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
+        else anim.SetBool("isMoving", false);
     }
     bool CanSeePlayer()
     {
@@ -83,6 +90,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Shoot()
     {
         isShooting = true;
+        anim.SetTrigger("Attack");
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         //bScript.damage = shootDamage;
@@ -96,9 +104,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        anim.SetTrigger("Damaged");
         StartCoroutine(FlashDamage());
         if (Hp <= 0)
         {
+            anim.SetTrigger("death");
             Destroy(gameObject);
             gameManager.Instance.updateGameGoal(-1);
         }
