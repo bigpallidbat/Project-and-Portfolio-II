@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
-    [SerializeField] int Speed;
+    [SerializeField] int speed;
     [SerializeField] int TargetFaceSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
@@ -25,8 +25,10 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
-    [SerializeField] float ShootRate;
-    [SerializeField] float ShootDamage;
+    [SerializeField] float fireRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] int bulletSpeed;
+    [SerializeField] Bullet bScript;
     public bool isShooting = false;
     bool playerInRange = false;
     float angleToPlayer;
@@ -35,6 +37,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        
+        //bScript = bullet.GetComponent<Bullet>();
+        //bScript.damage = shootDamage;
+        //bScript.speed = bulletSpeed;
         Hp = MaxHp;
         Mcolor = model.material.color;
         gameManager.Instance.updateGameGoal(1);
@@ -77,9 +83,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Shoot()
     {
         isShooting = true;
-
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = shootDamage;
+        //bScript.damage = shootDamage;
+        //bScript.speed = bulletSpeed;
         Instantiate(bullet, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(ShootRate);
+        yield return new WaitForSeconds(fireRate);
         isShooting = false;
     }
 

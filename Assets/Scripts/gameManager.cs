@@ -7,6 +7,8 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager Instance;
 
+    //public string spawnpoint;
+
     [Header("----- player stuff ------")]
     public GameObject player;
     public PlayerController playerScript;
@@ -34,6 +36,7 @@ public class gameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        //sendDoorA(spawnpoint);
         playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
     }
 
@@ -107,4 +110,12 @@ public class gameManager : MonoBehaviour
         playerScript.spawnPlayer();
         Debug.Log(playerSpawnPoint.transform.position);
     }
+    /*public void sendDoorA(string Point)
+     * {
+     * if (point == null) point = "Player Spawn Point"
+     * 
+     * playerSpawnPoint = GameObject.FindWithTag(point);
+     * }
+    */
+
 }
