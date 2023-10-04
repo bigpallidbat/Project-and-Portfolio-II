@@ -8,14 +8,14 @@ public class DoorController : MonoBehaviour
     [SerializeField] int nextSceneIndex;
      public static int doorNumber;
      public int DN;
-     public Transform doorSpawn;
+     public GameObject doorSpawn;
 
-   private GameObject door;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        door = GetComponent<GameObject>();
+
     }
     
 

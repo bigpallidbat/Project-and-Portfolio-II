@@ -35,14 +35,17 @@ public class gameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();;
-        if (!sceneManager.scenechange)
-        {
-            sendDoor(3);
-        }
-        else if (sceneManager.scenechange)
-        {
-            sendDoor(DoorController.doorNumber);
-        }
+         if (!sceneManager.scenechange)
+         {
+            playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");             
+         }
+         else if (sceneManager.scenechange)
+         {
+             sendDoor(DoorController.doorNumber);
+            sceneManager.scenechange = false;
+         }
+
+
 
     }
 
@@ -101,10 +104,6 @@ public class gameManager : MonoBehaviour
         {
 
             sceneManager.scenechange = false;
-        }
-        else
-        {
-            playerSpawnPoint = SpawnPoints[3];
         }
 
     }
