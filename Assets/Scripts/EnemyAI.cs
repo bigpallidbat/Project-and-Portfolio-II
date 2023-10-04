@@ -87,7 +87,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         bullet.GetComponent<Bullet>().damage = shootDamage;
         //bScript.damage = shootDamage;
         //bScript.speed = bulletSpeed;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
+        Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
         yield return new WaitForSeconds(fireRate);
         isShooting = false;
     }
