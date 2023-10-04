@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IDamage
         Movement();
         if (Input.GetButton("Shoot") && !isShooting) StartCoroutine(shoot());
     }
-
+    
     void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))

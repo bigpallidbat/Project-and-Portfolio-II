@@ -2845,8 +2845,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerScript: {fileID: 0}
+  SpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerSpawnPoint: {fileID: 0}
-  Doors: []
+  Doors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _DC: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 4464073343368951336}
