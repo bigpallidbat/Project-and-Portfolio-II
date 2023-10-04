@@ -7,11 +7,10 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager Instance;
 
-    //public string spawnpoint;
-
     [Header("----- player stuff ------")]
     public GameObject player;
     public PlayerController playerScript;
+    public GameObject[] SpawnPoints;
     public GameObject playerSpawnPoint;
     public GameObject[] Doors;
     public DoorController _DC;
@@ -35,9 +34,16 @@ public class gameManager : MonoBehaviour
         Instance = this;
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerController>();
-        //sendDoorA(spawnpoint);
-        playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+        playerScript = player.GetComponent<PlayerController>();;
+        if (!sceneManager.scenechange)
+        {
+            sendDoor(3);
+        }
+        else if (sceneManager.scenechange)
+        {
+            sendDoor(DoorController.doorNumber);
+        }
+
     }
 
     // Update is called once per frame
@@ -89,33 +95,39 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void sendDoor(int doornum, GameObject obj)
+    public void sendDoor(int doornum)
     {
-        /*
-        Doors = GameObject.FindGameObjectsWithTag("Door");
-        for(int i = 0; i < Doors.Length;++i)
+        if (findDoor(doornum))
         {
-            Door = Doors[i];
-            _DC = Door.GetComponent<DoorController>();
-            if(_DC.doorNumber == doornum)
+
+            sceneManager.scenechange = false;
+        }
+        else
+        {
+            playerSpawnPoint = SpawnPoints[3];
+        }
+
+    }
+
+    bool findDoor(int doornum)
+    {
+        for (int i = 0; i < Doors.Length; ++i)
+        {
+            // Door = Doors[i];
+            _DC = Doors[i].GetComponent<DoorController>();
+            if (_DC.DN == doornum)
             {
-               // playerSpawnPoint.transform.position = _DC.doorSpawn.position;
-                break;
+                playerSpawnPoint = SpawnPoints[i];
+                return true;
             }
         }
-        */
-        Door = obj;
-        _DC = Door.GetComponent<DoorController>();
-        playerSpawnPoint.transform.position = _DC.doorSpawn.position;
-        playerScript.spawnPlayer();
-        Debug.Log(playerSpawnPoint.transform.position);
+
+
+
+        return false;
+
     }
-    /*public void sendDoorA(string Point)
-     * {
-     * if (point == null) point = "Player Spawn Point"
-     * 
-     * playerSpawnPoint = GameObject.FindWithTag(point);
-     * }
-    */
+
+
 
 }

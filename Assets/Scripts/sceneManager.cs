@@ -8,6 +8,7 @@ public class sceneManager : MonoBehaviour
 {
     public static sceneManager Instance;
     int sceneIndex;
+    public static bool scenechange;
 
     private void Start()
     {
@@ -15,10 +16,11 @@ public class sceneManager : MonoBehaviour
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void loadScene(int sceneNum, int doorNum, GameObject obj)
+    public void loadScene(int sceneNum)
     {
+       
+        scenechange = true;
         SceneManager.LoadScene(sceneNum);
-        gameManager.Instance.sendDoor(doorNum, obj);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 

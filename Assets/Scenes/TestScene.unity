@@ -189,6 +189,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+      propertyPath: DN
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: doorNumber
       value: 2
       objectReference: {fileID: 0}
@@ -245,6 +249,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+--- !u!1 &216315051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 216315050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &216315052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 847544004163568602, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 216315050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +520,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+--- !u!1 &1114649732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 1114649731}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1114649733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 847544004163568602, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 1114649731}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1129477371 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8276902492435786015, guid: 9d9ab280164f33d429f759f1103555c8, type: 3}
@@ -530,6 +554,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+      propertyPath: DN
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: doorNumber
       value: 1
@@ -587,6 +615,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+--- !u!1 &1207522432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 1207522431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1207522433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 847544004163568602, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+  m_PrefabInstance: {fileID: 1207522431}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1366004187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -689,6 +727,34 @@ PrefabInstance:
       objectReference: {fileID: 1129477371}
     - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: playerSpawnPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: Doors.Array.data[0]
+      value: 
+      objectReference: {fileID: 1114649732}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: Doors.Array.data[1]
+      value: 
+      objectReference: {fileID: 1207522432}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: Doors.Array.data[2]
+      value: 
+      objectReference: {fileID: 216315051}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: SpawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1114649733}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: SpawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1207522433}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: SpawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 216315052}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: SpawnPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1176936588}
     m_RemovedComponents: []
