@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: b2150ab26184d464b819df9169e77e89, type: 2}
 --- !u!1001 &377440121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &497860853
 MeshCollider:
@@ -446,7 +446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126035656}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.279557, z: -0, w: 0.9601291}
   m_LocalPosition: {x: -9.5, y: 1, z: -1.5358331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -455,7 +455,7 @@ Transform:
   - {fileID: 1600356133}
   - {fileID: 1182677939}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 32.468, z: 0}
 --- !u!195 &1126035661
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -497,12 +497,12 @@ MonoBehaviour:
   MaxHp: 3
   Hp: 3
   Speed: 3
-  TargetFaceSpeed: 40
+  TargetFaceSpeed: 60
   viewAngle: 90
-  shootAngle: 20
-  animSpeed: 20
+  shootAngle: 45
+  animSpeed: 80
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
-  ShootRate: 10
+  ShootRate: 0.1
   ShootDamage: 1
   isShooting: 0
 --- !u!135 &1126035663
@@ -537,7 +537,6 @@ GameObject:
   - component: {fileID: 1182677939}
   - component: {fileID: 1182677942}
   - component: {fileID: 1182677941}
-  - component: {fileID: 1182677940}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
@@ -560,29 +559,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1126035660}
   m_LocalEulerAnglesHint: {x: -17.948, y: 0, z: 0}
---- !u!136 &1182677940
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182677938}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1182677941
 MeshRenderer:
   m_ObjectHideFlags: 0
