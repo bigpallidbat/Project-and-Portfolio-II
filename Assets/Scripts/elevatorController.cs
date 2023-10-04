@@ -42,8 +42,11 @@ public class elevatorController : MonoBehaviour
     {
         isRising = true;
         anim.Play("Elevator");
-        yield return new WaitForSeconds(30.05f);
+        yield return new WaitForSeconds(13f);
+        barrier.enabled = false;
+        yield return new WaitForSeconds(17.05f);
         anim.Play("Static");
         isRising = false;
+        trigger.enabled = true;
     }
 }
