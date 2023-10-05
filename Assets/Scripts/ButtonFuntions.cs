@@ -33,5 +33,6 @@ public class ButtonFuntions : MonoBehaviour
     public void startGame()
     {
         sceneManager.Instance.nextScene(2);
+        screenManager.Instance.turnOffScreens();
     }
 }
