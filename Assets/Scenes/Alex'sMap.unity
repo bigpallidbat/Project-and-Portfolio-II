@@ -470,12 +470,13 @@ MonoBehaviour:
   model: {fileID: 670145631}
   shootPos: {fileID: 2144425814}
   headPos: {fileID: 905354815}
-  MaxHp: 3
-  Hp: 3
+  MaxHp: 900
+  Hp: 900
   dodgingSpeed: 0
   TargetFaceSpeed: 20
-  animChangeSpeed: 0
-  viewAngle: 45
+  painSpeed: 0.25
+  animChangeSpeed: 40
+  viewAngle: 80
   shootAngle: 25
   animSpeed: 70
   bullet: {fileID: 0}
@@ -484,6 +485,7 @@ MonoBehaviour:
   bulletSpeed: 1
   bScript: {fileID: 0}
   isShooting: 0
+  inPain: 0
 --- !u!135 &995680295
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour, IDamage
             else AudioRando.PlayRandomClip(PlayerSounds, Miss);
         }
 
-        yield return new WaitForSeconds(shootRate);
+       yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
 
