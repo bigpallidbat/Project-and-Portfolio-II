@@ -52,9 +52,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        float agentVelo = agent.velocity.normalized.magnitude;
+        //float agentVelo = agent.velocity.normalized.magnitude;
         //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * Speed);
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
+        //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
 
         if (playerInRange && CanSeePlayer())
         {
@@ -65,6 +65,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
         else anim.SetBool("isMoving", false);
+
     }
     bool CanSeePlayer()
     {
@@ -90,7 +91,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Shoot()
     {
         isShooting = true;
-        anim.SetTrigger("Attack");
+        anim.SetTrigger("attack");
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         //bScript.damage = shootDamage;
@@ -104,7 +105,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
-        anim.SetTrigger("Damaged");
+        anim.SetTrigger("damaged");
         StartCoroutine(FlashDamage());
         if (Hp <= 0)
         {
