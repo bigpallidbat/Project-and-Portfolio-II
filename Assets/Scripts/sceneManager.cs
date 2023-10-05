@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,8 +17,9 @@ public class sceneManager : MonoBehaviour
 
     public void loadScene(int sceneNum)
     {
-       
+        gameManager.Instance.playerSpawnPoint = null;
         scenechange = true;
+        gameManager.Instance.playerScript.setHP(); 
         SceneManager.LoadScene(sceneNum);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }

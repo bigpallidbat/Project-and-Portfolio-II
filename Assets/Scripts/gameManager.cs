@@ -34,16 +34,16 @@ public class gameManager : MonoBehaviour
         Instance = this;
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerController>();;
-         if (!sceneManager.scenechange)
-         {
-            playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");             
-         }
-         else if (sceneManager.scenechange)
-         {
-             sendDoor(DoorController.doorNumber);
-            sceneManager.scenechange = false;
-         }
+        playerScript = player.GetComponent<PlayerController>();
+        if (!sceneManager.scenechange)
+        {
+            playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+        }
+        else if (sceneManager.scenechange)
+        {
+            sendDoor(DoorController.doorNumber);
+
+        }
 
 
 
@@ -108,8 +108,8 @@ public class gameManager : MonoBehaviour
     {
         if (findDoor(doornum))
         {
-
             sceneManager.scenechange = false;
+            playerScript.spawnPlayer(Quaternion.Euler(0, 0, 0));
         }
 
     }
@@ -125,6 +125,7 @@ public class gameManager : MonoBehaviour
                 playerSpawnPoint = SpawnPoints[i];
                 return true;
             }
+
         }
 
 
@@ -132,7 +133,5 @@ public class gameManager : MonoBehaviour
         return false;
 
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
     int HPMax;
+    public static int curHP;
     [Range(1, 10)][SerializeField] float playerSpeed;
     [Range(1, 3)][SerializeField] float SprintMod;
     [Range(1, 3)][SerializeField] int JumpMax;
@@ -139,10 +141,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
+        if (HP > 0)
+            HPMax = HP;
+        else HP = curHP;
+        UpdatePlayerUI();
+        controller.enabled = false;
+        transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
+        controller.enabled = true;
+    }
+    
+    public void spawnPlayer(quaternion rot)
+    {
         HP = HPMax;
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
+        transform.rotation = rot;
         controller.enabled = true;
     }
 
@@ -163,5 +177,9 @@ public class PlayerController : MonoBehaviour, IDamage
             UpdatePlayerUI();
             yield return new WaitForSeconds(.1f);
         }
+    }
+    public void setHP()
+    {
+        curHP = HP;
     }
 }

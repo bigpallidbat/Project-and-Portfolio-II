@@ -59,16 +59,20 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (playerInRange && CanSeePlayer() && !inPain)
         {
-                    anim.SetTrigger("Attack");
+            if(checkTag())
+                anim.SetTrigger("Attack");
 
         }
         else if (inPain) agent.SetDestination(transform.position);
         //if (isShooting) anim.SetBool("attacking", true); 
         //else anim.SetBool("attacking", false);
-        if (inPain) anim.SetBool("inPain", true);
-        else anim.SetBool("inPain", false);
-        if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
-        else anim.SetBool("isMoving", false);
+        if (checkTag())
+        {
+            if (inPain) anim.SetBool("inPain", true);
+            else anim.SetBool("inPain", false);
+            if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
+            else anim.SetBool("isMoving", false);
+        }
     }
     bool CanSeePlayer()
     {
@@ -94,7 +98,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         return false;
     }
-
+    bool checkTag()
+    {
+        if(gameObject.CompareTag("lilChick"))
+        { return true; }
+        else { return false; }
+    }
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -110,6 +119,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp -= amount;
         soundSFX.PlayOneShot(painSound);
+        agent.SetDestination(gameManager.Instance.player.transform.position);
         if (Hp <= 0)
         {
             //dead = true;
@@ -120,6 +130,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
             Invoke("Death", 0.75f);
+
             //gameManager.Instance.updateGameGoal(-1);
         }
         else 
@@ -135,7 +146,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
         mainBody.gameObject.SetActive(true);
-        anim.SetTrigger("damaged");
+        if(checkTag())
+            anim.SetTrigger("damaged");
         //anim.SetTrigger("damaged");
         Invoke("endPain", painSpeed);
         //model.material.color = Color.red;
