@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,14 +28,16 @@ public class specialEnemyAi : MonoBehaviour, IDamage
 
     float angleToPlayer;
     Vector3 playerDir;
-    Color oColor;
+    const int numDamAnims = 3;
+    int lastAnim = -1;
     bool isShooting;
     bool playerInRange;
+    bool isMoving;
 
     // Start is called before the first frame update
     void Start()
     {
-        oColor = model.material.color;
+
         setModel();
 
     }
@@ -50,13 +50,14 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         {
 
         }
+        moving();
+        
     }
 
     void setModel()
     {
         Gun = Instantiate(Gun);
         Gun.transform.parent = RightHand;
-        //Gun.transform.localScale = Vector3.one;
         Gun.transform.localPosition = Vector3.zero;
         Gun.transform.localRotation = Quaternion.Euler(90, 0, 0);
         shootPos = Gun.transform.GetChild(0);
@@ -69,6 +70,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.Instance.player.transform.position);
         if (HP <= 0)
         {
+            anim.SetTrigger("Death");
             gameManager.Instance.updateGameGoal();
             Destroy(gameObject);
         }
@@ -76,22 +78,27 @@ public class specialEnemyAi : MonoBehaviour, IDamage
 
     IEnumerator flashDamage()
     {
-        model.material.color = Color.red;
+        int id = Random.Range(0, numDamAnims);
+        if (numDamAnims > 1)
+            while (id == lastAnim)
+                id = Random.Range(0, numDamAnims);
+        lastAnim = id;
+        anim.SetInteger("DamageID", id);
+        anim.SetTrigger("Damage");
+
         yield return new WaitForSeconds(0.1f);
-        model.material.color = oColor;
+
     }
 
     IEnumerator shoot()
     {
         isShooting = true;
-        Gun.GetComponent<MeshRenderer>().enabled = true;
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = gunDamage;
         //bScript.damage = shootDamage;
         //bScript.speed = bulletSpeed;
         shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
         Instantiate(bullet, shootPos.position, transform.rotation);
-        //Gun.GetComponent<MeshRenderer>().enabled = false;
         yield return new WaitForSeconds(fireRate);
         isShooting = false;
     }
@@ -118,6 +125,17 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         }
     }
 
+    void moving()
+    {
+        if(agent.velocity != Vector3.zero)
+        {
+            isMoving = true;
+            anim.SetBool("Aiming", !isMoving);
+            anim.SetFloat("Speed", 2f);
+        }
+
+    }
+
     bool AiRoutine()
     {
         //find direction to player if in range
@@ -125,7 +143,6 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         //find angle to player within distance
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.DrawRay(headPos.position, playerDir, Color.red);
         RaycastHit hit;
 
         if (Physics.Raycast(headPos.position, playerDir, out hit) && angleToPlayer <= viewAngle)
@@ -135,10 +152,16 @@ public class specialEnemyAi : MonoBehaviour, IDamage
                 agent.SetDestination(gameManager.Instance.player.transform.position);
 
                 if (agent.remainingDistance < agent.stoppingDistance)
+                {
                     faceTarget();
+                    anim.SetFloat("Speed", 0);
+                    anim.SetBool("Aiming", true);
+                    if (angleToPlayer <= shootAngle && !isShooting)
+                        StartCoroutine(shoot());
+                }
+                    
 
-                if (angleToPlayer <= shootAngle && !isShooting)
-                    StartCoroutine(shoot());
+
                 return true;
             }
 

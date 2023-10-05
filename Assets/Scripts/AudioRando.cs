@@ -9,7 +9,7 @@ public class AudioRando : MonoBehaviour
         source.pitch = Random.Range(pitchmin, pitchmax);
         if (clips.Length < 1)
         {
-            Debug.Log("AudioSource name: " + source.name);
+
         }
         else if (clips.Length == 1)
         {
