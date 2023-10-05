@@ -13,21 +13,32 @@ public class DoorAnim : MonoBehaviour
     private bool isOpening;
     private bool isClosing;
 
+    private void Start()
+    {
+        isOpen = false;
+        isClosing = false;
+        isOpening = false;
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!isOpen && !isOpening)
+        if (other.CompareTag("Player"))
         {
-            isOpen = true;
-            openDoor.enabled = false;
-            closeDoor.enabled = true;
-            StartCoroutine(Open());
-        }
-        else if(isOpen && !isClosing)
-        {
-            isOpen = false;
-            closeDoor.enabled = false;
-            openDoor.enabled = true;
-            StartCoroutine(Close());
+            if (!isOpen && !isOpening)
+            {
+                isOpen = true;
+                openDoor.enabled = false;
+                closeDoor.enabled = true;
+                StartCoroutine(Open());
+            }
+            else if (isOpen && !isClosing)
+            {
+                isOpen = false;
+                closeDoor.enabled = false;
+                openDoor.enabled = true;
+                StartCoroutine(Close());
+            }
         }
     }
 
@@ -51,8 +62,8 @@ public class DoorAnim : MonoBehaviour
 
     void playAnimOpen()
     {
-        rightAnim.Play("RightDoor");
-        leftAnim.Play("LeftDoor");
+        rightAnim.Play("RightDoorOpen");
+        leftAnim.Play("LeftDoorOpen");
     }
 
     void playAnimClose()
