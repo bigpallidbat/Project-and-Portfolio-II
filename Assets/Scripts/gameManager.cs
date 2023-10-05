@@ -26,7 +26,7 @@ public class gameManager : MonoBehaviour
 
     public bool isPaused;
     float timeScaleOrig;
-    int enemiesRemaining;
+    static int enemiesRemaining;
     GameObject Door;
     // Start is called before the first frame update
     void Awake()
@@ -90,6 +90,12 @@ public class gameManager : MonoBehaviour
             menuActive = menuWin;
             menuActive.SetActive(true);
         }
+    }
+    public void updateGameGoal()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
     }
     public void YouLose()
     {

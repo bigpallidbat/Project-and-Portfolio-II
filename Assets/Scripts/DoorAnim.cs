@@ -25,6 +25,7 @@ public class DoorAnim : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            
             if (!isOpen && !isOpening)
             {
                 isOpen = true;
@@ -40,6 +41,11 @@ public class DoorAnim : MonoBehaviour
                 StartCoroutine(Close());
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 
     IEnumerator Open()
