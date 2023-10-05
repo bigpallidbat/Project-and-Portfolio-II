@@ -16,8 +16,11 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(1, 3)][SerializeField] int JumpMax;
     [Range(8, 30)][SerializeField] float jumpHeight;
     [Range(-40f, -9.81f)][SerializeField] float gravityValue;
-    [Range(1,10)][SerializeField] int Stamina;
-    int maxStam;
+    [SerializeField] float Stamina;
+    float maxStam;
+    [SerializeField] float runCost;
+    [SerializeField] float ChargeRate;
+    float origPlayerSpeed;
 
 
     [Header("----- Gun States -----")]
@@ -34,10 +37,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private int jumpedTimes;
     bool isSprinting;
     bool isShooting;
+    private Coroutine recharge;
     private void Start()
     {
         HPMax = HP;
         maxStam = Stamina;
+        origPlayerSpeed = playerSpeed;
         spawnPlayer();
     }
 
@@ -46,18 +51,37 @@ public class PlayerController : MonoBehaviour, IDamage
         Movement();
         if (Input.GetButton("Shoot") && !isShooting) StartCoroutine(shoot());
     }
-    
+
     void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))
         {
+            isSprinting = true;
             playerSpeed *= SprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
+            isSprinting = false;
             playerSpeed /= SprintMod;
         }
+        if (isSprinting)
+        {
+            Stamina -= runCost * Time.deltaTime;
+            if (Stamina < 0)
+            {
+                Stamina = 0;
+            }
+
+            if(recharge != null) StopCoroutine(recharge);
+            recharge = StartCoroutine(ReachargeStamina());
+        }
+        if(Stamina == 0)
+        {
+            playerSpeed = origPlayerSpeed;
+        }
+        UpdatePlayerUI();
     }
+
     void Movement()
     {
         Sprint();
@@ -101,7 +125,7 @@ public class PlayerController : MonoBehaviour, IDamage
             else AudioRando.PlayRandomClip(PlayerSounds, Miss);
         }
 
-        yield return new WaitForSeconds(shootRate);
+       yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
 
@@ -126,5 +150,18 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         gameManager.Instance.playerHpBar.fillAmount = (float)HP / HPMax;
         gameManager.Instance.playerStamBar.fillAmount = (float)Stamina / maxStam;
+    }
+
+    private IEnumerator ReachargeStamina()
+    {
+        yield return new WaitForSeconds(1f);
+
+        while(Stamina < maxStam)
+        {
+            Stamina += ChargeRate / 10f;
+            if (Stamina > maxStam) Stamina = maxStam;
+            UpdatePlayerUI();
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }

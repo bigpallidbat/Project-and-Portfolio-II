@@ -252,6 +252,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083687776293bd643872d849b54931f8, type: 3}
+--- !u!1 &450359203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+  m_PrefabInstance: {fileID: 1351268108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &450359211
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450359203}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &497860852
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +406,7 @@ GameObject:
   - component: {fileID: 995680294}
   - component: {fileID: 995680293}
   - component: {fileID: 995680295}
+  - component: {fileID: 995680296}
   m_Layer: 6
   m_Name: lilChick
   m_TagString: Untagged
@@ -443,12 +470,13 @@ MonoBehaviour:
   model: {fileID: 670145631}
   shootPos: {fileID: 2144425814}
   headPos: {fileID: 905354815}
-  MaxHp: 3
-  Hp: 3
+  MaxHp: 900
+  Hp: 900
   dodgingSpeed: 0
   TargetFaceSpeed: 20
-  animChangeSpeed: 0
-  viewAngle: 45
+  painSpeed: 0.25
+  animChangeSpeed: 40
+  viewAngle: 80
   shootAngle: 25
   animSpeed: 70
   bullet: {fileID: 0}
@@ -457,6 +485,7 @@ MonoBehaviour:
   bulletSpeed: 1
   bScript: {fileID: 0}
   isShooting: 0
+  inPain: 0
 --- !u!135 &995680295
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -478,6 +507,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &995680296
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995680291}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1004811692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 677610318158243380, guid: 9d9ab280164f33d429f759f1103555c8, type: 3}
@@ -950,6 +1002,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 450359211}
+    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: fireRate
       value: 1
       objectReference: {fileID: 0}
@@ -1008,7 +1064,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 450359211}
   m_SourcePrefab: {fileID: 100100000, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
 --- !u!1 &1415479044
 GameObject:

@@ -20,6 +20,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public int Hp;
     [SerializeField] int dodgingSpeed;
     [SerializeField] int TargetFaceSpeed;
+    [SerializeField] float painSpeed;
     [SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
@@ -32,8 +33,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int bulletSpeed;
     [SerializeField] Bullet bScript;
     public bool isShooting = false;
+    public bool inPain = false;
     bool playerInRange = false;
     float angleToPlayer;
+    float stoppingDistOrig;
 
     Color Mcolor;
     // Start is called before the first frame update
@@ -46,25 +49,27 @@ public class EnemyAI : MonoBehaviour, IDamage
         Hp = MaxHp;
         Mcolor = model.material.color;
         gameManager.Instance.updateGameGoal(1);
+        stoppingDistOrig = agent.stoppingDistance;
         //Player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        float agentVelo = agent.velocity.normalized.magnitude;
+        //float agentVelo = agent.velocity.normalized.magnitude;
         //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * Speed);
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
+        //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVelo, Time.deltaTime * animChangeSpeed));
 
-        if (playerInRange && CanSeePlayer())
+        if (playerInRange && CanSeePlayer() && !inPain)
         {
             //PlayerDir = GameManager.Instance
             //agent.SetDestination(GameManager.Instance.player.transform.position);
             //if (!isShooting) StartCoroutine(Shoot());
         }
-
+        else agent.SetDestination(transform.position);
         if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
         else anim.SetBool("isMoving", false);
+
     }
     bool CanSeePlayer()
     {
@@ -90,7 +95,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Shoot()
     {
         isShooting = true;
-        anim.SetTrigger("Attack");
+        anim.SetTrigger("attack");
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         //bScript.damage = shootDamage;
@@ -104,7 +109,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
-        anim.SetTrigger("Damaged");
         StartCoroutine(FlashDamage());
         if (Hp <= 0)
         {
@@ -116,9 +120,13 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     IEnumerator FlashDamage()
     {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.028571f);
-        model.material.color = Mcolor;
+        inPain = true;
+        anim.SetTrigger("damaged");
+        agent.SetDestination(transform.position);
+         //model.material.color = Color.red;
+         yield return new WaitForSeconds(painSpeed);
+        inPain = false;
+        //model.material.color = Mcolor;
     }
 
     void FaceTarget()
