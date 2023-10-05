@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float maxStam;
     [SerializeField] float runCost;
     [SerializeField] float ChargeRate;
+    float origPlayerSpeed;
 
 
     [Header("----- Gun States -----")]
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         HPMax = HP;
         maxStam = Stamina;
+        origPlayerSpeed = playerSpeed;
         spawnPlayer();
     }
 
@@ -72,6 +74,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
             if(recharge != null) StopCoroutine(recharge);
             recharge = StartCoroutine(ReachargeStamina());
+        }
+        if(Stamina == 0)
+        {
+            playerSpeed = origPlayerSpeed;
         }
         UpdatePlayerUI();
     }
