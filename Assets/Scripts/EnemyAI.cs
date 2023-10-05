@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject mainBody;
     [SerializeField] GameObject VoxelDamage;
+    [SerializeField] GameObject DeathOBJ;
     //[SerializeField] GameObject Player;
     [SerializeField] Animator anim;
     [SerializeField] Renderer model;
@@ -43,6 +44,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool playerInRange = false;
     float angleToPlayer;
     float stoppingDistOrig;
+    //bool dead = false;
 
     Color Mcolor;
     // Start is called before the first frame update
@@ -58,16 +60,15 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (playerInRange && CanSeePlayer() && !inPain)
         {
                     anim.SetTrigger("Attack");
-                    anim.SetTrigger("Attack");
+
         }
-        else agent.SetDestination(transform.position);
+        else if (inPain) agent.SetDestination(transform.position);
         //if (isShooting) anim.SetBool("attacking", true); 
         //else anim.SetBool("attacking", false);
         if (inPain) anim.SetBool("inPain", true);
         else anim.SetBool("inPain", false);
         if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
         else anim.SetBool("isMoving", false);
-
     }
     bool CanSeePlayer()
     {
@@ -76,7 +77,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, PlayerDir, out hit))
+        if (Physics.Raycast(headPos.position, PlayerDir, out hit) && angleToPlayer <= viewAngle)
         {
             if (hit.collider.CompareTag("Player"))
             {
@@ -86,8 +87,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
                 if (angleToPlayer <= shootAngle && !isShooting && playerDist <= attackRange)
                 {
-
-
                     StartCoroutine(Shoot());
                 }
                 return true;
@@ -111,14 +110,20 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp -= amount;
         soundSFX.PlayOneShot(painSound);
-        StartCoroutine(FlashDamage());
         if (Hp <= 0)
         {
+            //dead = true;
             soundSFX.PlayOneShot(deathSound);
-            anim.SetTrigger("death");
-            Destroy(gameObject);
+        mainBody.gameObject.SetActive(false);
+        VoxelDamage.gameObject.SetActive(false);
+        DeathOBJ.gameObject.SetActive(true);
+            Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+            transform.rotation = Rot;
+            Invoke("Death", 0.75f);
             //gameManager.Instance.updateGameGoal(-1);
         }
+        else 
+        StartCoroutine(FlashDamage());
     }
     IEnumerator FlashDamage()
     {
@@ -146,6 +151,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
+    }
+    void Death()
+    {
+            Destroy(gameObject);
     }
 
     /*public void physics(Vector3 dir)
