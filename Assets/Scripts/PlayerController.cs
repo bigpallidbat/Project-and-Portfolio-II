@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             IDamage damgable = hit.collider.GetComponent<IDamage>();
 
-            if (damgable != null)
+            if (hit.collider.transform.position != transform.position  && damgable != null)
             {
                 damgable.takeDamage(shootDamage);
             }
