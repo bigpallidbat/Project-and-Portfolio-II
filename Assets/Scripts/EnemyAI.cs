@@ -119,7 +119,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp -= amount;
         soundSFX.PlayOneShot(painSound);
-        agent.SetDestination(gameManager.Instance.player.transform.position);
         if (Hp <= 0)
         {
             //dead = true;
@@ -156,6 +155,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void endPain()
     {
         inPain = false;
+        agent.SetDestination(gameManager.Instance.player.transform.position);
         //anim.SetBool("inPain", false);
     }
 
