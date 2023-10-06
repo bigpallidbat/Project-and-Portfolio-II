@@ -66,13 +66,13 @@ public class EnemyAI : MonoBehaviour, IDamage
         else if (inPain) agent.SetDestination(transform.position);
         //if (isShooting) anim.SetBool("attacking", true); 
         //else anim.SetBool("attacking", false);
-        if (checkTag())
+       if (checkTag())
         {
             if (inPain) anim.SetBool("inPain", true);
             else anim.SetBool("inPain", false);
             if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
             else anim.SetBool("isMoving", false);
-        }
+       }
     }
     bool CanSeePlayer()
     {
