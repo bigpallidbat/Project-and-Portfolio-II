@@ -131,14 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: fireRate
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: shotoffSet
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_Name
       value: Pickabo (1)
@@ -1218,6 +1210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+      propertyPath: bulletSpeed
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_Name
       value: Pickabo

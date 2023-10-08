@@ -201,8 +201,8 @@ MonoBehaviour:
   TargetFaceSpeed: 60
   painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
   deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
-  VpainSound: {fileID: 0}
-  VdeathSound: {fileID: 0}
+  VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
   seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
   soundSFX: {fileID: 2002164510430661021}
   painSpeed: 0.02
@@ -213,9 +213,10 @@ MonoBehaviour:
   roamDist: 0
   roamPauseTime: 0
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
-  fireRate: 1
+  fireRate: 0.25
   shootDamage: 1
   bulletSpeed: 20
+  shotoffSet: 0.05
   isShooting: 0
   inPain: 0
 --- !u!195 &6344887214283075143

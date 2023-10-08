@@ -73,8 +73,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
         else if (playerInRange && CanSeePlayer() && !inPain)
-        {   
-            if(checkTag())
+        {
+            if (checkTag())
                 anim.SetTrigger("Attack");
             if (!ambusher)
             {
@@ -92,7 +92,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             else anim.SetBool("inPain", false);
             if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
             else anim.SetBool("isMoving", false);
-       }
+        }
     }
     bool CanSeePlayer()
     {
@@ -141,7 +141,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     bool checkTag()
     {
-        if(gameObject.CompareTag("lilChick"))
+        if (gameObject.CompareTag("lilChick"))
         { return true; }
         else { return false; }
     }
@@ -167,7 +167,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp -= amount;
         soundSFX.PlayOneShot(VpainSound);
-        soundSFX.PlayOneShot(painSound);
+        if (checkTag()) soundSFX.PlayOneShot(painSound);
 
         if (Hp <= 0)
         {
@@ -176,18 +176,18 @@ public class EnemyAI : MonoBehaviour, IDamage
             //GetComponent<NavMeshAgent>().enabled = false;
 
             soundSFX.PlayOneShot(VdeathSound);
-            soundSFX.PlayOneShot(deathSound);
-        mainBody.gameObject.SetActive(false);
-        VoxelDamage.gameObject.SetActive(false);
-        DeathOBJ.gameObject.SetActive(true);
+            if (checkTag()) soundSFX.PlayOneShot(deathSound);
+            mainBody.gameObject.SetActive(false);
+            VoxelDamage.gameObject.SetActive(false);
+            DeathOBJ.gameObject.SetActive(true);
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
             Invoke("Death", 0.8f);
 
             //gameManager.Instance.updateGameGoal(-1);
         }
-        else 
-        StartCoroutine(FlashDamage());
+        else
+            StartCoroutine(FlashDamage());
     }
     IEnumerator FlashDamage()
     {
@@ -199,7 +199,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
         mainBody.gameObject.SetActive(true);
-        if(checkTag())
+        if (checkTag())
             anim.SetTrigger("damaged");
         //anim.SetTrigger("damaged");
         Invoke("endPain", painSpeed);
@@ -221,7 +221,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     void Death()
     {
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     /*public void physics(Vector3 dir)
@@ -229,16 +229,16 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.velocity += dir;   // uncomment when need
     }*/
 
-    public void OnTriggerEnter(Collider other) 
+    public void OnTriggerEnter(Collider other)
     {
         //soundSFX.PlayOneShot(seeSound);
         //soundSFX.PlayOneShot(seeSound);
-        if (other.CompareTag("Player")) playerInRange = true; 
+        if (other.CompareTag("Player")) playerInRange = true;
     }
-    public void OnTriggerExit(Collider other) 
+    public void OnTriggerExit(Collider other)
     {
         foundPlayer = false;
-       if (other.CompareTag("Player")) playerInRange = false;
+        if (other.CompareTag("Player")) playerInRange = false;
         agent.stoppingDistance = 0;
     }
 }
