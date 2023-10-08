@@ -10,13 +10,16 @@ public class Bullet : MonoBehaviour
     [Header("----- Bullet stats -----")]
      public int damage;
      public int speed;
+    public float offsetX;
+    public float offsetY;
     [SerializeField] float DestroyTime;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        rb.velocity = transform.forward * speed;
+        rb.velocity = ((gameManager.Instance.player.transform.position - transform.position).normalized) + new Vector3(offsetX, 0 , offsetY) * speed;
+        //Vector3.Angle();
         Destroy(gameObject, DestroyTime);
     }
 

@@ -61,18 +61,25 @@ MonoBehaviour:
   shootPos: {fileID: 8398353671240449785}
   headPos: {fileID: 4664263225133598801}
   MaxHp: 5
-  Hp: 4
+  Hp: 2
+  knowsPlayerLocation: 0
+  ambusher: 0
   attackRange: 3
   dodgingSpeed: 0
   TargetFaceSpeed: 20
-  painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
-  deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  painSound: {fileID: 8300000, guid: 4eb6c71c871e60c46b918a04e3e16e6d, type: 3}
+  deathSound: {fileID: 8300000, guid: 49b777c44f3eeb14cb35f4f34714dea3, type: 3}
+  VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  seeSound: {fileID: 8300000, guid: 0f967872e129f4143a2433d44ea5beb7, type: 3}
   soundSFX: {fileID: 3240552226166346376}
   painSpeed: 0.25
   animChangeSpeed: 40
   viewAngle: 80
   shootAngle: 25
   animSpeed: 70
+  roamDist: 20
+  roamPauseTime: 2
   bullet: {fileID: 4821185415007250156, guid: 331af11e633200040a74feef9e9cd1d2, type: 3}
   fireRate: 1
   shootDamage: 2

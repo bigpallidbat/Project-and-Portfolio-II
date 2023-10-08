@@ -194,17 +194,24 @@ MonoBehaviour:
   headPos: {fileID: 6668547045629893703}
   MaxHp: 6
   Hp: 3
+  knowsPlayerLocation: 0
+  ambusher: 0
   attackRange: 30
   dodgingSpeed: 0
   TargetFaceSpeed: 60
   painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
   deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  VpainSound: {fileID: 0}
+  VdeathSound: {fileID: 0}
+  seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
   soundSFX: {fileID: 2002164510430661021}
   painSpeed: 0.02
   animChangeSpeed: 0
   viewAngle: 45
   shootAngle: 22
   animSpeed: 80
+  roamDist: 0
+  roamPauseTime: 0
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
   fireRate: 1
   shootDamage: 1
@@ -929,6 +936,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 87ca03d76263b47448707fe6dfec8205, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a7f1d67d588801a4e9710d7c9f8679a1, type: 2}
     - target: {fileID: 919132149155446097, guid: 87ca03d76263b47448707fe6dfec8205, type: 3}
       propertyPath: m_Name
       value: tom

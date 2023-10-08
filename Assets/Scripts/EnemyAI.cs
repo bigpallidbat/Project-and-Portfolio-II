@@ -22,28 +22,40 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
+    [SerializeField] bool knowsPlayerLocation;
+    [SerializeField] bool ambusher;
     [SerializeField] float attackRange;
     [SerializeField] int dodgingSpeed;
     [SerializeField] int TargetFaceSpeed;
     [SerializeField] AudioClip painSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip VpainSound;
+    [SerializeField] AudioClip VdeathSound;
+    [SerializeField] AudioClip seeSound;
     public AudioSource soundSFX;
     [SerializeField] float painSpeed;
     [SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     [SerializeField] float animSpeed;//uncomment when needed
+    [SerializeField] int roamDist;
+    [SerializeField] int roamPauseTime;
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
+    [SerializeField] float shotoffSet;
     public bool isShooting = false;
     public bool inPain = false;
     bool playerInRange = false;
     float angleToPlayer;
     float stoppingDistOrig;
+    bool destinationChosen;
+    Vector3 StartingPos;
+    bool foundPlayer = false;
+
     //bool dead = false;
 
     Color Mcolor;
@@ -52,21 +64,29 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp = MaxHp;
         soundSFX = GetComponent<AudioSource>();
+        StartingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange && CanSeePlayer() && !inPain)
-        {
+        if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
+        else if (playerInRange && CanSeePlayer() && !inPain)
+        {   
             if(checkTag())
                 anim.SetTrigger("Attack");
+            if (!ambusher)
+            {
+                StartCoroutine(Roam());
+            }
 
         }
         else if (inPain) agent.SetDestination(transform.position);
+        else StartCoroutine(Roam());
         //if (isShooting) anim.SetBool("attacking", true); 
         //else anim.SetBool("attacking", false);
-       if (checkTag())
+        if (checkTag())
         {
             if (inPain) anim.SetBool("inPain", true);
             else anim.SetBool("inPain", false);
@@ -81,10 +101,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, PlayerDir, out hit) && angleToPlayer <= viewAngle)
+        if (Physics.Raycast(headPos.position, PlayerDir, out hit))
         {
-            if (hit.collider.CompareTag("Player"))
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
+                if (!foundPlayer) found();
+                agent.stoppingDistance = stoppingDistOrig;
                 agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
                     FaceTarget();
@@ -98,6 +120,25 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         return false;
     }
+
+    IEnumerator Roam()
+    {
+        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        {
+            destinationChosen = true;
+            agent.stoppingDistance = 0;
+            yield return new WaitForSeconds(roamPauseTime);
+            Vector3 randomPos = Random.insideUnitSphere * roamDist;
+            randomPos += StartingPos;
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+            agent.SetDestination(hit.position);
+
+            destinationChosen = false;
+        }
+
+    }
     bool checkTag()
     {
         if(gameObject.CompareTag("lilChick"))
@@ -109,26 +150,39 @@ public class EnemyAI : MonoBehaviour, IDamage
         isShooting = true;
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
+        bullet.GetComponent<Bullet>().offsetX = Random.Range(shotoffSet * -1, shotoffSet);
+        bullet.GetComponent<Bullet>().offsetY = Random.Range(shotoffSet * -1, shotoffSet);
         yield return new WaitForSeconds(fireRate);
         shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
         Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
         isShooting = false;
     }
+    void found()
+    {
+        soundSFX.PlayOneShot(seeSound);
+        foundPlayer = true;
+    }
 
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        soundSFX.PlayOneShot(VpainSound);
         soundSFX.PlayOneShot(painSound);
+
         if (Hp <= 0)
         {
             //dead = true;
+            GetComponent<CapsuleCollider>().enabled = false;
+            //GetComponent<NavMeshAgent>().enabled = false;
+
+            soundSFX.PlayOneShot(VdeathSound);
             soundSFX.PlayOneShot(deathSound);
         mainBody.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(false);
         DeathOBJ.gameObject.SetActive(true);
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
-            Invoke("Death", 0.75f);
+            Invoke("Death", 0.8f);
 
             //gameManager.Instance.updateGameGoal(-1);
         }
@@ -162,6 +216,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void FaceTarget()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+        //transform.rotation = Rot; snap code
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
     void Death()
@@ -174,6 +229,16 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.velocity += dir;   // uncomment when need
     }*/
 
-    public void OnTriggerEnter(Collider other) { if (other.CompareTag("Player")) playerInRange = true; }
-    public void OnTriggerExit(Collider other) { if (other.CompareTag("Player")) playerInRange = false; }
+    public void OnTriggerEnter(Collider other) 
+    {
+        //soundSFX.PlayOneShot(seeSound);
+        //soundSFX.PlayOneShot(seeSound);
+        if (other.CompareTag("Player")) playerInRange = true; 
+    }
+    public void OnTriggerExit(Collider other) 
+    {
+        foundPlayer = false;
+       if (other.CompareTag("Player")) playerInRange = false;
+        agent.stoppingDistance = 0;
+    }
 }
