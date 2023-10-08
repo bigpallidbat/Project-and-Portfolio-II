@@ -74,12 +74,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
         else if (playerInRange && CanSeePlayer() && !inPain)
         {
-
             if (!ambusher)
             {
                 StartCoroutine(Roam());
             }
-
         }
         else if (inPain) agent.SetDestination(transform.position);
         else StartCoroutine(Roam());
@@ -193,7 +191,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator FlashDamage()
     {
         inPain = true;
-        //anim.SetBool("inPain", true);
+        //if (checkTag()) anim.SetBool("inPain", true);
         mainBody.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
@@ -211,7 +209,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         inPain = false;
         agent.SetDestination(gameManager.Instance.player.transform.position);
-        //anim.SetBool("inPain", false);
+        //if (checkTag()) anim.SetBool("inPain", false);
     }
 
     void FaceTarget()
@@ -233,12 +231,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void OnTriggerEnter(Collider other)
     {
         //soundSFX.PlayOneShot(seeSound);
-        //soundSFX.PlayOneShot(seeSound);
         if (other.CompareTag("Player")) playerInRange = true;
     }
     public void OnTriggerExit(Collider other)
     {
-        foundPlayer = false;
+        //foundPlayer = false;
         if (other.CompareTag("Player")) playerInRange = false;
         agent.stoppingDistance = 0;
     }
