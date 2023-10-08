@@ -74,8 +74,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
         else if (playerInRange && CanSeePlayer() && !inPain)
         {
-            if (checkTag())
-                anim.SetTrigger("Attack");
+
             if (!ambusher)
             {
                 StartCoroutine(Roam());
@@ -148,6 +147,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Shoot()
     {
         isShooting = true;
+        if (checkTag())
+            anim.SetTrigger("Attack");
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         bullet.GetComponent<Bullet>().offsetX = Random.Range(shotoffSet * -1, shotoffSet);

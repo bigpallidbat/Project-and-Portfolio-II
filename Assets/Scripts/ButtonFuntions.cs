@@ -28,6 +28,7 @@ public class ButtonFuntions : MonoBehaviour
     public void mainMenu()
     {
         SceneManager.LoadScene(1);
+        gameManager.Instance.stateUnpause();
     }
     public void startGame()
     {
