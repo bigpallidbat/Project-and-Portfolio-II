@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
 
-        rb.velocity = (gameManager.Instance.player.transform.position - transform.position).normalized * speed;
+        rb.velocity = (new Vector3(gameManager.Instance.player.transform.position.x + offsetX, gameManager.Instance.player.transform.position.y + offsetY, gameManager.Instance.player.transform.position.z) - transform.position).normalized * speed;
         //Vector3.Angle();
         Destroy(gameObject, DestroyTime);
     }

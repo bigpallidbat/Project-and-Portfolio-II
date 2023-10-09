@@ -236,7 +236,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void OnTriggerExit(Collider other)
     {
         //foundPlayer = false;
-        if (other.CompareTag("Player")) playerInRange = false;
+        //if (other.CompareTag("Player")) playerInRange = false;
         agent.stoppingDistance = 0;
     }
 }
