@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -93,6 +94,14 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal()
     {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+    }
+
+    public IEnumerator youWin()
+    {
+        yield return new WaitForSeconds(3);
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(true);
