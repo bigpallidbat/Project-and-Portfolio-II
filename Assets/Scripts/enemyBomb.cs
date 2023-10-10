@@ -11,26 +11,20 @@ public class enemyBomb : MonoBehaviour, IDamage
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
     [SerializeField] int damage;
-    [SerializeField] float speed;
-    [SerializeField] float explodeDist;
 
-
-    bool chasePlayer;
+    bool playerInRange;
     Color colorOrig;
     UnityEngine.Vector3 playerDir;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //colorOrig = model.material.color;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (chasePlayer)
-        {
-            Debug.Log("IN RANGE");
+        Debug.Log(agent.remainingDistance);
+        if (playerInRange && canSeePlayer())
+        { 
         }
     }
 
@@ -44,9 +38,10 @@ public class enemyBomb : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(gameManager.Instance.player.transform.position);
-
-                if (agent.remainingDistance < agent.stoppingDistance)
+                if (agent.remainingDistance < agent.stoppingDistance && agent.remainingDistance > 0)
+                {
                     explode();
+                }
 
                 return true;
             }
@@ -64,17 +59,11 @@ public class enemyBomb : MonoBehaviour, IDamage
         }
     }
 
-    void faceTarget()
-    {
-        UnityEngine.Quaternion rot = UnityEngine.Quaternion.LookRotation(playerDir);
-        transform.rotation = UnityEngine.Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * 10);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            chasePlayer = true;
+            playerInRange = true;
         }
     }
 
@@ -82,7 +71,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
-            chasePlayer = false;
+            playerInRange = false;
         }
     }
 
@@ -96,5 +85,5 @@ public class enemyBomb : MonoBehaviour, IDamage
         }
 
         Destroy(gameObject);
-    }    
+    }
 }
