@@ -11,7 +11,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
     [SerializeField] int damage;
-    [SerializeField] int explodeRange;
+    [SerializeField] int explosionRange;
 
     bool playerInRange;
     bool isExploding;
@@ -20,21 +20,17 @@ public class enemyBomb : MonoBehaviour, IDamage
 
     void Start()
     {
-        //colorOrig = model.material.color;
+        colorOrig = model.material.color;
     }
 
     void Update()
     {
-        Debug.Log(model.material.color);
-        model.material.color = Color.red;
-
-        //model.material.SetColor("_Color", Color.red);
-        //if (!isExploding)
-        //{
-        //    if (playerInRange && canSeePlayer())
-        //    {
-        //    }
-        //}
+        if (!isExploding)
+        {
+            if (playerInRange && canSeePlayer())
+            {
+            }
+        }
     }
 
     bool canSeePlayer()
@@ -49,7 +45,7 @@ public class enemyBomb : MonoBehaviour, IDamage
                 agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance && agent.remainingDistance > 0)
                 {
-                    explode();
+                    StartCoroutine(explode());
                 }
 
                 return true;
@@ -84,48 +80,50 @@ public class enemyBomb : MonoBehaviour, IDamage
         }
     }
 
-    void explode()
+    IEnumerator explode()
     {
         isExploding = true;
-        agent.stoppingDistance = 20;
+        agent.SetDestination(transform.position);
 
-        //model.material.color = Color.red;
-        //new WaitForSeconds(1);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.9F);
-        //model.material.color = Color.red;
-        //new WaitForSeconds(0.8F);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.7F);
-        //model.material.color = Color.red;
-        //new WaitForSeconds(0.6F);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.5F);
-        //model.material.color = Color.red;
-        //new WaitForSeconds(0.4F);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.3F);
-        //model.material.color = Color.red;
-        //new WaitForSeconds(0.2F);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.1F);
-        //model.material.color = Color.red;
-        //new WaitForSeconds(0.05F);
-        //model.material.color = colorOrig;
-        //new WaitForSeconds(0.05F);
-        //model.material.color = Color.red;
-        //applyDamage();
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(.8F);
+        model.material.color = colorOrig;
+        yield return new WaitForSeconds(.7F);
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(.6F);
+        model.material.color = colorOrig;
+        yield return new WaitForSeconds(.5F);
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(.4F);
+        model.material.color = colorOrig;
+        yield return new WaitForSeconds(.3F);
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(.2F);
+        model.material.color = colorOrig;
+        yield return new WaitForSeconds(.2F);
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(.1F);
+        model.material.color = colorOrig;
+        yield return new WaitForSeconds(.1F);
+        model.material.color = Color.red;
+        applyDamage();
     }
 
     void applyDamage()
     {
         IDamage damageable = gameManager.Instance.player.GetComponent<IDamage>();
-
-        if (damageable != null)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, playerDir, out hit))
         {
-            damageable.takeDamage(damage);
+            if (hit.collider.CompareTag("Player"))
+            {
+                float dist = Vector3.Distance(transform.position, gameManager.Instance.player.transform.position);
+                if (dist < explosionRange && damageable != null)
+                {
+                    damageable.takeDamage(damage);
+                }
+            }
         }
-
         Destroy(gameObject);
     }
 }
