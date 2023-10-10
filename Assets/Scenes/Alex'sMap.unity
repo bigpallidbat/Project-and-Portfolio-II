@@ -207,7 +207,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3204626716714302467, guid: a3a1e59eb34dae541a8da31d83f78d1d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2105411541}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9007301754834518797, guid: a3a1e59eb34dae541a8da31d83f78d1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2106667455}
   m_SourcePrefab: {fileID: 100100000, guid: a3a1e59eb34dae541a8da31d83f78d1d, type: 3}
 --- !u!1001 &377440121
 PrefabInstance:
@@ -1181,6 +1184,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1366783484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2106667451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9007301754834518797, guid: a3a1e59eb34dae541a8da31d83f78d1d, type: 3}
+  m_PrefabInstance: {fileID: 295400232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2106667455
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106667451}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f37aff7bcedcc1e42bd8ae6c49d0ea26, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1910477341243370407
 PrefabInstance:
   m_ObjectHideFlags: 0

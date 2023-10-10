@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool leftChecker;
     public bool rightChecker;
     public bool inStafingRange;
-    public bool goRight = Random.Range(0, 2) == 0;
+    public bool goRight;
     bool isDead = false;
     //bool dead = false;
 
@@ -75,6 +75,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Hp = MaxHp;
         soundSFX = GetComponent<AudioSource>();
         StartingPos = transform.position;
+        goRight = Random.Range(0, 2) == 0;
         //stoppingDistOrig = agent.stoppingDistance;
     }
 
@@ -250,7 +251,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             DeathOBJ.gameObject.SetActive(true);
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
-            Invoke("Death", 0.8f);
+            StartCoroutine(Death());
+            //Invoke("Death", 0.8f);
 
             //gameManager.Instance.updateGameGoal(-1);
         }
@@ -287,8 +289,9 @@ public class EnemyAI : MonoBehaviour, IDamage
         //transform.rotation = Rot; snap code
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
-    void Death()
+    IEnumerator Death()
     {
+        yield return new WaitForSeconds(0.8f);
         Destroy(gameObject);
     }
 

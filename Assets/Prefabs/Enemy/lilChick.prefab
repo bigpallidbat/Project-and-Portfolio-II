@@ -60,12 +60,15 @@ MonoBehaviour:
   model: {fileID: 4664263225147562359}
   shootPos: {fileID: 8398353671240449785}
   headPos: {fileID: 4664263225133598801}
+  leftCheck: {fileID: 0}
+  rightCheck: {fileID: 0}
   MaxHp: 5
   Hp: 2
+  friendly: 0
   knowsPlayerLocation: 0
   ambusher: 0
   attackRange: 3
-  dodgingSpeed: 0
+  strafingSpeed: 0
   TargetFaceSpeed: 20
   painSound: {fileID: 8300000, guid: 1dafc655eadc45242aa1eeacaf43646d, type: 3}
   deathSound: {fileID: 8300000, guid: 1ac2cbc12fd1738449dfea4a94cf6588, type: 3}
@@ -87,6 +90,10 @@ MonoBehaviour:
   shotoffSet: 0
   isShooting: 0
   inPain: 0
+  leftChecker: 0
+  rightChecker: 0
+  inStafingRange: 0
+  goRight: 0
 --- !u!195 &2808708521450107452
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -289,7 +296,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9138881912287532692}
-  - component: {fileID: 1563443399078034604}
   - component: {fileID: 932081513715289229}
   m_Layer: 6
   m_Name: Death
@@ -313,27 +319,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3204626716714302467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1563443399078034604
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9007301754834518797}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f37aff7bcedcc1e42bd8ae6c49d0ea26, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &932081513715289229
 SpriteRenderer:
   m_ObjectHideFlags: 0
