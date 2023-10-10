@@ -11,21 +11,30 @@ public class enemyBomb : MonoBehaviour, IDamage
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
     [SerializeField] int damage;
+    [SerializeField] int explodeRange;
 
     bool playerInRange;
+    bool isExploding;
     Color colorOrig;
     UnityEngine.Vector3 playerDir;
 
     void Start()
     {
+        //colorOrig = model.material.color;
     }
 
     void Update()
     {
-        Debug.Log(agent.remainingDistance);
-        if (playerInRange && canSeePlayer())
-        { 
-        }
+        Debug.Log(model.material.color);
+        model.material.color = Color.red;
+
+        //model.material.SetColor("_Color", Color.red);
+        //if (!isExploding)
+        //{
+        //    if (playerInRange && canSeePlayer())
+        //    {
+        //    }
+        //}
     }
 
     bool canSeePlayer()
@@ -76,6 +85,39 @@ public class enemyBomb : MonoBehaviour, IDamage
     }
 
     void explode()
+    {
+        isExploding = true;
+        agent.stoppingDistance = 20;
+
+        //model.material.color = Color.red;
+        //new WaitForSeconds(1);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.9F);
+        //model.material.color = Color.red;
+        //new WaitForSeconds(0.8F);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.7F);
+        //model.material.color = Color.red;
+        //new WaitForSeconds(0.6F);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.5F);
+        //model.material.color = Color.red;
+        //new WaitForSeconds(0.4F);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.3F);
+        //model.material.color = Color.red;
+        //new WaitForSeconds(0.2F);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.1F);
+        //model.material.color = Color.red;
+        //new WaitForSeconds(0.05F);
+        //model.material.color = colorOrig;
+        //new WaitForSeconds(0.05F);
+        //model.material.color = Color.red;
+        //applyDamage();
+    }
+
+    void applyDamage()
     {
         IDamage damageable = gameManager.Instance.player.GetComponent<IDamage>();
 
