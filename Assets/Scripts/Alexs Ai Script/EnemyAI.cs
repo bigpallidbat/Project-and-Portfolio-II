@@ -45,6 +45,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] float animSpeed;//uncomment when needed
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
+    public spawnerWave whereISpawned;
+    public Spawner WhereISpawned;
 
     [Header("----- Projectile States -----")]
     [SerializeField] GameObject bullet;
@@ -254,6 +256,11 @@ public class EnemyAI : MonoBehaviour, IDamage
             StartCoroutine(Death());
             //Invoke("Death", 0.8f);
 
+            whereISpawned.updateEnemyNumber();
+
+            if (WhereISpawned != null)
+                WhereISpawned.heyIDied();
+
             //gameManager.Instance.updateGameGoal(-1);
         }
         else
@@ -311,4 +318,5 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player")) playerInRange = false;
         //agent.stoppingDistance = 0;
     }
+
 }
