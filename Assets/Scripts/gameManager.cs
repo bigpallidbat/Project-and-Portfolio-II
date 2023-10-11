@@ -24,7 +24,12 @@ public class gameManager : MonoBehaviour
     public Image playerHpBar;
     public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
+    [SerializeField] GameObject playerDamageFlash;
 
+    [Header("----- GameMode/Level -----")]
+    [SerializeField] static int gameModeChosen;
+
+    enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
@@ -143,4 +148,21 @@ public class gameManager : MonoBehaviour
 
     }
 
+    public void setGameMode(int mode)
+    {
+        gameModeChosen = mode;
+
+    }
+
+    public int getGameMode()
+    {
+        return gameModeChosen;
+    }
+
+    public IEnumerator playerFlash()
+    {
+        playerDamageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        playerDamageFlash.SetActive(false);
+    }
 }
