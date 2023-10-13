@@ -27,6 +27,7 @@ public class waveManager : MonoBehaviour
             spawners[waveCurrent - 1].startWave();
         }
         else
+            gameManager.Instance.updateGameGoal();
             StartCoroutine(gameManager.Instance.youWin());
     }
 }

@@ -131,7 +131,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         {
             isMoving = true;
             anim.SetBool("Aiming", !isMoving);
-            anim.SetFloat("Speed", 2f);
+            anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
         }
 
     }
