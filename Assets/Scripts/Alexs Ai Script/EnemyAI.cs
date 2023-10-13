@@ -10,6 +10,11 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] AudioClip painSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip VpainSound;
+    [SerializeField] AudioClip VdeathSound;
+    [SerializeField] AudioClip seeSound;
     [SerializeField] GameObject mainBody;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
@@ -28,21 +33,16 @@ public class EnemyAI : MonoBehaviour, IDamage
     public int Hp;
     [SerializeField] bool friendly;
     [SerializeField] bool knowsPlayerLocation;
-    [SerializeField] bool ambusher;
-    [SerializeField] float attackRange;
+    [SerializeField] bool ambusher; // may get ride of
+    [SerializeField] bool meleeOnly;
+    [SerializeField] float meleeRange;
     [SerializeField] int strafingSpeed;
     [SerializeField] int TargetFaceSpeed;
-    [SerializeField] AudioClip painSound;
-    [SerializeField] AudioClip deathSound;
-    [SerializeField] AudioClip VpainSound;
-    [SerializeField] AudioClip VdeathSound;
-    [SerializeField] AudioClip seeSound;
     public AudioSource soundSFX;
-    [SerializeField] float painSpeed;
     [SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
-    [SerializeField] float animSpeed;//uncomment when needed
+    //[SerializeField] float animSpeed;//uncomment when needed
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
     public spawnerWave whereISpawned;
@@ -54,8 +54,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
-    public bool isShooting = false;
-    public bool inPain = false;
+    [SerializeField] Collider hitBoxCOL;
+
+    public bool isAttacking = false;
+    bool inPain;
     bool playerInRange = false;
     float angleToPlayer;
     //float stoppingDistOrig;
@@ -67,7 +69,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
-    bool isDead = false;
     //bool dead = false;
 
     Color Mcolor;
@@ -84,8 +85,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        if (agent.isActiveAndEnabled)
         {
+            if (checkTag())
+            {
+                anim.SetFloat("speed", agent.velocity.normalized.magnitude);
+            }
             if (!friendly)
             {
                 if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -102,13 +107,6 @@ public class EnemyAI : MonoBehaviour, IDamage
                 //else anim.SetBool("attacking", false);
             }
             else StartCoroutine(Roam());
-            if (checkTag())
-            {
-                if (inPain) anim.SetBool("inPain", true);
-                else anim.SetBool("inPain", false);
-                if (agent.velocity != Vector3.zero) anim.SetBool("isMoving", true);
-                else anim.SetBool("isMoving", false);
-            }
         }
     }
     bool CanSeePlayer()
@@ -125,14 +123,15 @@ public class EnemyAI : MonoBehaviour, IDamage
                 if (!foundPlayer) found();
                 //agent.stoppingDistance = stoppingDistOrig;
                 //if (playerDist < agent.stoppingDistance + 1) strafe();
-                if (inStafingRange) StartCoroutine(strafe());
+                if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
                 else agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
                     FaceTarget();
 
-                if (angleToPlayer <= shootAngle && !isShooting && playerDist <= attackRange)
+                if (angleToPlayer <= shootAngle && !isAttacking)// && playerDist <= meleeRange)
                 {
-                    StartCoroutine(Shoot());
+                    if (!meleeOnly) StartCoroutine(attack());
+                    else if (playerDist <= meleeRange) StartCoroutine(attack());
                 }
                 return true;
             }
@@ -212,20 +211,36 @@ public class EnemyAI : MonoBehaviour, IDamage
         { return true; }
         else { return false; }
     }
-    IEnumerator Shoot()
+    IEnumerator attack()
     {
-        isShooting = true;
+        isAttacking = true;
         if (checkTag())
-            anim.SetTrigger("Attack");
+            anim.SetTrigger("attack");
+        else
+        {                     
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
         bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
-        yield return new WaitForSeconds(fireRate);
-        shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
-        Instantiate(bullet, shootPos.position, shootPos.transform.rotation);
-        isShooting = false;
+            Instantiate(bullet, shootPos.position, transform.rotation);
+        //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
+        }
+            yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
+    }
+    public void shoot()
+    {
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
 
+    public void hitBoxOn()
+    {
+        hitBoxCOL.enabled = true;
+    }
+
+    public void hitBoxOff()
+    {
+        hitBoxCOL.enabled = false;
     }
     void found()
     {
@@ -236,12 +251,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound);
         if (checkTag()) soundSFX.PlayOneShot(painSound);
 
         if (Hp <= 0)
         {
-            isDead = true;
             FaceTarget();
             GetComponent<CapsuleCollider>().enabled = false;
             //GetComponent<NavMeshAgent>().enabled = false;
@@ -277,9 +292,9 @@ public class EnemyAI : MonoBehaviour, IDamage
         VoxelDamage.gameObject.SetActive(false);
         mainBody.gameObject.SetActive(true);
         if (checkTag())
-            anim.SetTrigger("damaged");
+            anim.SetTrigger("pain");
         //anim.SetTrigger("damaged");
-        Invoke("endPain", painSpeed);
+        //Invoke("endPain", painSpeed);
         //model.material.color = Color.red;
         //model.material.color = Mcolor;
     }

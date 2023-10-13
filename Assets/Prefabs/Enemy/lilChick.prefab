@@ -83,6 +83,8 @@ MonoBehaviour:
   animSpeed: 70
   roamDist: 20
   roamPauseTime: 2
+  whereISpawned: {fileID: 0}
+  WhereISpawned: {fileID: 0}
   bullet: {fileID: 4821185415007250156, guid: 331af11e633200040a74feef9e9cd1d2, type: 3}
   fireRate: 1
   shootDamage: 2
@@ -913,7 +915,7 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: fb240781ff8d048478dbd8b541843897, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2b17353e673b8496e96027450e66fac2, type: 2}
+      objectReference: {fileID: 9100000, guid: ec874d7b9bbf6ca49aad84ee760782fa, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
