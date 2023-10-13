@@ -219,8 +219,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             anim.SetTrigger("Attack");
         bullet.GetComponent<Bullet>().speed = bulletSpeed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
-        bullet.GetComponent<Bullet>().offsetX = Random.Range(shotoffSet * -1, shotoffSet);
-        bullet.GetComponent<Bullet>().offsetY = Random.Range(shotoffSet * -1, shotoffSet);
+        bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
+        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
         yield return new WaitForSeconds(fireRate);
         shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
         Instantiate(bullet, shootPos.position, shootPos.transform.rotation);

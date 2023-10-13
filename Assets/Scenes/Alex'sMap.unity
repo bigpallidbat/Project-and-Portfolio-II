@@ -1107,6 +1107,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+      propertyPath: shotoffSet
+      value: 1.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: knowsPlayerLocation
       value: 1
       objectReference: {fileID: 0}
@@ -1120,7 +1124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.11
+      value: 4.42
       objectReference: {fileID: 0}
     - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_LocalPosition.z
