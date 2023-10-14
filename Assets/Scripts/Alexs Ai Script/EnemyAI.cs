@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioClip VpainSound;
     [SerializeField] AudioClip VdeathSound;
     [SerializeField] AudioClip seeSound;
+    [SerializeField] AudioClip swosh;
     [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
@@ -62,7 +63,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool inPain;
     bool playerInRange = false;
     float angleToPlayer;
-    //float stoppingDistOrig;
+    float stoppingDistOrig;
     bool destinationChosen;
     //bool isStrafing = false;
     Vector3 StartingPos;
@@ -81,7 +82,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         soundSFX = GetComponent<AudioSource>();
         StartingPos = transform.position;
         goRight = Random.Range(0, 2) == 0;
-        //stoppingDistOrig = agent.stoppingDistance;
+        stoppingDistOrig = agent.stoppingDistance;
     }
 
     // Update is called once per frame
@@ -89,10 +90,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (agent.isActiveAndEnabled)
         {
-            if (checkTag())
-            {
-                anim.SetFloat("speed", agent.velocity.normalized.magnitude);
-            }
+            if (anim != null) anim.SetFloat("speed", agent.velocity.normalized.magnitude);
+
             if (!friendly)
             {
                 if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -105,8 +104,6 @@ public class EnemyAI : MonoBehaviour, IDamage
                 }
                 else if (inPain) agent.SetDestination(transform.position);
                 else if (!ambusher) StartCoroutine(Roam());
-                //if (isShooting) anim.SetBool("attacking", true); 
-                //else anim.SetBool("attacking", false);
             }
             else StartCoroutine(Roam());
         }
@@ -122,8 +119,9 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle || hit.collider.CompareTag("Player") && foundPlayer)
             {
+               
                 if (!foundPlayer) found();
-                //agent.stoppingDistance = stoppingDistOrig;
+                agent.stoppingDistance = stoppingDistOrig;
                 //if (playerDist < agent.stoppingDistance + 1) strafe();
                 if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
                 else agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -146,7 +144,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (agent.remainingDistance < 0.05f && !destinationChosen)
         {
             destinationChosen = true;
-            //agent.stoppingDistance = 0;
+            agent.stoppingDistance = 0;
             yield return new WaitForSeconds(roamPauseTime);
             Vector3 randomPos = Random.insideUnitSphere * roamDist;
             randomPos += StartingPos;
@@ -176,7 +174,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         //agent.stoppingDistance = 0;
         //isStrafing = true;
-        if (!checkTag())
+        if (anim == null)
         {
             if (goRight)
             {
@@ -207,15 +205,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     //    FaceTarget();
     //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * strafingSpeed);
     //}
-    bool checkTag()
-    {
-        if (gameObject.CompareTag("lilChick"))
-        { return true; }
-        else { return false; }
-    }
+    //bool checkTag()
+    //{
+    //    if (gameObject.CompareTag("lilChick"))
+    //    { return true; }
+    //    else { return false; }
+    //}
     IEnumerator attack()
     {
-        if (checkTag())
+        if (anim != null)
         {
             isAttacking = true;
             anim.SetTrigger("attack");
@@ -233,6 +231,10 @@ public class EnemyAI : MonoBehaviour, IDamage
             yield return new WaitForSeconds(fireRate);
             isAttacking = false;
         }
+    }
+    public void playSwosh()
+    {
+        soundSFX.PlayOneShot(swosh);
     }
     public void stopedAttack()
     {
@@ -263,11 +265,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound);
-        if (checkTag())
-        {
-            //anim.SetTrigger("pain");
-            soundSFX.PlayOneShot(painSound);
-        }
+        if (painSound != null) soundSFX.PlayOneShot(painSound);
 
         if (Hp <= 0)
         {
@@ -276,7 +274,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             //GetComponent<NavMeshAgent>().enabled = false;
 
             soundSFX.PlayOneShot(VdeathSound);
-            if (checkTag()) soundSFX.PlayOneShot(deathSound);
+            if (deathSound != null) soundSFX.PlayOneShot(deathSound);
             mainBody.enabled = false;
             VoxelDamage.gameObject.SetActive(false);
             DeathOBJ.gameObject.SetActive(true);
@@ -310,12 +308,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
         mainBody.enabled = true;
-        if (checkTag())
-            anim.SetTrigger("pain");
-        //anim.SetTrigger("damaged");
-        //Invoke("endPain", painSpeed);
-        //model.material.color = Color.red;
-        //model.material.color = Mcolor;
+        if (anim != null) anim.SetTrigger("pain");
+
     }
     public void endPain()
     {
@@ -349,7 +343,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         //foundPlayer = false;
         if (other.CompareTag("Player")) playerInRange = false;
-        //agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0;
     }
 
 }
