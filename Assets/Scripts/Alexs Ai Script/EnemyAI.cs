@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioClip seeSound;
     [SerializeField] AudioClip swosh;
     [SerializeField] SkinnedMeshRenderer mainBody;
+    [SerializeField] GameObject mainBodyV;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
     //[SerializeField] GameObject Player;
@@ -119,7 +120,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle || hit.collider.CompareTag("Player") && foundPlayer)
             {
-               
+
                 if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
                 //if (playerDist < agent.stoppingDistance + 1) strafe();
@@ -174,23 +175,26 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         //agent.stoppingDistance = 0;
         //isStrafing = true;
-        if (anim == null)
+        if (agent.isActiveAndEnabled)
         {
-            if (goRight)
+            if (anim == null)
             {
-                FaceTarget();
-                agent.SetDestination(rightCheck.transform.position);
+                if (goRight)
+                {
+                    FaceTarget();
+                    agent.SetDestination(rightCheck.transform.position);
+                }
+                else
+                {
+                    FaceTarget();
+                    agent.SetDestination(leftCheck.transform.position);
+                }
             }
             else
             {
                 FaceTarget();
-                agent.SetDestination(leftCheck.transform.position);
+                agent.SetDestination(transform.position);
             }
-        }
-        else
-        {
-            FaceTarget();
-            agent.SetDestination(transform.position);
         }
         //isStrafing = false;
         ///}
@@ -275,7 +279,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 
             soundSFX.PlayOneShot(VdeathSound);
             if (deathSound != null) soundSFX.PlayOneShot(deathSound);
-            mainBody.enabled = false;
+            if (mainBody != null) mainBody.enabled = false;
+            else mainBodyV.gameObject.SetActive(false);
             VoxelDamage.gameObject.SetActive(false);
             DeathOBJ.gameObject.SetActive(true);
             agent.enabled = false;
@@ -296,19 +301,22 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         else
             StartCoroutine(FlashDamage());
-        
+
     }
     IEnumerator FlashDamage()
     {
         inPain = true;
         //if (checkTag()) anim.SetBool("inPain", true);
-        mainBody.enabled = false;
+        if (mainBody != null) mainBody.enabled = false;
+        else mainBodyV.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
-        mainBody.enabled = true;
+        if (mainBody != null) mainBody.enabled = true;
+        else mainBodyV.gameObject.SetActive(true);
         if (anim != null) anim.SetTrigger("pain");
+        else Invoke("endPain", 0.142857f);
 
     }
     public void endPain()

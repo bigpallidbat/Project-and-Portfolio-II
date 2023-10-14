@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 6344887214283075143}
   - component: {fileID: 9023171234318834266}
   - component: {fileID: 2002164510430661021}
-  - component: {fileID: 551690400417051520}
   m_Layer: 6
   m_Name: Tom
   m_TagString: EnemyNoEmote
@@ -125,10 +124,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &5469265872573636588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,43 +141,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 6344887214283075143}
-  mainBody: {fileID: 8968855541303391430}
+  painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  attckSound: {fileID: 0}
+  VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
+  swosh: {fileID: 0}
+  mainBody: {fileID: 0}
+  mainBodyV: {fileID: 8968855541303391430}
   VoxelDamage: {fileID: 486960310575183347}
   DeathOBJ: {fileID: 8129138573040082651}
-  anim: {fileID: 551690400417051520}
-  model: {fileID: 0}
+  anim: {fileID: 0}
   shootPos: {fileID: 6052297366222655052}
   headPos: {fileID: 6668547045629893703}
   leftCheck: {fileID: 4570078233276524948}
   rightCheck: {fileID: 5190378838521041352}
+  damageCOL: {fileID: 9068316085045256232}
   MaxHp: 6
   Hp: 3
   friendly: 0
-  knowsPlayerLocation: 0
+  knowsPlayerLocation: 1
   ambusher: 0
-  attackRange: 30
+  meleeOnly: 0
+  meleeRange: 0
   strafingSpeed: 10
   TargetFaceSpeed: 60
-  painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
-  deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
-  VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
-  VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
-  seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
   soundSFX: {fileID: 2002164510430661021}
-  painSpeed: 0.02
   animChangeSpeed: 0
   viewAngle: 45
   shootAngle: 22
-  animSpeed: 80
   roamDist: 2
   roamPauseTime: 0
+  whereISpawned: {fileID: 0}
+  WhereISpawned: {fileID: 0}
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
-  fireRate: 0.5
+  fireRate: 0.375
   shootDamage: 1
-  bulletSpeed: 10
-  shotoffSet: 1
-  isShooting: 0
-  inPain: 0
+  bulletSpeed: 20
+  shotoffSet: 1.09
+  hitBoxCOL: {fileID: 0}
   leftChecker: 0
   rightChecker: 0
   inStafingRange: 0
@@ -322,27 +324,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!95 &551690400417051520
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7185401572130973068}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 68485edab6726484f9d37b98136654cc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7976604557189720485
 GameObject:
   m_ObjectHideFlags: 0
