@@ -229,7 +229,8 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: Event endPain has a time (0.522017) outside the clip's
+      valid range (0.000000..0.520833). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -267,7 +268,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1.0022727
+      - time: 0.7212121
         functionName: endPain
         data: 
         objectReferenceParameter: {instanceID: 0}

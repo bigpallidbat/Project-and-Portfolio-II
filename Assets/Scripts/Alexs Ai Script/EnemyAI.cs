@@ -12,19 +12,21 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip attckSound;
     [SerializeField] AudioClip VpainSound;
     [SerializeField] AudioClip VdeathSound;
     [SerializeField] AudioClip seeSound;
-    [SerializeField] GameObject mainBody;
+    [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
     //[SerializeField] GameObject Player;
     [SerializeField] Animator anim;
-    [SerializeField] Renderer model;
+    //[SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
+    [SerializeField] Collider damageCOL;
     Vector3 PlayerDir;
     float playerDist;
 
@@ -56,7 +58,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
 
-    public bool isAttacking = false;
+    bool isAttacking = false;
     bool inPain;
     bool playerInRange = false;
     float angleToPlayer;
@@ -193,7 +195,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             agent.SetDestination(transform.position);
         }
         //isStrafing = false;
-        //}
+        ///}
     }
     //void srafeLeft()
     //{
@@ -213,19 +215,27 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator attack()
     {
-        isAttacking = true;
         if (checkTag())
+        {
+            isAttacking = true;
             anim.SetTrigger("attack");
-        else
-        {                     
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = shootDamage;
-        bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
-        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
-            Instantiate(bullet, shootPos.position, transform.rotation);
-        //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
+            soundSFX.PlayOneShot(attckSound);
         }
+        else
+        {
+            isAttacking = true;
+            bullet.GetComponent<Bullet>().speed = bulletSpeed;
+            bullet.GetComponent<Bullet>().damage = shootDamage;
+            bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
+            bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
+            Instantiate(bullet, shootPos.position, transform.rotation);
+            //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
             yield return new WaitForSeconds(fireRate);
+            isAttacking = false;
+        }
+    }
+    public void stopedAttack()
+    {
         isAttacking = false;
     }
     public void shoot()
@@ -253,44 +263,53 @@ public class EnemyAI : MonoBehaviour, IDamage
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound);
-        if (checkTag()) soundSFX.PlayOneShot(painSound);
+        if (checkTag())
+        {
+            //anim.SetTrigger("pain");
+            soundSFX.PlayOneShot(painSound);
+        }
 
         if (Hp <= 0)
         {
             FaceTarget();
-            GetComponent<CapsuleCollider>().enabled = false;
+            //GetComponent<CapsuleCollider>().enabled = false;
             //GetComponent<NavMeshAgent>().enabled = false;
 
             soundSFX.PlayOneShot(VdeathSound);
             if (checkTag()) soundSFX.PlayOneShot(deathSound);
-            mainBody.gameObject.SetActive(false);
+            mainBody.enabled = false;
             VoxelDamage.gameObject.SetActive(false);
             DeathOBJ.gameObject.SetActive(true);
+            agent.enabled = false;
+            damageCOL.enabled = false;
+            StopAllCoroutines();
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
-            StartCoroutine(Death());
-            //Invoke("Death", 0.8f);
+            //StartCoroutine(Death());
+            Invoke("Death", 0.8f);
 
-            whereISpawned.updateEnemyNumber();
 
             if (WhereISpawned != null)
+            {
+                whereISpawned.updateEnemyNumber();
                 WhereISpawned.heyIDied();
-
-            //gameManager.Instance.updateGameGoal(-1);
+                //gameManager.Instance.updateGameGoal(-1);
+            }
         }
         else
             StartCoroutine(FlashDamage());
+        
     }
     IEnumerator FlashDamage()
     {
         inPain = true;
         //if (checkTag()) anim.SetBool("inPain", true);
-        mainBody.gameObject.SetActive(false);
+        mainBody.enabled = false;
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
-        mainBody.gameObject.SetActive(true);
+        mainBody.enabled = true;
         if (checkTag())
             anim.SetTrigger("pain");
         //anim.SetTrigger("damaged");
@@ -298,7 +317,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         //model.material.color = Color.red;
         //model.material.color = Mcolor;
     }
-    void endPain()
+    public void endPain()
     {
         inPain = false;
         agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -311,9 +330,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         //transform.rotation = Rot; snap code
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
-    IEnumerator Death()
+    public void Death()
     {
-        yield return new WaitForSeconds(0.8f);
         Destroy(gameObject);
     }
 
@@ -335,3 +353,4 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 }
+
