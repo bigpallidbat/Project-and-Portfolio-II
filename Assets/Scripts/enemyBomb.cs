@@ -5,13 +5,20 @@ using UnityEngine.AI;
 
 public class enemyBomb : MonoBehaviour, IDamage
 {
+    [Header("---- Components -----")]
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
+    [SerializeField] ParticleSystem effect;
 
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
     [SerializeField] int damage;
     [SerializeField] int explosionRange;
+    [SerializeField] AudioSource aud;
+
+    public AudioClip explodeSound;
+    public AudioClip beepSound;
 
     bool playerInRange;
     bool isExploding;
@@ -21,12 +28,14 @@ public class enemyBomb : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = model.material.color;
+        //aud.PlayOneShot(explodeSound, 5);
     }
 
     void Update()
     {
         if (!isExploding)
         {
+            anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
             if (playerInRange && canSeePlayer())
             {
             }
@@ -84,33 +93,50 @@ public class enemyBomb : MonoBehaviour, IDamage
     {
         isExploding = true;
         agent.SetDestination(transform.position);
+        anim.SetFloat("Speed", 0);
+        yield return new WaitForSeconds(.5F);
+        anim.enabled = false;
+        
 
         model.material.color = Color.red;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.8F);
         model.material.color = colorOrig;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.7F);
         model.material.color = Color.red;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.6F);
         model.material.color = colorOrig;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.5F);
         model.material.color = Color.red;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.4F);
         model.material.color = colorOrig;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.3F);
         model.material.color = Color.red;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.2F);
         model.material.color = colorOrig;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.2F);
         model.material.color = Color.red;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.1F);
         model.material.color = colorOrig;
+        aud.PlayOneShot(beepSound, 5);
         yield return new WaitForSeconds(.1F);
         model.material.color = Color.red;
-        applyDamage();
+        StartCoroutine(applyDamage());
     }
 
-    void applyDamage()
+    IEnumerator applyDamage()
     {
+        Instantiate(effect, transform.position, Quaternion.identity);
+        
+        aud.PlayOneShot(explodeSound, 5);
         IDamage damageable = gameManager.Instance.player.GetComponent<IDamage>();
         RaycastHit hit;
         if (Physics.Raycast(transform.position, playerDir, out hit))
@@ -124,6 +150,8 @@ public class enemyBomb : MonoBehaviour, IDamage
                 }
             }
         }
+        model.enabled = false;
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
 }
