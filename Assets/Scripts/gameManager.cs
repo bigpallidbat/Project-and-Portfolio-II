@@ -24,6 +24,8 @@ public class gameManager : MonoBehaviour
     public Image playerHpBar;
     public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
+    [SerializeField] TMP_Text AmmoCurrent;
+    [SerializeField] TMP_Text AmmoMax;
     [SerializeField] GameObject playerDamageFlash;
 
     [Header("----- GameMode/Level -----")]
@@ -141,22 +143,8 @@ public class gameManager : MonoBehaviour
             }
 
         }
-
-
-
         return false;
 
-    }
-
-    public void setGameMode(int mode)
-    {
-        gameModeChosen = mode;
-
-    }
-
-    public int getGameMode()
-    {
-        return gameModeChosen;
     }
 
     public IEnumerator playerFlash()
@@ -164,5 +152,16 @@ public class gameManager : MonoBehaviour
         playerDamageFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         playerDamageFlash.SetActive(false);
+    }
+
+    public void updateAmmo(int cur, int max)
+    {
+        AmmoCurrent.text = cur.ToString("F0");
+        AmmoMax.text = max.ToString("F0");
+    }
+
+    public void updateAmmo(int cur)
+    {
+        AmmoCurrent.text = cur.ToString("F0");
     }
 }

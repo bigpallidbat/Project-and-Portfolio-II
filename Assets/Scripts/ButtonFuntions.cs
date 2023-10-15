@@ -38,6 +38,11 @@ public class ButtonFuntions : MonoBehaviour
         gameManager.Instance.stateUnpause();
     }
 
+    public void levelButton()
+    {
+
+    }
+
     public void levelSelect(int level)
     {
 
