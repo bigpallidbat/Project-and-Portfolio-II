@@ -26,12 +26,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
     [Header("----- Gun States -----")]
-    [SerializeField] AudioClip Shot;
-    [SerializeField] AudioClip[] Miss;
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
+    [SerializeField] GameObject gunModel;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
-    [SerializeField] GameObject cube;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -40,6 +39,8 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isSprinting;
     bool isShooting;
     private Coroutine recharge;
+    int selectedGun;
+
     private void Start()
     {
         HPMax = HP;
@@ -50,8 +51,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Update()
     {
+        if (gunList.Count > 0)
+        {
+            selectGun();
+
+            if (Input.GetButton("Shoot") && !isShooting)
+                StartCoroutine(shoot());
+        }
+
         Movement();
-        if (Input.GetButton("Shoot") && !isShooting) StartCoroutine(shoot());
     }
 
     void Sprint()
@@ -114,7 +122,6 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-        PlayerSounds.PlayOneShot(Shot);
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
         {
@@ -124,7 +131,6 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 damgable.takeDamage(shootDamage);
             }
-            else AudioRando.PlayRandomClip(PlayerSounds, Miss);
         }
 
        yield return new WaitForSeconds(shootRate);
@@ -181,5 +187,47 @@ public class PlayerController : MonoBehaviour, IDamage
     public void setHP()
     {
         curHP = HP;
+    }
+
+    public void setGunStats(gunStats gun)
+    {
+        gunList.Add(gun);
+
+        shootDamage = gun.shootDamage;
+        shootdist = gun.shootdist;
+        shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        selectedGun = gunList.Count - 1;
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
+        {
+            selectedGun++;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+        {
+            selectedGun--;
+            changeGun();
+        }
+    }
+
+    void changeGun()
+    {
+        shootDamage = gunList[selectedGun].shootDamage;
+        shootdist = gunList[selectedGun].shootdist;
+        shootRate = gunList[selectedGun].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        
+
+        isShooting = false;
     }
 }
