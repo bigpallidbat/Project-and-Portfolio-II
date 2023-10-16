@@ -58,16 +58,41 @@ MonoBehaviour:
   JumpMax: 2
   jumpHeight: 12
   gravityValue: -25
-  Stamina: 16
-  runCost: 2
-  ChargeRate: 4
-  Shot: {fileID: 8300000, guid: 54e8bcf58a05fd04b998f7c951645bbc, type: 3}
-  Miss:
-  - {fileID: 8300000, guid: 0861ca3d46258bc42a12a0fd4f1b579e, type: 3}
-  shootRate: 0.5
-  shootDamage: 2
-  shootdist: 50
-  cube: {fileID: 0}
+  Stamina: 100
+  runCost: 25
+  ChargeRate: 33
+  gunList: []
+  gunModel: {fileID: 8222893367937395141}
+  shootRate: 0
+  shootDamage: 0
+  shootdist: 0
+  audDamage:
+  - {fileID: 8300000, guid: c5f292dfcc98f9940a6349dfc7561676, type: 3}
+  - {fileID: 8300000, guid: 0791e2afc83048343ad1e19f4d9a819f, type: 3}
+  - {fileID: 8300000, guid: ecdd56c8d64786e44b863232af6e64ef, type: 3}
+  - {fileID: 8300000, guid: 01c3a40afe94deb42a3396f97b11fed9, type: 3}
+  - {fileID: 8300000, guid: 3779ec412fa7da545a73902eafaed34b, type: 3}
+  - {fileID: 8300000, guid: f3528659c4848484b82f8e47d03621cd, type: 3}
+  audDamageVol: 0.5
+  audJump:
+  - {fileID: 8300000, guid: 285514a6a5519214295012d622411672, type: 3}
+  - {fileID: 8300000, guid: 9df28f241c2a77c458babe8fedcebe30, type: 3}
+  - {fileID: 8300000, guid: e174f30fcc1cf984394d42abe1e1be34, type: 3}
+  audJumpVol: 0.5
+  audSteps:
+  - {fileID: 8300000, guid: 5af5d3d3f68702049960c3cd07a71c4e, type: 3}
+  - {fileID: 8300000, guid: 3942cd3f39231714ab03ff19db72a8a5, type: 3}
+  - {fileID: 8300000, guid: b18eaf3e9f6d293439edf0a5d1825b10, type: 3}
+  - {fileID: 8300000, guid: 580309b9afa4cce4cb3a7962b4eee4dc, type: 3}
+  - {fileID: 8300000, guid: 0d981911988ba334182af79d005f7c03, type: 3}
+  - {fileID: 8300000, guid: 00022c55225e7fe438a87e52c9a8fc7e, type: 3}
+  - {fileID: 8300000, guid: f9cec09174c93e24db2d55a80359167b, type: 3}
+  - {fileID: 8300000, guid: f4a5048b89aa66a4e8ecc648d53c19ef, type: 3}
+  - {fileID: 8300000, guid: 9add6ef0a8d75134187ac6ba4d006ed1, type: 3}
+  audStepsVol: 0.05
+  audReload:
+  - {fileID: 8300000, guid: bf22610fc143eee4ca9cd21c17251264, type: 3}
+  audReloadVol: 0.5
 --- !u!143 &5450961746517650194
 CharacterController:
   m_ObjectHideFlags: 0
@@ -178,7 +203,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -263,6 +288,89 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &8222893367937395141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150066405907571207}
+  - component: {fileID: 1591896016059224888}
+  - component: {fileID: 3251403582903511786}
+  m_Layer: 0
+  m_Name: Gun modle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150066405907571207
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222893367937395141}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.378, y: -0.616, z: 1.1}
+  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3390283529923176430}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!33 &1591896016059224888
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222893367937395141}
+  m_Mesh: {fileID: 0}
+--- !u!23 &3251403582903511786
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222893367937395141}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8811056596830717380
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +402,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1150066405907571207}
   m_Father: {fileID: 9159849997777138825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3685032739756913989
@@ -309,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b6699aa0e248c248b3e10931746d4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  senitivity: 700
+  senitivity: 500
   lockvertmin: -90
   lockvertmax: 90
   invertY: 0
