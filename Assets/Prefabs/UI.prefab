@@ -447,7 +447,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1474,6 +1474,7 @@ GameObject:
   - component: {fileID: 8376476150093778605}
   - component: {fileID: 6024615069377316189}
   - component: {fileID: 895026903806356525}
+  - component: {fileID: 5253349761575138786}
   m_Layer: 5
   m_Name: ScreenManager
   m_TagString: Untagged
@@ -1516,6 +1517,7 @@ MonoBehaviour:
   screenList:
   - {fileID: 6971619296183538943}
   - {fileID: 9131189373417107877}
+  - {fileID: 9086657721031898273}
   background: {fileID: 8670740485643862941}
   anim: {fileID: 7259698867673134491}
 --- !u!114 &895026903806356525
@@ -1528,6 +1530,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b95c6ded8d7493444836d552a4a4681c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5253349761575138786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836400293039429907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ccab2e147fbca478e09c5cfd07edb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2941449775783431327
@@ -1787,12 +1801,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 895026903806356525}
         m_TargetAssemblyTypeName: ButtonFuntions, Assembly-CSharp
-        m_MethodName: startGame
-        m_Mode: 1
+        m_MethodName: levelSelect
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5010,7 +5024,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 895026903806356525}
         m_TargetAssemblyTypeName: ButtonFuntions, Assembly-CSharp
-        m_MethodName: quit
+        m_MethodName: BackFromLevelSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5635,7 +5649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2142940934529765089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5740,7 +5754,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 895026903806356525}
         m_TargetAssemblyTypeName: ButtonFuntions, Assembly-CSharp
-        m_MethodName: startGame
+        m_MethodName: levelButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
