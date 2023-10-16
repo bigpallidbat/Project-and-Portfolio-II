@@ -35,24 +35,29 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
+    static int currentLevel;
     GameObject Door;
+
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
         timeScaleOrig = Time.timeScale;
-        player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<PlayerController>();
-        if (!sceneManager.scenechange)
-        {
-            playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
-        }
-        else if (sceneManager.scenechange)
-        {
-            sendDoor(DoorController.doorNumber);
 
-        }
+        if (currentLevel != -1)
+        {
+            player = GameObject.FindWithTag("Player");
+            playerScript = player.GetComponent<PlayerController>();
+            if (!sceneManager.scenechange)
+            {
+                playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+            }
+            else if (sceneManager.scenechange)
+            {
+                sendDoor(DoorController.doorNumber);
 
+            }
+        }
         if (isPaused)
         {
             stateUnpause();
@@ -167,5 +172,10 @@ public class gameManager : MonoBehaviour
     public void updateAmmo(int cur)
     {
         AmmoCurrent.text = cur.ToString("F0");
+    }
+    
+    public void setCurrLevel(int level)
+    {
+        currentLevel = level;
     }
 }

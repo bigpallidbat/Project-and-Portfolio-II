@@ -6,15 +6,11 @@ using UnityEngine;
 
 public class itemStats : ScriptableObject
 {
-    public float shootRate;
-    public int shootDamage;
-    public int shootDist;
-    public int ammoCurr;
-    public int ammoMax;
-    public bool AreaofEffect;
+    public string itemName;
+    public int id;
+    public enum strength{small = 1, medium, large, full};
+    public Sprite icon;
+    public enum itemType {healing =1, Damage, Speed, Ammo };
 
-
-    public GameObject model;
-    public ParticleSystem hitEffect;
-    public AudioClip shotSound;
+    
 }
