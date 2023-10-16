@@ -53,6 +53,10 @@ public class gameManager : MonoBehaviour
 
         }
 
+        if (isPaused)
+        {
+            stateUnpause();
+        }
 
 
     }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFuntions : MonoBehaviour
 {
-    enum levels {levelOne = 2, LevelTwo = 4 };
+    
 
     public void resume()
     {
@@ -35,16 +35,22 @@ public class ButtonFuntions : MonoBehaviour
     {
         sceneManager.Instance.nextScene(2);
         screenManager.Instance.turnOffScreens();
-        gameManager.Instance.stateUnpause();
     }
+
 
     public void levelButton()
     {
-
+        screenManager.Instance.setScreen(2);
     }
 
     public void levelSelect(int level)
     {
+        sceneManager.Instance.nextScene(level);
+        screenManager.Instance.turnOffScreens();
+    }
 
+    public void BackFromLevelSelect()
+    {
+        screenManager.Instance.setScreen(1);
     }
 }
