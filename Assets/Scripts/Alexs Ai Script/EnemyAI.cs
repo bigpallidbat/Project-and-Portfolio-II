@@ -26,6 +26,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     //[SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
+    [SerializeField] GameObject EyeColor;
+    [SerializeField] Material newMaterial;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
     [SerializeField] Collider damageCOL;
@@ -257,6 +259,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void hitBoxOff()
     {
         hitBoxCOL.enabled = false;
+    }
+
+    public void redEyes()
+    {
+        EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+        knowsPlayerLocation = true;
+        agent.acceleration *= 4;
+        agent.angularSpeed *= 4;
     }
     void found()
     {
