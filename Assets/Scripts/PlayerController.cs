@@ -32,6 +32,16 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioClip[] audDamage;
+    [Range(0, 1)][SerializeField] float audDamageVol;
+    [SerializeField] AudioClip[] audJump;
+    [Range(0, 1)][SerializeField] float audJumpVol;
+    [SerializeField] AudioClip[] audSteps;
+    [Range(0, 1)][SerializeField] float audStepsVol;
+    [SerializeField] AudioClip[] audReload;
+    [Range(0, 1)][SerializeField] float audReloadVol;
+
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Vector3 move;
@@ -40,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isShooting;
     private Coroutine recharge;
     int selectedGun;
+    bool footstepsPlaying;
 
     private void Start()
     {
@@ -98,6 +109,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         groundedPlayer = controller.isGrounded;
 
+        if (groundedPlayer && move.normalized.magnitude > 0.3f && !footstepsPlaying)
+            StartCoroutine(playFootsteps());
+
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
@@ -113,10 +127,23 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             playerVelocity.y = jumpHeight;
             jumpedTimes++;
+            PlayerSounds.PlayOneShot(audJump[UnityEngine.Random.Range(0, audJump.Length)], audJumpVol);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    IEnumerator playFootsteps()
+    {
+        footstepsPlaying = true;
+
+        PlayerSounds.PlayOneShot(audSteps[UnityEngine.Random.Range(0, audSteps.Length)], audStepsVol);
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+        footstepsPlaying = false;
     }
 
     IEnumerator shoot()
@@ -125,7 +152,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             isShooting = true;
             gunList[selectedGun].ammoCur--;
-
+            PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
 
             RaycastHit hit;
@@ -152,7 +179,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-
+        PlayerSounds.PlayOneShot(audDamage[UnityEngine.Random.Range(0, audDamage.Length)], audDamageVol);
         StartCoroutine(gameManager.Instance.playerFlash());
 
         UpdatePlayerUI();
@@ -271,6 +298,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Reload"))
         {
             gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+            PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
         }
     }
 }
