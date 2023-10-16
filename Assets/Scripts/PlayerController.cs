@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour, IDamage
             if (Input.GetButton("Shoot") && !isShooting)
                 StartCoroutine(shoot());
         }
-
         Movement();
     }
 
@@ -95,6 +94,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Movement()
     {
         Sprint();
+        Reload();
 
         groundedPlayer = controller.isGrounded;
 
@@ -121,27 +121,44 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        isShooting = true;
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
+        if (gunList[selectedGun].ammoCur > 0)
         {
-            IDamage damgable = hit.collider.GetComponent<IDamage>();
+            isShooting = true;
+            gunList[selectedGun].ammoCur--;
 
-            if (hit.collider.transform.position != transform.position  && damgable != null)
+            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
-                damgable.takeDamage(shootDamage);
-            }
-        }
+                IDamage damgable = hit.collider.GetComponent<IDamage>();
 
-       yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+                if (hit.collider.transform.position != transform.position && damgable != null)
+                {
+                    damgable.takeDamage(shootDamage);
+                    Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                }
+            }
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
     }
 
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        StartCoroutine(gameManager.Instance.playerFlash());
+
         UpdatePlayerUI();
-        if (HP <= 0) gameManager.Instance.YouLose();
+
+        if (HP <= 0)
+            gameManager.Instance.YouLose();
     }
 
 
@@ -201,18 +218,36 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         selectedGun = gunList.Count - 1;
+
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
     }
 
     void selectGun()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count)
         {
             selectedGun++;
+            if (selectedGun <= -1)
+            {
+                selectedGun = gunList.Count - 1;
+            }
+            else if (selectedGun >= gunList.Count)
+            {
+                selectedGun = 0;
+            }
             changeGun();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > -1)
         {
             selectedGun--;
+            if (selectedGun <= -1)
+            {
+                selectedGun = gunList.Count - 1;
+            }
+            else if (selectedGun >= gunList.Count)
+            {
+                selectedGun = 0;
+            }
             changeGun();
         }
     }
@@ -226,8 +261,16 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
 
-        
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
 
         isShooting = false;
+    }
+
+    void Reload()
+    {
+        if (Input.GetButtonDown("Reload"))
+        {
+            gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+        }
     }
 }

@@ -9,7 +9,7 @@ public class gunPickup : MonoBehaviour
 
     void Start()
     {
-        
+        gun.ammoCur = gun.ammoMax;
     }
 
     private void OnTriggerEnter(Collider other)
