@@ -8,11 +8,13 @@ public class sceneManager : MonoBehaviour
     public static sceneManager Instance;
     static int sceneIndex;
     public static bool scenechange;
+    int sceneCount;
 
     private void Start()
     {
         Instance = this;
         sceneIndex = 0;
+        
     }
 
     public void loadScene(int sceneNum)
@@ -22,10 +24,13 @@ public class sceneManager : MonoBehaviour
         gameManager.Instance.playerScript.setHP(); 
         SceneManager.LoadScene(sceneNum);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        gameManager.Instance.setCurrLevel(sceneNum);
+
     }
     public void nextScene(int sceneNum)
     {
         SceneManager.LoadScene(sceneNum);
+        gameManager.Instance.setCurrLevel(sceneNum);
     }
 
     public void reloadScene()
