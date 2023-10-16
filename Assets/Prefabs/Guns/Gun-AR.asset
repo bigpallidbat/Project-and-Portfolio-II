@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c3e634531177a4da0701b3d7502501, type: 3}
+  m_Script: {fileID: 11500000, guid: 12c83d7666da9ae478c92483394eba31, type: 3}
   m_Name: Gun-AR
   m_EditorClassIdentifier: 
   shootRate: 0.4
   shootDamage: 2
-  shootdist: 75
-  ammoCur: 19
+  shootdist: 50
+  ammoCur: 0
   ammoMax: 25
   model: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
