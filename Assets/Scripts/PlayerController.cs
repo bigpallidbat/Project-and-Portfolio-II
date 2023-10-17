@@ -299,6 +299,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
             PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
+            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
         }
     }
 }

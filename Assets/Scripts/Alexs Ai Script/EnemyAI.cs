@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SocialPlatforms;
@@ -31,6 +32,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
     [SerializeField] Collider damageCOL;
+    [SerializeField] Rigidbody RBody;
     Vector3 PlayerDir;
     float playerDist;
 
@@ -75,6 +77,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
+    bool bunnyFly;
     //bool dead = false;
 
     Color Mcolor;
@@ -94,7 +97,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (agent.isActiveAndEnabled)
         {
             if (anim != null) anim.SetFloat("speed", agent.velocity.normalized.magnitude);
-
+            if (bunnyFly && mainBodyV.transform.position.y < 0.95f) mainBodyV.transform.position = new Vector3 (mainBodyV.transform.position.x, mainBodyV.transform.position.y + Time.deltaTime * 20, mainBodyV.transform.position.z);
             if (!friendly)
             {
                 if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -264,9 +267,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void redEyes()
     {
         EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+        RBody.useGravity = false;
         knowsPlayerLocation = true;
-        agent.acceleration *= 4;
-        agent.angularSpeed *= 4;
+        agent.speed *= 3;
+        agent.acceleration *= 3;
+        agent.angularSpeed *= 3;
+        bunnyFly = true;
     }
     void found()
     {
