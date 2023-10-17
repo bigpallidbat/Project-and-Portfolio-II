@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioClip seeSound;
     [SerializeField] AudioClip swosh;
     [SerializeField] SkinnedMeshRenderer mainBody;
+    [SerializeField] SkinnedMeshRenderer secondPart;
     [SerializeField] GameObject mainBodyV;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
@@ -77,7 +78,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
-    bool bunnyFly;
+    //bool bunnyFly;
     //bool dead = false;
 
     Color Mcolor;
@@ -97,7 +98,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (agent.isActiveAndEnabled)
         {
             if (anim != null) anim.SetFloat("speed", agent.velocity.normalized.magnitude);
-            if (bunnyFly && mainBodyV.transform.position.y < 0.95f) mainBodyV.transform.position = new Vector3 (mainBodyV.transform.position.x, mainBodyV.transform.position.y + Time.deltaTime * 20, mainBodyV.transform.position.z);
+            //if (bunnyFly && mainBodyV.transform.position.y < 0.95f) mainBodyV.transform.position = new Vector3 (mainBodyV.transform.position.x, mainBodyV.transform.position.y + Time.deltaTime * 20, mainBodyV.transform.position.z);
             if (!friendly)
             {
                 if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -241,10 +242,12 @@ public class EnemyAI : MonoBehaviour, IDamage
             isAttacking = false;
         }
     }
+
     public void playSwosh()
     {
         soundSFX.PlayOneShot(swosh);
     }
+
     public void stopedAttack()
     {
         isAttacking = false;
@@ -266,17 +269,19 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public void redEyes()
     {
+        Hp = 1;
         EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
-        RBody.useGravity = false;
+        //RBody.useGravity = false;
         knowsPlayerLocation = true;
-        agent.speed *= 3;
-        agent.acceleration *= 3;
-        agent.angularSpeed *= 3;
-        bunnyFly = true;
+        agent.speed *= 5;
+        agent.acceleration *= 8;
+        agent.angularSpeed *= 8;
+        //
+        //bunnyFly = true;
     }
     void found()
     {
-        soundSFX.PlayOneShot(seeSound);
+        if (seeSound != null) soundSFX.PlayOneShot(seeSound);
         foundPlayer = true;
     }
 
@@ -295,7 +300,11 @@ public class EnemyAI : MonoBehaviour, IDamage
 
             soundSFX.PlayOneShot(VdeathSound);
             if (deathSound != null) soundSFX.PlayOneShot(deathSound);
-            if (mainBody != null) mainBody.enabled = false;
+            if (mainBody != null)
+            {
+                mainBody.enabled = false;
+                if (secondPart != null) secondPart.enabled = false;
+            }
             else mainBodyV.gameObject.SetActive(false);
             VoxelDamage.gameObject.SetActive(false);
             DeathOBJ.gameObject.SetActive(true);
