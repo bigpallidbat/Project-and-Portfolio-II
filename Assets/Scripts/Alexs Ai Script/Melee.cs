@@ -8,6 +8,7 @@ public class Melee : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] AudioSource sound;
     [SerializeField] AudioClip Hit;
+    [Range(0, 1)][SerializeField] float audHitVol;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,7 +18,7 @@ public class Melee : MonoBehaviour
 
         if (damagable != null)
         {
-            sound.PlayOneShot(Hit);
+            sound.PlayOneShot(Hit, audHitVol);
             damagable.takeDamage(damage);
         }
     }

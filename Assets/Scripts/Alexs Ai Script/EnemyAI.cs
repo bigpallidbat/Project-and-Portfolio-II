@@ -12,12 +12,19 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
+    [Range(0, 1)][SerializeField] float audPainVol;
     [SerializeField] AudioClip deathSound;
+    [Range(0, 1)][SerializeField] float audDeathVol;
     [SerializeField] AudioClip attckSound;
+    [Range(0, 1)][SerializeField] float audAttackVol;
     [SerializeField] AudioClip VpainSound;
+    [Range(0, 1)][SerializeField] float audVpainVol;
     [SerializeField] AudioClip VdeathSound;
+    [Range(0, 1)][SerializeField] float audVdeathVol;
     [SerializeField] AudioClip seeSound;
-    [SerializeField] AudioClip swosh;
+    [Range(0, 1)][SerializeField] float audSeeVol;
+    [SerializeField] AudioClip woosh;
+    [Range(0, 1)][SerializeField] float audWooshVol;
     [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] SkinnedMeshRenderer secondPart;
     [SerializeField] GameObject mainBodyV;
@@ -64,6 +71,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
+    public spawnerDestroyable origin;
 
     bool isAttacking = false;
     bool inPain;
@@ -227,7 +235,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             isAttacking = true;
             anim.SetTrigger("attack");
-            soundSFX.PlayOneShot(attckSound);
+            soundSFX.PlayOneShot(attckSound, audAttackVol);
         }
         else
         {
@@ -245,7 +253,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public void playSwosh()
     {
-        soundSFX.PlayOneShot(swosh);
+        soundSFX.PlayOneShot(woosh, audWooshVol);
     }
 
     public void stopedAttack()
@@ -281,7 +289,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     void found()
     {
-        if (seeSound != null) soundSFX.PlayOneShot(seeSound);
+        if (seeSound != null) soundSFX.PlayOneShot(seeSound, audSeeVol);
         foundPlayer = true;
     }
 
@@ -289,8 +297,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
-        soundSFX.PlayOneShot(VpainSound);
-        if (painSound != null) soundSFX.PlayOneShot(painSound);
+        soundSFX.PlayOneShot(VpainSound, audVpainVol);
+        if (painSound != null) soundSFX.PlayOneShot(painSound, audPainVol);
 
         if (Hp <= 0)
         {
@@ -298,8 +306,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             //GetComponent<CapsuleCollider>().enabled = false;
             //GetComponent<NavMeshAgent>().enabled = false;
 
-            soundSFX.PlayOneShot(VdeathSound);
-            if (deathSound != null) soundSFX.PlayOneShot(deathSound);
+            soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+            if (deathSound != null) soundSFX.PlayOneShot(deathSound, audDeathVol);
             if (mainBody != null)
             {
                 mainBody.enabled = false;
