@@ -84,4 +84,16 @@ public class DoorAnim : MonoBehaviour
         leftAnim.Play("Static");
     }
 
+
+    public void activateDoor()
+    {
+        if (isOpen)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 }

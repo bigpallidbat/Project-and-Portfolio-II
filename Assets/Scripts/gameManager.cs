@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuInv;
     public Image playerHpBar;
     public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
@@ -65,7 +66,7 @@ public class gameManager : MonoBehaviour
             stateUnpause();
         }
 
-
+        
     }
 
     // Update is called once per frame
@@ -75,6 +76,12 @@ public class gameManager : MonoBehaviour
         {
             statePause();
             menuActive = menuPause;
+            menuActive.SetActive(isPaused);
+        }
+        if(Input.GetButtonDown("Inventory") && menuActive == null)
+        {
+            statePause();
+            menuActive = menuInv;
             menuActive.SetActive(isPaused);
         }
     }
