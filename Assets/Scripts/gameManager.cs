@@ -31,7 +31,8 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
 
-    enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+    // enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+    
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
@@ -44,7 +45,7 @@ public class gameManager : MonoBehaviour
         Instance = this;
         timeScaleOrig = Time.timeScale;
 
-        if (currentLevel != -1)
+        if (currentLevel > 1)
         {
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
