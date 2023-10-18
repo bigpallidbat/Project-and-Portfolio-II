@@ -26,6 +26,17 @@ public class bossAI : MonoBehaviour
     [SerializeField] float fireRate;
     [Range(30, 180)][SerializeField] int shootAngle;
 
+    [Header("----- Spawner Stats -----")]
+    [SerializeField] List<GameObject> objectList = new List<GameObject>();
+    [SerializeField] GameObject objectToSpawn;
+    [SerializeField] int maxObjectsToSpawn;
+    [SerializeField] int timeBetweenSpawn;
+    [SerializeField] Transform[] spawnPos;
+
+    int curObjectsSpawned;
+    bool isSpawning;
+    bool startSpawning;
+
     float angleToPlayer;
     Vector3 playerDir;
     Color oColor;
@@ -39,6 +50,8 @@ public class bossAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Update game goal here? Since this acts as spawner.
+        gameManager.Instance.updateGameGoal(maxObjectsToSpawn);
         oColor = model.material.color;
         //gameManager.instance.updateGameGoal(1);
         startPos = transform.position;
@@ -59,6 +72,13 @@ public class bossAI : MonoBehaviour
             {
                 StartCoroutine(roam());
             }
+        }
+
+        //Checking if player is in trigger, and have we spawned max number of objects
+
+        if(startSpawning && curObjectsSpawned < maxObjectsToSpawn)
+        {
+            StartCoroutine(spawn());
         }
     }
 
@@ -113,11 +133,35 @@ public class bossAI : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * targetFaceSpeed);
     }
 
+    //spawn method
+    IEnumerator spawn()
+    {
+        if (!isSpawning)
+        {
+            isSpawning = true;
+
+            curObjectsSpawned++;
+            GameObject objectClone = Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
+            objectList.Add(objectClone);
+            //Cannot convert bossAI to Spawner on "this" ?
+            //objectClone.GetComponent<EnemyAI>().WhereISpawned = this;
+
+            yield return new WaitForSeconds(timeBetweenSpawn);
+            isSpawning = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+        }
+
+        //Enemies start spawning
+        if (other.CompareTag("Player"))
+        {
+            startSpawning = true;
         }
     }
 
@@ -127,6 +171,21 @@ public class bossAI : MonoBehaviour
         {
             playerInRange = false;
             agent.stoppingDistance = 0;
+        }
+
+        //Enemies stop spawning
+        if (other.CompareTag("Player"))
+        {
+            startSpawning = false;
+
+            //destroys spawned enemies once out of view
+            for(int i = 0; i < objectList.Count; i++)
+            {
+                Destroy(objectList[i]);
+            }
+            objectList.Clear();
+
+            curObjectsSpawned = 0;
         }
     }
 
@@ -180,6 +239,10 @@ public class bossAI : MonoBehaviour
         }
     }
 
-
-
+    //Whenever enemy dies, decrement max number and numberOfObjectsToSpawn
+    public void updateObjectNum()
+    {
+        curObjectsSpawned--;
+        maxObjectsToSpawn--;
+    }
 }
