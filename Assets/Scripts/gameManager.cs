@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -44,7 +45,7 @@ public class gameManager : MonoBehaviour
     {
         Instance = this;
         timeScaleOrig = Time.timeScale;
-
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
         if (currentLevel > 1)
         {
             player = GameObject.FindWithTag("Player");

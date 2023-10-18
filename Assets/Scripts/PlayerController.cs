@@ -191,9 +191,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
-        if (HP > 0)
-            HPMax = HP;
-        else HP = curHP;
+        HP = HPMax;
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
@@ -202,7 +200,10 @@ public class PlayerController : MonoBehaviour, IDamage
     
     public void spawnPlayer(quaternion rot)
     {
-        HP = HPMax;
+        if (HP > 0)
+            HPMax = HP;
+        else HP = curHP;
+
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
