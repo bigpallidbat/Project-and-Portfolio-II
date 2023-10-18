@@ -27,6 +27,7 @@ public class bossAI : MonoBehaviour
     [Range(30, 180)][SerializeField] int shootAngle;
 
     [Header("----- Spawner Stats -----")]
+    [SerializeField] List<GameObject> objectList = new List<GameObject>();
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] int maxObjectsToSpawn;
     [SerializeField] int timeBetweenSpawn;
@@ -49,6 +50,8 @@ public class bossAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Update game goal here? Since this acts as spawner.
+        gameManager.Instance.updateGameGoal(maxObjectsToSpawn);
         oColor = model.material.color;
         //gameManager.instance.updateGameGoal(1);
         startPos = transform.position;
@@ -133,13 +136,19 @@ public class bossAI : MonoBehaviour
     //spawn method
     IEnumerator spawn()
     {
-        isSpawning = true;
+        if (!isSpawning)
+        {
+            isSpawning = true;
 
-        curObjectsSpawned++;
-        Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
+            curObjectsSpawned++;
+            GameObject objectClone = Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
+            objectList.Add(objectClone);
+            //Cannot convert bossAI to Spawner on "this" ?
+            //objectClone.GetComponent<EnemyAI>().WhereISpawned = this;
 
-        yield return new WaitForSeconds(timeBetweenSpawn);
-        isSpawning = false;
+            yield return new WaitForSeconds(timeBetweenSpawn);
+            isSpawning = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -168,6 +177,14 @@ public class bossAI : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             startSpawning = false;
+
+            //destroys spawned enemies once out of view
+            for(int i = 0; i < objectList.Count; i++)
+            {
+                Destroy(objectList[i]);
+            }
+            objectList.Clear();
+
             curObjectsSpawned = 0;
         }
     }
@@ -222,4 +239,10 @@ public class bossAI : MonoBehaviour
         }
     }
 
+    //Whenever enemy dies, decrement max number and numberOfObjectsToSpawn
+    public void updateObjectNum()
+    {
+        curObjectsSpawned--;
+        maxObjectsToSpawn--;
+    }
 }
