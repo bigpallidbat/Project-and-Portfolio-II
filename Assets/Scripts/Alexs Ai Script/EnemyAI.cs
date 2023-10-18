@@ -331,6 +331,10 @@ public class EnemyAI : MonoBehaviour, IDamage
                 WhereISpawned.heyIDied();
                 //gameManager.Instance.updateGameGoal(-1);
             }
+            if (origin != null)
+            {
+                origin.updateObjectNum();
+            }
         }
         else
             StartCoroutine(FlashDamage());
