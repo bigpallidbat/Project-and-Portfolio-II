@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuInv;
     public Image playerHpBar;
     public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
@@ -31,7 +33,8 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
 
-    enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+    // enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+    
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
@@ -43,8 +46,8 @@ public class gameManager : MonoBehaviour
     {
         Instance = this;
         timeScaleOrig = Time.timeScale;
-
-        if (currentLevel != -1)
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
+        if (currentLevel > 1)
         {
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
@@ -63,7 +66,7 @@ public class gameManager : MonoBehaviour
             stateUnpause();
         }
 
-
+        
     }
 
     // Update is called once per frame
@@ -73,6 +76,12 @@ public class gameManager : MonoBehaviour
         {
             statePause();
             menuActive = menuPause;
+            menuActive.SetActive(isPaused);
+        }
+        if(Input.GetButtonDown("Inventory") && menuActive == null)
+        {
+            statePause();
+            menuActive = menuInv;
             menuActive.SetActive(isPaused);
         }
     }

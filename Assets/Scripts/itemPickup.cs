@@ -17,7 +17,7 @@ public class itemPickup : MonoBehaviour
     {/*
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.itemPickup(gun);
+            gameManager.instance.playerScript.itemPickup(item);
             Destroy(gameObject);
         }*/
     }
