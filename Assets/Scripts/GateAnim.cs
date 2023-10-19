@@ -19,8 +19,13 @@ public class GateAnim : MonoBehaviour
         if (gameManager.miniGoalAcquired)
         {
             anim.SetBool("isOpen", gameManager.miniGoalAcquired);
-
+            turnOnGate();
         }
 
+    }
+
+    public void turnOnGate()
+    {
+        gate.GetComponent<BoxCollider>().enabled = true;
     }
 }

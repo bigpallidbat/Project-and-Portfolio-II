@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c83d7666da9ae478c92483394eba31, type: 3}
   m_Name: Gun - BDG
   m_EditorClassIdentifier: 
-  shootRate: 0.1
+  shootRate: 0.4
   shootDamage: 2
   shootdist: 100
-  ammoCur: 45
+  ammoCur: 2
   ammoMax: 60
-  ammoReserve: 45
+  ammoReserve: 40
   ammoReserveStart: 40
   ammoReserveMax: 80
   model: {fileID: 220877443674962753, guid: d8b013f3e06e92849ab07c776c33ec4b, type: 3}

@@ -2170,17 +2170,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5053925668127403250, guid: e6e68c2c3777dcd478818d71b6aeeef7, type: 3}
---- !u!114 &345804324 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5574579502741419907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
-  m_PrefabInstance: {fileID: 1719897087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &353848372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3647500253707810840, guid: cd9e75a424e61ca4aaeaaaf487cbef65, type: 3}
@@ -2959,17 +2948,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2228417370725966487, guid: e6e68c2c3777dcd478818d71b6aeeef7, type: 3}
---- !u!114 &548217545 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 769779022568018945, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
-  m_PrefabInstance: {fileID: 1719897087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &577511308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3376,6 +3354,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3a1e59eb34dae541a8da31d83f78d1d, type: 3}
+--- !u!95 &641943029 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2674485990342959229, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+  m_PrefabInstance: {fileID: 5735051581583275860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &658119838
 GameObject:
   m_ObjectHideFlags: 0
@@ -4960,6 +4943,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3329902420748629119, guid: e6e68c2c3777dcd478818d71b6aeeef7, type: 3}
+--- !u!1 &889721661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8009311835267989413, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+  m_PrefabInstance: {fileID: 5735051581583275860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &926130962
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,14 +7713,6 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
-      propertyPath: MedkitCount
-      value: 
-      objectReference: {fileID: 548217545}
-    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
-      propertyPath: GrenadeCount
-      value: 
-      objectReference: {fileID: 345804324}
-    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 676860975}
@@ -10100,6 +10080,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigGate-ToBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 4149612542926490810, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+      propertyPath: DN
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149612542926490810, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+      propertyPath: nextSceneIndex
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5846131720808187444, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -36.5
@@ -10140,6 +10128,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8018846380911590842, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 641943029}
+    - target: {fileID: 8018846380911590842, guid: 7379ddbfb4b5c2b4caf911387931241f, type: 3}
+      propertyPath: gate
+      value: 
+      objectReference: {fileID: 889721661}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
