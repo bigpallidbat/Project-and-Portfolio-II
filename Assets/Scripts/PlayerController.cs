@@ -17,10 +17,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private IInteract actionable;
     [SerializeField] GameObject nade;
     [SerializeField] GameObject throwPos;
+    [SerializeField] GameObject flashLight;
     
 
     [Header("----- player state -----")]
-    [Range(1, 10)][SerializeField] int HP;
+    [Range(1, 15)][SerializeField] int HP;
     int HPMax;
     public static int curHP;
     [Range(1, 10)][SerializeField] float playerSpeed;
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject gunModel2;
+    [SerializeField] GameObject gunModel3;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         move = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
 
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        controller.Move(move * Time.deltaTime * (playerSpeed + stats.speedBuff));
 
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && jumpedTimes < JumpMax)
@@ -180,7 +182,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
                 if (hit.collider.transform.position != transform.position && damgable != null)
                 {
-                    damgable.takeDamage(shootDamage);
+                    damgable.takeDamage(shootDamage + stats.damageBuff);
                     if (!hit.collider.GetComponent<spawnerDestroyable>())
                     {
                         Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
@@ -257,6 +259,13 @@ public class PlayerController : MonoBehaviour, IDamage
         curHP = HP;
     }
 
+    void updateHP()
+    {
+        HPMax = HPMax + stats.hpBuff;
+        HP += stats.hpBuff;
+        UpdatePlayerUI();
+    }
+
     public void setGunStats(gunStats gun)
     {
         gunList.Add(gun);
@@ -268,6 +277,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gun.ID == 1)
         {
+            gunModel3.SetActive(false);
             gunModel2.SetActive(false);
             gunModel.SetActive(true);
             gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
@@ -277,11 +287,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if(gun.ID == 2)
         {
-            gunModel2.SetActive(false);
+            gunModel3.SetActive(false);
+            gunModel.SetActive(false);
             gunModel2.SetActive(true);
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
             gunModel2.transform.localScale = gun.model.transform.localScale;
+        }
+
+        if(gun.ID == 3)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(false);
+            gunModel3.SetActive(true);
+            gunModel3.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel3.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel3.transform.localScale = gun.model.transform.localScale;
         }
       
         selectedGun = gunList.Count - 1;
@@ -328,6 +349,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gunList[selectedGun].ID == 1)
         {
+            gunModel3.SetActive(false);
             gunModel2.SetActive(false);
             gunModel.SetActive(true);
             gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
@@ -337,13 +359,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gunList[selectedGun].ID == 2)
         {
+            gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
         }   gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;
 
-
+        if (gunList[selectedGun].ID == 3)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(false);
+            gunModel3.SetActive(true);
+            gunModel3.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel3.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel3.transform.localScale = gunList[selectedGun].model.transform.localScale;
+        }
 
 
 
@@ -392,7 +423,19 @@ public class PlayerController : MonoBehaviour, IDamage
                 HP += medkitHeal;
             else HP = HPMax;
             gameManager.Instance.updateMedkit(medkitCount);
+            UpdatePlayerUI();
 
+        }
+        if (Input.GetButtonDown("Flashlight"))
+        {
+            if(flashLight.activeInHierarchy == false)
+            {
+                flashLight.SetActive(true);
+            }
+            else
+            {
+                flashLight.SetActive(false);
+            }
         }
     }
 
@@ -503,6 +546,7 @@ public class PlayerController : MonoBehaviour, IDamage
             case itemStats.itemType.Health: //Health buffs add HP
 
                 stats.hpBuff = amount;
+                updateHP();
 
                 break;
 
