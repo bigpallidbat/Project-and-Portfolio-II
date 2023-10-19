@@ -10,6 +10,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
     [SerializeField] ParticleSystem effect;
+    public Spawner origin;
 
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
@@ -71,6 +72,8 @@ public class enemyBomb : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.Instance.player.transform.position);
         if (HP <= 0)
         {
+            if (origin != null)
+                origin.heyIDied();
             Destroy(gameObject);
         }
     }
@@ -152,7 +155,11 @@ public class enemyBomb : MonoBehaviour, IDamage
                 }
             }
         }
+
+        if (origin != null)
+            origin.heyIDied();
         model.enabled = false;
+
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
