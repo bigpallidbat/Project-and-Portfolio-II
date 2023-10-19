@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -360,7 +361,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             nade.GetComponent<grenade>().player = throwPos;
             nade.GetComponent<grenade>().ThrowGrenade();
-
+            grenadeCount--;
+            gameManager.Instance.updateGrenade(grenadeCount);
         }
     }
 
@@ -444,9 +446,13 @@ public class PlayerController : MonoBehaviour, IDamage
     public void itemPickUpEffect(itemStats item)
     {
 
-        if (item.itemName == "Grenade") {
+        if (item.type == itemStats.itemType.grenade) {
             grenadeCount++;
-
+            gameManager.Instance.updateGrenade(grenadeCount);
+        }
+        else if(item.type == itemStats.itemType.healing)
+        {
+            
         }
     }
 
