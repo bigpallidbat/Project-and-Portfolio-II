@@ -1,6 +1,9 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -8,6 +11,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource PlayerSounds;
+
+    [SerializeField] Collider actionRange;
+    private bool canActivate;
+    private IInteract actionable;
+    [SerializeField] GameObject nade;
+    [SerializeField] GameObject throwPos;
+    
 
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -23,6 +33,10 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float runCost;
     [SerializeField] float ChargeRate;
     float origPlayerSpeed;
+    [SerializeField] playerStats stats;
+    [SerializeField] int grenadeCount;
+    [SerializeField] int medkitCount;
+    [SerializeField] int medkitHeal;
 
 
     [Header("----- Gun States -----")]
@@ -58,6 +72,10 @@ public class PlayerController : MonoBehaviour, IDamage
         maxStam = Stamina;
         origPlayerSpeed = playerSpeed;
         spawnPlayer();
+
+        Debug.Log(HP);
+        Debug.Log(HPMax);
+        Debug.Log(gunList);
     }
 
     void Update()
@@ -106,6 +124,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Sprint();
         Reload();
+        inputs();
 
         groundedPlayer = controller.isGrounded;
 
@@ -153,7 +172,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isShooting = true;
             gunList[selectedGun].ammoCur--;
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
@@ -163,7 +182,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (hit.collider.transform.position != transform.position && damgable != null)
                 {
                     damgable.takeDamage(shootDamage);
-                    Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    if (!hit.collider.GetComponent<spawnerDestroyable>())
+                    {
+                        Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    }
                 }
                 else
                 {
@@ -191,23 +213,26 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
-        if (HP > 0)
-            HPMax = HP;
-        else HP = curHP;
+        HP = HPMax + stats.hpBuff;
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         controller.enabled = true;
+        getSpawnStats();
     }
     
     public void spawnPlayer(quaternion rot)
     {
-        HP = HPMax;
+        if (HP > 0)
+            stats.hpcur = HP;
+        else HP = curHP;
+
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         transform.rotation = rot;
         controller.enabled = true;
+        getSpawnStats(true);
     }
 
     void UpdatePlayerUI()
@@ -243,10 +268,21 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.transform.localScale = gun.model.transform.localScale;
+
+        //needs to set model rotation to force gun models to face forward
+        //if (gun.ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if(gun.ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
 
         selectedGun = gunList.Count - 1;
 
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
     }
 
     void selectGun()
@@ -287,8 +323,20 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+        //gunModel.transform.localScale = gunList[selectedGun].size.localScale;
+        gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
 
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+        ////needs to set model rotation to force gun models to face forward
+        //if (gunList[selectedGun].ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if (gunList[selectedGun].ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
+
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
         isShooting = false;
     }
@@ -297,9 +345,178 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Reload"))
         {
-            gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
-            PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            if (gunList[selectedGun].ammoReserve > 0)
+            {
+                gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+                PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
+                gunList[selectedGun].ammoReserve--;
+                gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
+
+            }
+
         }
     }
+
+    void inputs()
+    {
+        if (Input.GetButtonDown("Action") && canActivate)
+        {
+            actionable.Activate();
+        }
+        if (Input.GetButtonDown("Grenade") && grenadeCount > 0)
+        {
+            nade.GetComponent<grenade>().player = throwPos;
+            nade.GetComponent<grenade>().ThrowGrenade();
+            grenadeCount--;
+            gameManager.Instance.updateGrenade(grenadeCount);
+        }
+        if (Input.GetButtonDown("Heal") && medkitCount > 0)
+        {
+            medkitCount--;
+
+            int amountToHeal = (HPMax - HP);
+            
+
+            if (amountToHeal >= medkitHeal && HP + medkitHeal !> HPMax)
+                HP += medkitHeal;
+            else HP = HPMax;
+            gameManager.Instance.updateMedkit(medkitCount);
+
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        actionable = other.GetComponent<IInteract>();
+
+        if (actionable != null)
+        {
+            canActivate = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        actionable = null;
+        canActivate = false;
+    }
+
+    private void getSpawnStats()
+    {
+        gunList.Add(stats.gunList[0]);
+        selectedGun = 0;
+        changeGun();
+        grenadeCount = stats.grenadeCount;
+        medkitCount = stats.medkitCount;
+        gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
+
+    }
+
+    public void getSpawnStats(bool check)
+    {
+
+        for(int i = 0; i < stats.gunCount; i++)
+        {
+            gunList.Add(stats.gunList[i]);
+        }
+        selectedGun = 0; changeGun();
+        HP = stats.hpcur;
+        HPMax = stats.hpmax;
+        medkitCount = stats.medkitCount;
+        grenadeCount = stats.grenadeCount;
+
+    }
+
+    public void setStats(bool check)
+    {
+
+        for(int i = 0;i < gunList.Count; i++)
+        {
+            stats.gunList[i] = gunList[i];
+        }
+
+        
+
+        stats.gunCount = gunList.Count;
+        stats.hpcur = HP;
+        stats.hpmax = HPMax;
+        stats.grenadeCount = grenadeCount;
+        stats.medkitCount = medkitCount;
+
+    }
+    public void setStats()
+    {
+        if(stats.gunCount > 1)
+            stats.gunList.Clear();
+        stats.gunList[0] = stats.startingGunList[0];
+        gunList.Clear();
+        stats.hpcur = 0;
+        stats.hpmax = HPMax;
+        stats.gunCount = 1;
+        stats.grenadeCount = 2;
+        stats.hpBuff = 0;
+        stats.speedBuff = 0;
+        stats.damageBuff = 0;
+        stats.medkitCount = 2;
+    }
+
+    public void setBuff(int amount, itemStats.itemType type)
+    {
+
+        switch (type)
+        {
+            case itemStats.itemType.healing:
+
+                medkitHeal = amount;
+                medkitCount++;
+                gameManager.Instance.updateMedkit(medkitCount);
+
+                break;
+            case itemStats.itemType.Damage:
+
+                stats.damageBuff = amount; //Damage buff add damage
+
+                break;
+
+            case itemStats.itemType.Speed:
+
+                stats.speedBuff = amount; //Speed buff add speed
+
+                break;
+            case itemStats.itemType.Ammo:
+
+                restoreAmmo(amount); //Restore Ammo
+
+                break;
+            case itemStats.itemType.Health: //Health buffs add HP
+
+                stats.hpBuff = amount;
+
+                break;
+
+            default: break;
+        }
+    }
+
+    public void itemPickUpEffect(itemStats item)
+    {
+
+        if (item.type == itemStats.itemType.grenade) {
+            grenadeCount++;
+            gameManager.Instance.updateGrenade(grenadeCount);
+        }
+        else
+        {
+            setBuff(item.amount, item.type);
+        }
+    }
+
+    void restoreAmmo(int amount)
+    {
+        for(int i = 0; i < gunList.Count; i++)
+        {
+            gunList[i].ammoReserve += amount;
+        }
+    }
+
 }

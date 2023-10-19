@@ -10,14 +10,23 @@ using UnityEngine.SocialPlatforms;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] Renderer model;
+    [SerializeField] ParticleSystem effect;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
+    [Range(0, 1)][SerializeField] float audPainVol;
     [SerializeField] AudioClip deathSound;
+    [Range(0, 1)][SerializeField] float audDeathVol;
     [SerializeField] AudioClip attckSound;
+    [Range(0, 1)][SerializeField] float audAttackVol;
     [SerializeField] AudioClip VpainSound;
+    [Range(0, 1)][SerializeField] float audVpainVol;
     [SerializeField] AudioClip VdeathSound;
+    [Range(0, 1)][SerializeField] float audVdeathVol;
     [SerializeField] AudioClip seeSound;
-    [SerializeField] AudioClip swosh;
+    [Range(0, 1)][SerializeField] float audSeeVol;
+    [SerializeField] AudioClip woosh;
+    [Range(0, 1)][SerializeField] float audWooshVol;
     [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] SkinnedMeshRenderer secondPart;
     [SerializeField] GameObject mainBodyV;
@@ -40,15 +49,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
-    [SerializeField] bool friendly;
+    public bool friendly;
     [SerializeField] bool knowsPlayerLocation;
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
     [SerializeField] float meleeRange;
-    [SerializeField] int strafingSpeed;
+    //[SerializeField] int strafingSpeed;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
-    [SerializeField] int animChangeSpeed;
+    //[SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     //[SerializeField] float animSpeed;//uncomment when needed
@@ -57,13 +66,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     public spawnerWave whereISpawned;
     public Spawner WhereISpawned;
 
-    [Header("----- Projectile States -----")]
+    [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
+    [SerializeField] int explosionRange;
+    public spawnerDestroyable origin;
 
     bool isAttacking = false;
     bool inPain;
@@ -78,6 +89,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
+    bool readyToExplod;
+    bool IAmExploding;
+    Material OGeye;
     //bool bunnyFly;
     //bool dead = false;
 
@@ -90,6 +104,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartingPos = transform.position;
         goRight = Random.Range(0, 2) == 0;
         stoppingDistOrig = agent.stoppingDistance;
+        if (EyeColor != null) OGeye = EyeColor.GetComponent<SkinnedMeshRenderer>().material;
+
     }
 
     // Update is called once per frame
@@ -129,7 +145,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
                 if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
-                //if (playerDist < agent.stoppingDistance + 1) strafe();
                 if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
                 else agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
@@ -202,32 +217,15 @@ public class EnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(transform.position);
             }
         }
-        //isStrafing = false;
-        ///}
     }
-    //void srafeLeft()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * -strafingSpeed);
-    //}
-    //void stafeRight()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * strafingSpeed);
-    //}
-    //bool checkTag()
-    //{
-    //    if (gameObject.CompareTag("lilChick"))
-    //    { return true; }
-    //    else { return false; }
-    //}
+
     IEnumerator attack()
     {
         if (anim != null)
         {
             isAttacking = true;
             anim.SetTrigger("attack");
-            soundSFX.PlayOneShot(attckSound);
+            soundSFX.PlayOneShot(attckSound, audAttackVol);
         }
         else
         {
@@ -237,7 +235,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
             bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
             Instantiate(bullet, shootPos.position, transform.rotation);
-            //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
             yield return new WaitForSeconds(fireRate);
             isAttacking = false;
         }
@@ -245,7 +242,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public void playSwosh()
     {
-        soundSFX.PlayOneShot(swosh);
+        soundSFX.PlayOneShot(woosh, audWooshVol);
     }
 
     public void stopedAttack()
@@ -279,18 +276,53 @@ public class EnemyAI : MonoBehaviour, IDamage
         //
         //bunnyFly = true;
     }
+    public void startUnFriend()
+    {
+        StartCoroutine(Roam());
+        StartCoroutine(unFriend());
+        EyeColor.GetComponent<SkinnedMeshRenderer>().material = OGeye;
+        anim.SetBool("BAttack", false);
+        knowsPlayerLocation = false;
+        hitBoxCOL.enabled = false;
+        agent.speed = 3.5f;
+        agent.acceleration = 16;
+        agent.angularSpeed = 600;
+    }
+
+    IEnumerator unFriend()
+    {
+        yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
+        friendly = false;
+
+    }
+
+    public void brownAttack()
+    {
+        anim.SetBool("BAttack", true);
+        EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+        knowsPlayerLocation = true;
+        agent.speed *= 4;
+        agent.acceleration *= 8;
+        agent.angularSpeed *= 8;
+        roamPauseTime = 0;
+    }
+
+
     void found()
     {
-        if (seeSound != null) soundSFX.PlayOneShot(seeSound);
+        if (seeSound != null) soundSFX.PlayOneShot(seeSound, audSeeVol);
         foundPlayer = true;
     }
 
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        if (EyeColor != null) startUnFriend();
+        if (anim != null) anim.SetBool("BAttack", false);
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
-        soundSFX.PlayOneShot(VpainSound);
-        if (painSound != null) soundSFX.PlayOneShot(painSound);
+        soundSFX.PlayOneShot(VpainSound, audVpainVol);
+        if (painSound != null) soundSFX.PlayOneShot(painSound, audPainVol);
 
         if (Hp <= 0)
         {
@@ -298,8 +330,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             //GetComponent<CapsuleCollider>().enabled = false;
             //GetComponent<NavMeshAgent>().enabled = false;
 
-            soundSFX.PlayOneShot(VdeathSound);
-            if (deathSound != null) soundSFX.PlayOneShot(deathSound);
+            soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+            if (deathSound != null) soundSFX.PlayOneShot(deathSound, audDeathVol);
             if (mainBody != null)
             {
                 mainBody.enabled = false;
@@ -323,6 +355,10 @@ public class EnemyAI : MonoBehaviour, IDamage
                 WhereISpawned.heyIDied();
                 //gameManager.Instance.updateGameGoal(-1);
             }
+            if (origin != null)
+            {
+                origin.updateObjectNum();
+            }
         }
         else
             StartCoroutine(FlashDamage());
@@ -332,18 +368,57 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         inPain = true;
         //if (checkTag()) anim.SetBool("inPain", true);
-        if (mainBody != null) mainBody.enabled = false;
+        if (mainBody != null)
+        {
+            mainBody.enabled = false;
+            if (secondPart != null) secondPart.enabled = false;
+        }
         else mainBodyV.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
+        if (secondPart != null) secondPart.enabled = true;
         if (mainBody != null) mainBody.enabled = true;
         else mainBodyV.gameObject.SetActive(true);
         if (anim != null) anim.SetTrigger("pain");
         else Invoke("endPain", 0.142857f);
 
     }
+    public void readyExplod()
+    {
+        if (!readyToExplod && !IAmExploding)
+        {
+            readyToExplod = true;
+            agent.speed *= 2;
+            agent.acceleration *= 4;
+            agent.angularSpeed *= 4;
+            roamPauseTime = 0;
+            StartCoroutine(fuseOn());
+        }
+    }
+    IEnumerator fuseOn()
+    {
+        yield return new WaitForSeconds(5);
+        ImExplodeing();
+    }
+    public void ImExplodeing()
+    {
+        if (!IAmExploding)
+        {
+            IAmExploding = true;
+            readyToExplod = true;
+            agent.SetDestination(gameManager.Instance.player.transform.position);
+            agent.enabled = false;
+        }
+    }
+    //IEnumerator Explode()
+    //{
+        
+    //    yield return new WaitForSeconds();
+    //}
+    
+
     public void endPain()
     {
         inPain = false;

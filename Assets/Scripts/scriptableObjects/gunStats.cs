@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu]
 
@@ -11,10 +12,14 @@ public class gunStats : ScriptableObject
     public int shootdist;
     public int ammoCur;
     public int ammoMax;
+    public int ammoReserve;
+    public int ammoReserveStart;
+    public int ammoReserveMax;
 
     public GameObject model;
     public ParticleSystem hitEffect;
     public ParticleSystem hitEffectEnemy;
     public AudioClip shootSound;
     [Range(0, 1)] public float shootSoundVol;
+    public int ID;
 }

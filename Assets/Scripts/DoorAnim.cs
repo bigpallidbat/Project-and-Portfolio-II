@@ -1,87 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class DoorAnim : MonoBehaviour
+public class DoorAnim : MonoBehaviour , IInteract
 {
     [Header("----- Anim Components -----")]
-    [SerializeField]Animator rightAnim;
-    [SerializeField]Animator leftAnim;
-    [SerializeField] BoxCollider openDoor;
-    [SerializeField] BoxCollider closeDoor;
+    [SerializeField] BoxCollider Door;
+    [SerializeField] GameObject leftDoor;
+    [SerializeField] GameObject rightDoor;
+    [SerializeField] GameObject rotatorLeft;
+    [SerializeField] GameObject rotatorRight;
+
+
+    [SerializeField] float openSpeed;
+    [SerializeField] int leftAngle;
+    [SerializeField] int rightAngle;
+
+    [SerializeField] Quaternion rightOrig;
+    [SerializeField] Quaternion leftOrig;
+
     private bool isOpen;
-    private bool isOpening;
-    private bool isClosing;
+    private bool recieved;
 
     private void Start()
     {
         isOpen = false;
-        isClosing = false;
-        isOpening = false;
+        rightOrig = Quaternion.identity; leftOrig = Quaternion.identity;
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    IEnumerator doorRotation(Quaternion targRot)
     {
-        if (other.CompareTag("Player"))
+        float times = 0f;
+        Quaternion initRot = rightDoor.transform.localRotation;
+
+        Vector3 worldPivPointRight = transform.TransformPoint(rotatorRight.transform.position);
+        Vector3 worldPivPointLeft = transform.TransformPoint(rotatorLeft.transform.position);
+
+        while(times <= 1f )
         {
-            
-            if (!isOpen && !isOpening)
-            {
-                isOpen = true;
-                openDoor.enabled = false;
-                closeDoor.enabled = true;
-                StartCoroutine(Open());
-            }
-            else if (isOpen && !isClosing)
-            {
-                isOpen = false;
-                closeDoor.enabled = false;
-                openDoor.enabled = true;
-                StartCoroutine(Close());
-            }
+            times += Time.deltaTime * openSpeed;
+
+            Quaternion newRotation = Quaternion.Lerp(initRot, targRot, times);
+
+            Vector3 pivotOffSetRight = worldPivPointRight - rightDoor.transform.position;
+            Vector3 pivotOffSetLeft = worldPivPointLeft - leftDoor.transform.position;
+
+            leftDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetLeft.y ,0);
+            rightDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetRight.y ,0);
+            yield return null;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Activate()
     {
         
-    }
 
-    IEnumerator Open()
-    {
-        isOpening = true;
+        if (isOpen)
+        {
+            //rightDoor.transform.rotation = Quaternion.Lerp(leftDoor.transform.rotation, rightOrig, openSpeed * Time.deltaTime);
+            //leftDoor.transform.rotation = Quaternion.Lerp(leftDoor.transform.rotation, leftOrig , openSpeed * Time.deltaTime);
+            rightOrig = Quaternion.Euler(0, 0, 0);
+            StartCoroutine(doorRotation(rightOrig));
+            isOpen = false;
+        }
+        else
+        {
+            recieved = true;
+            Debug.Log(recieved);
+            //Quaternion rotRight = Quaternion.Euler(0, rightAngle, 0);
+            //Quaternion rotLeft = Quaternion.Euler(0, leftAngle, 0);
 
-        playAnimOpen();
-        yield return new WaitForSeconds(4f);
-        isOpening = false;
-    }
-    
-    IEnumerator Close()
-    {
-        isClosing = true;
-        playAnimClose();
-        yield return new WaitForSeconds(3f);
-        AnimStatic();
-        isClosing = false;
-    }
+            //rightDoor.transform.rotation = Quaternion.Lerp(rightOrig, Quaternion.Euler(0 , rightAngle, 0)  , openSpeed * Time.deltaTime);
+            // leftDoor.transform.rotation = Quaternion.Lerp(leftOrig, Quaternion.Euler(0 , leftAngle, 0), openSpeed * Time.deltaTime);
 
-    void playAnimOpen()
-    {
-        rightAnim.Play("RightDoorOpen");
-        leftAnim.Play("LeftDoorOpen");
-    }
+            rightOrig = Quaternion.Euler(0, 90, 0);
+            StartCoroutine (doorRotation(rightOrig));
 
-    void playAnimClose()
-    {
-        rightAnim.Play("RightDoorClose");
-        leftAnim.Play("LeftDoorClose");
-    }
+            isOpen = true;
+            
 
-    void AnimStatic()
-    {
-        rightAnim.Play("Static");
-        leftAnim.Play("Static");
+        }
     }
-
 }

@@ -52,6 +52,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5450961746517650194}
   PlayerSounds: {fileID: 3990142919921343724}
+  actionRange: {fileID: 4718439272394538074}
+  nade: {fileID: 2167477435043757623, guid: bbac6e471120a5748b54190c3e01e94c, type: 3}
+  throwPos: {fileID: 0}
   HP: 4
   playerSpeed: 8
   SprintMod: 2.5
@@ -61,6 +64,8 @@ MonoBehaviour:
   Stamina: 100
   runCost: 25
   ChargeRate: 33
+  stats: {fileID: 11400000, guid: e39cbff7355946f418fafe73f13b931c, type: 2}
+  grenadeCount: 0
   gunList: []
   gunModel: {fileID: 8222893367937395141}
   shootRate: 0
@@ -288,6 +293,61 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &3677445255744861357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7410133759166528245}
+  - component: {fileID: 4718439272394538074}
+  m_Layer: 0
+  m_Name: ActivateCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7410133759166528245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3677445255744861357}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.356, z: 0.409}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3390283529923176430}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4718439272394538074
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3677445255744861357}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 3
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!1 &8222893367937395141
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +464,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1150066405907571207}
+  - {fileID: 7410133759166528245}
   m_Father: {fileID: 9159849997777138825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3685032739756913989

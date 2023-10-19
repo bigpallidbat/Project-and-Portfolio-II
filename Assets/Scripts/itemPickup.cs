@@ -5,6 +5,7 @@ using UnityEngine;
 public class itemPickup : MonoBehaviour
 {
     [SerializeField] itemStats item;
+    public Spawner orgin;
 
     // Start is called before the first frame update
     void Start()
@@ -13,12 +14,17 @@ public class itemPickup : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {/*
+    void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.itemPickup(gun);
+            
+            other.GetComponent<PlayerController>().itemPickUpEffect(item);
+
+            orgin.heyIDied();
             Destroy(gameObject);
-        }*/
+
+        }
     }
+
 }

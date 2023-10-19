@@ -8,9 +8,12 @@ public class itemStats : ScriptableObject
 {
     public string itemName;
     public int id;
-    public enum strength{small = 1, medium, large, full};
-    public Sprite icon;
-    public enum itemType {healing =1, Damage, Speed, Ammo };
+    public int amount;
+
+
+    public enum itemType {healing =1, Damage, Speed, Ammo, Health ,grenade };
+    public itemType type;
+
 
     
 }

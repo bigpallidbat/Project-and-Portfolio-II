@@ -25,6 +25,7 @@ public class sceneManager : MonoBehaviour
         SceneManager.LoadScene(sceneNum);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
         gameManager.Instance.setCurrLevel(sceneNum);
+        gameManager.Instance.playerScript.setStats(true);
 
     }
     public void nextScene(int sceneNum)

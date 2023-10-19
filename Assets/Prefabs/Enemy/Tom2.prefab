@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233488377972035275}
   - component: {fileID: 60377592084847408}
+  - component: {fileID: -1632111679716441041}
   - component: {fileID: 4628454794815255302}
   - component: {fileID: 5440413955648891952}
   - component: {fileID: 1529109992406289997}
@@ -128,7 +129,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &4628454794815255302
+--- !u!114 &-1632111679716441041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,6 +137,37 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701662490496739331}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99c3b68e8b4fd04d83c619688fc7e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 0}
+  agent: {fileID: 5440413955648891952}
+  shootPos: {fileID: 7245585145424277932}
+  headPos: {fileID: 2268590104383468978}
+  anim: {fileID: 0}
+  hitBox: {fileID: 0}
+  HP: 18
+  targetFaceSpeed: 0
+  viewAngle: 0
+  roamDistance: 0
+  roamWaitTime: 0
+  bullet: {fileID: 0}
+  fireRate: 0
+  shootAngle: 0
+  objectToSpawn: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
+  maxObjectsToSpawn: 0
+  timeBetweenSpawn: 0
+  spawnPos: []
+  origin: {fileID: 0}
+--- !u!114 &4628454794815255302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701662490496739331}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4052a375436e9dd489b51b457845e585, type: 3}
   m_Name: 
@@ -149,15 +181,19 @@ MonoBehaviour:
   seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
   swosh: {fileID: 0}
   mainBody: {fileID: 0}
+  secondPart: {fileID: 0}
   mainBodyV: {fileID: 6512061257714533475}
   VoxelDamage: {fileID: 7416490365970601704}
   DeathOBJ: {fileID: 5344640536152591788}
   anim: {fileID: 0}
   shootPos: {fileID: 7245585145424277932}
   headPos: {fileID: 2268590104383468978}
+  EyeColor: {fileID: 0}
+  newMaterial: {fileID: 0}
   leftCheck: {fileID: 1569863205216604107}
   rightCheck: {fileID: 8905974230129373903}
   damageCOL: {fileID: 3265294568784535181}
+  RBody: {fileID: 0}
   MaxHp: 9
   Hp: 9
   friendly: 0
