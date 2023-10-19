@@ -36,6 +36,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject EyeColor;
+    Material OGeye;
     [SerializeField] Material newMaterial;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
@@ -47,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int MaxHp;
     public int Hp;
-    [SerializeField] bool friendly;
+    public bool friendly;
     [SerializeField] bool knowsPlayerLocation;
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
@@ -64,7 +65,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public spawnerWave whereISpawned;
     public Spawner WhereISpawned;
 
-    [Header("----- Projectile States -----")]
+    [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
@@ -98,6 +99,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartingPos = transform.position;
         goRight = Random.Range(0, 2) == 0;
         stoppingDistOrig = agent.stoppingDistance;
+        if (EyeColor != null) OGeye = EyeColor.GetComponent<SkinnedMeshRenderer>().material;
+
     }
 
     // Update is called once per frame
@@ -287,6 +290,39 @@ public class EnemyAI : MonoBehaviour, IDamage
         //
         //bunnyFly = true;
     }
+    public void startUnFriend()
+    {
+        StartCoroutine(Roam());
+        StartCoroutine(unFriend());
+        EyeColor.GetComponent<SkinnedMeshRenderer>().material = OGeye;
+        anim.SetBool("BAttack", false);
+        knowsPlayerLocation = false;
+        hitBoxCOL.enabled = false;
+        agent.speed = 3.5f;
+        agent.acceleration = 16;
+        agent.angularSpeed = 600;
+    }
+
+    IEnumerator unFriend()
+    { 
+        yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
+      friendly = false;
+
+    }
+
+    public void brownAttack()
+    {
+        anim.SetBool("BAttack", true);
+        EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+        knowsPlayerLocation = true;
+        agent.speed *= 5;
+        agent.acceleration *= 8;
+        agent.angularSpeed *= 8;
+        roamPauseTime = 0;
+    }
+
+
     void found()
     {
         if (seeSound != null) soundSFX.PlayOneShot(seeSound, audSeeVol);
@@ -296,6 +332,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        if (anim != null) anim.SetBool("BAttack", false);
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound, audVpainVol);
         if (painSound != null) soundSFX.PlayOneShot(painSound, audPainVol);
