@@ -13,12 +13,13 @@ public class itemPickup : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {/*
+    void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.itemPickup(item);
+            other.GetComponent<PlayerController>().itemPickUpEffect(item);
             Destroy(gameObject);
-        }*/
+        }
     }
+
 }

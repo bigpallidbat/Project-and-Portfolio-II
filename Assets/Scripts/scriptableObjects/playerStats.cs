@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerStats : MonoBehaviour
+[CreateAssetMenu]
+
+public class playerStats : ScriptableObject
 {
     [Header("----- Player Stats -----")]
     public List<gunStats> gunList;

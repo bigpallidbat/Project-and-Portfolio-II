@@ -33,7 +33,7 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
 
-    // enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+   // enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
     
     public bool isPaused;
     float timeScaleOrig;
