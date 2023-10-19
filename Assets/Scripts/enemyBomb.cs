@@ -18,7 +18,6 @@ public class enemyBomb : MonoBehaviour, IDamage
     [SerializeField] int explosionRange;
     [SerializeField] AudioSource aud;
 
-    [SerializeField] float volume;
 
     public AudioClip explodeSound;
     public AudioClip beepSound;
