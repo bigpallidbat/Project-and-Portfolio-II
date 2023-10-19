@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Gun States -----")]
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject gunModel2;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
@@ -73,9 +74,7 @@ public class PlayerController : MonoBehaviour, IDamage
         origPlayerSpeed = playerSpeed;
         spawnPlayer();
 
-        Debug.Log(HP);
-        Debug.Log(HPMax);
-        Debug.Log(gunList);
+
     }
 
     void Update()
@@ -266,20 +265,25 @@ public class PlayerController : MonoBehaviour, IDamage
         shootdist = gun.shootdist;
         shootRate = gun.shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
-        gunModel.transform.localScale = gun.model.transform.localScale;
 
-        //needs to set model rotation to force gun models to face forward
-        //if (gun.ID == 1)
-        //{
-        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
-        //}
-        //else if(gun.ID == 2)
-        //{
-        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
-        //}
+        if (gun.ID == 1)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(true);
+            gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel.transform.localScale = gun.model.transform.localScale;
+        }
 
+        if(gun.ID == 2)
+        {
+            gunModel2.SetActive(false);
+            gunModel2.SetActive(true);
+            gunModel2.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel2.transform.localScale = gun.model.transform.localScale;
+        }
+      
         selectedGun = gunList.Count - 1;
 
         gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
@@ -321,20 +325,27 @@ public class PlayerController : MonoBehaviour, IDamage
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
-        //gunModel.transform.localScale = gunList[selectedGun].size.localScale;
-        gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
 
-        ////needs to set model rotation to force gun models to face forward
-        //if (gunList[selectedGun].ID == 1)
-        //{
-        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
-        //}
-        //else if (gunList[selectedGun].ID == 2)
-        //{
-        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
-        //}
+        if (gunList[selectedGun].ID == 1)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(true);
+            gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
+        }
+
+        if (gunList[selectedGun].ID == 2)
+        {
+            gunModel.SetActive(false);
+            gunModel2.SetActive(true);
+            gunModel2.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+        }   gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;
+
+
+
+
 
         gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
@@ -414,7 +425,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void getSpawnStats(bool check)
     {
-
+        gunList.Clear();
         for(int i = 0; i < stats.gunCount; i++)
         {
             gunList.Add(stats.gunList[i]);
@@ -429,10 +440,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void setStats(bool check)
     {
+        stats.gunList.Clear();
 
         for(int i = 0;i < gunList.Count; i++)
         {
-            stats.gunList[i] = gunList[i];
+            stats.gunList.Add(gunList[i]);
         }
 
         
@@ -517,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gunList[i].ammoReserve += amount;
         }
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur,gunList[selectedGun].ammoReserve);
     }
 
 }

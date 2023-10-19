@@ -22,10 +22,11 @@ public class sceneManager : MonoBehaviour
         gameManager.Instance.playerSpawnPoint = null;
         scenechange = true;
         gameManager.Instance.playerScript.setHP(); 
+        gameManager.Instance.playerScript.setStats(true);
         SceneManager.LoadScene(sceneNum);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
         gameManager.Instance.setCurrLevel(sceneNum);
-        gameManager.Instance.playerScript.setStats(true);
+
 
     }
     public void nextScene(int sceneNum)

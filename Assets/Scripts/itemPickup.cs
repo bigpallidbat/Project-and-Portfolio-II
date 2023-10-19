@@ -21,7 +21,8 @@ public class itemPickup : MonoBehaviour
             
             other.GetComponent<PlayerController>().itemPickUpEffect(item);
 
-            orgin.heyIDied();
+            if(orgin != null) 
+                orgin.heyIDied();
             Destroy(gameObject);
 
         }
