@@ -10,6 +10,8 @@ using UnityEngine.SocialPlatforms;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] Renderer model;
+    [SerializeField] ParticleSystem effect;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
     [Range(0, 1)][SerializeField] float audPainVol;
@@ -36,7 +38,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject EyeColor;
-    Material OGeye;
     [SerializeField] Material newMaterial;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
@@ -53,10 +54,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
     [SerializeField] float meleeRange;
-    [SerializeField] int strafingSpeed;
+    //[SerializeField] int strafingSpeed;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
-    [SerializeField] int animChangeSpeed;
+    //[SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     //[SerializeField] float animSpeed;//uncomment when needed
@@ -72,6 +73,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
+    [SerializeField] int explosionRange;
     public spawnerDestroyable origin;
 
     bool isAttacking = false;
@@ -89,6 +91,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool goRight;
     bool readyToExplod;
     bool IAmExploding;
+    Material OGeye;
     //bool bunnyFly;
     //bool dead = false;
 
@@ -142,7 +145,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
                 if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
-                //if (playerDist < agent.stoppingDistance + 1) strafe();
                 if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
                 else agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
@@ -215,25 +217,8 @@ public class EnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(transform.position);
             }
         }
-        //isStrafing = false;
-        ///}
     }
-    //void srafeLeft()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * -strafingSpeed);
-    //}
-    //void stafeRight()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * strafingSpeed);
-    //}
-    //bool checkTag()
-    //{
-    //    if (gameObject.CompareTag("lilChick"))
-    //    { return true; }
-    //    else { return false; }
-    //}
+
     IEnumerator attack()
     {
         if (anim != null)
@@ -250,7 +235,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
             bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
             Instantiate(bullet, shootPos.position, transform.rotation);
-            //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
             yield return new WaitForSeconds(fireRate);
             isAttacking = false;
         }
@@ -403,7 +387,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     public void readyExplod()
     {
-        if (!readyToExplod)
+        if (!readyToExplod && !IAmExploding)
         {
             readyToExplod = true;
             agent.speed *= 2;
