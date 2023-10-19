@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] Collider actionRange;
     private bool canActivate;
     private IInteract actionable;
+    [SerializeField] GameObject nade;
+    [SerializeField] GameObject throwPos;
 
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float ChargeRate;
     float origPlayerSpeed;
     [SerializeField] playerStats stats;
+    [SerializeField] int grenadeCount;
 
 
     [Header("----- Gun States -----")]
@@ -256,6 +260,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.transform.localScale = gun.model.transform.localScale;
+        gunModel.transform.rotation = gun.model.transform.rotation;
+        
 
         selectedGun = gunList.Count - 1;
 
@@ -300,7 +307,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
-
+        //gunModel.transform.localScale = gunList[selectedGun].size.localScale;
+        gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
+        gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        
         gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
 
         isShooting = false;
@@ -321,6 +331,12 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Action") && canActivate)
         {
             actionable.Activate();
+        }
+        if (Input.GetButtonDown("Grenade") && grenadeCount > 0)
+        {
+            nade.GetComponent<grenade>().player = throwPos;
+            nade.GetComponent<grenade>().ThrowGrenade();
+
         }
     }
 
@@ -343,13 +359,21 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void getSpawnStats()
     {
-        gunList = stats.gunList;
+        gunList.Add(stats.gunList[0]);
+        selectedGun = 0;
+        changeGun();
+        grenadeCount = stats.grenadeCount;
 
     }
 
     private void getSpawnStats(bool check)
     {
-        gunList = stats.gunList;
+
+        for(int i = 0; i < stats.gunCount; i++)
+        {
+            gunList.Add(stats.gunList[i]);
+        }
+        selectedGun = 0; changeGun();
         HP = stats.hpcur;
         HPMax = stats.hpmax;
     }
@@ -387,5 +411,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void itemPickUpEffect(itemStats item)
     {
 
+        if (item.itemName == "Grenade") {
+            grenadeCount++;
+
+        }
     }
+
 }

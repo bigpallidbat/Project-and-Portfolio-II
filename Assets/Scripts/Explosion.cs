@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-
-    [SerializeField] int explosionAmount;
+    [SerializeField] int explosionDamage;
+    [SerializeField] int explosionForce;
     [SerializeField] GameObject explosionEffect;
 
     private void Start()
@@ -20,11 +20,17 @@ public class Explosion : MonoBehaviour
         if (other.isTrigger)
             return;
 
+        IDamage damage = other.GetComponent<IDamage>();
+        if (damage != null)
+        {
+            damage.takeDamage(0);
+        }
+
         IPhysics physicsenable = other.GetComponent<IPhysics>();
 
         if (physicsenable != null)
         {
-            physicsenable.physics((other.transform.position - transform.position).normalized * explosionAmount);
+            physicsenable.physics((other.transform.position - transform.position).normalized * explosionForce);
         }
     }
 }
