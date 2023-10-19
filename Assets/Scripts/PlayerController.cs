@@ -17,10 +17,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private IInteract actionable;
     [SerializeField] GameObject nade;
     [SerializeField] GameObject throwPos;
+    [SerializeField] GameObject flashLight;
     
 
     [Header("----- player state -----")]
-    [Range(1, 10)][SerializeField] int HP;
+    [Range(1, 15)][SerializeField] int HP;
     int HPMax;
     public static int curHP;
     [Range(1, 10)][SerializeField] float playerSpeed;
@@ -138,7 +139,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         move = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
 
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        controller.Move(move * Time.deltaTime * (playerSpeed + stats.speedBuff));
 
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && jumpedTimes < JumpMax)
@@ -180,7 +181,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
                 if (hit.collider.transform.position != transform.position && damgable != null)
                 {
-                    damgable.takeDamage(shootDamage);
+                    damgable.takeDamage(shootDamage + stats.damageBuff);
                     if (!hit.collider.GetComponent<spawnerDestroyable>())
                     {
                         Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
@@ -255,6 +256,13 @@ public class PlayerController : MonoBehaviour, IDamage
     public void setHP()
     {
         curHP = HP;
+    }
+
+    void updateHP()
+    {
+        HPMax = HPMax + stats.hpBuff;
+        HP += stats.hpBuff;
+        UpdatePlayerUI();
     }
 
     public void setGunStats(gunStats gun)
@@ -392,7 +400,19 @@ public class PlayerController : MonoBehaviour, IDamage
                 HP += medkitHeal;
             else HP = HPMax;
             gameManager.Instance.updateMedkit(medkitCount);
+            UpdatePlayerUI();
 
+        }
+        if (Input.GetButtonDown("Flashlight"))
+        {
+            if(flashLight.activeInHierarchy == false)
+            {
+                flashLight.SetActive(true);
+            }
+            else
+            {
+                flashLight.SetActive(false);
+            }
         }
     }
 
@@ -503,6 +523,7 @@ public class PlayerController : MonoBehaviour, IDamage
             case itemStats.itemType.Health: //Health buffs add HP
 
                 stats.hpBuff = amount;
+                updateHP();
 
                 break;
 
