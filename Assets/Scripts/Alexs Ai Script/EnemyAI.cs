@@ -223,340 +223,256 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-   
+
 
     IEnumerator attack()
     {
         isAttacking = true;
-        if (isBoss)
+        if (anim != null)
         {
-            FireSTD();
-            if (Hp <= 99) tomAttack();
-            if (Hp < 92) tomAttack();
-            if (Hp < 84) tomAttack();
-            if (Hp < 76) tomAttack();
-            if (Hp < 68) tomAttack();
-            if (Hp < 60) tomAttack();
-            if (Hp < 52) tomAttack();
-            if (Hp < 44) tomAttack();
-            if (Hp < 36) tomAttack();
-            if (Hp < 28) tomAttack();
-            if (Hp < 20) tomAttack();
-            if (Hp < 12) tomAttack();
-            if (Hp < 6) tomAttack();
-            if (Hp < 3) tomAttack();
-            DiceRoll = Random.Range(0, 20);
-            switch (DiceRoll)
-            {
-                case 0:
-                    Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    break;
-                case 1:
-                    if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 2:
-                    if (Hp < 80) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 3:
-                    if (Hp < 70) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 4:
-                    if (Hp < 60) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 5:
-                    if (Hp < 50) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 6:
-                    if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 7:
-                    if (Hp < 10) Instantiate(enemy2, spawnPos.position, transform.rotation);
-                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 8:
-                    if (Hp < 90) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 9:
-                    if (Hp < 80) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 10:
-                    if (Hp < 70) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 11:
-                    if (Hp < 60) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 12:
-                    if (Hp < 50) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 13:
-                    if (Hp < 40) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 14:
-                    if (Hp < 30) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 15:
-                    if (Hp < 20) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                case 16:
-                    if (Hp < 10) Instantiate(enemy1, spawnPos.position, transform.rotation);
-                    break;
-                default: break;
-            }
+            anim.SetTrigger("attack");
+            soundSFX.PlayOneShot(attckSound, audAttackVol);
+        }
+        else
+        {
+            tomAttack();
             yield return new WaitForSeconds(fireRate);
+    isAttacking = false;
         }
-        else
-        {
-            if (anim != null)
-            {
-                anim.SetTrigger("attack");
-                soundSFX.PlayOneShot(attckSound, audAttackVol);
-            }
-            else
-            {
-                tomAttack();
-                yield return new WaitForSeconds(fireRate);
-            }
-        }
-        isAttacking = false;
+   
     }
 
-    void tomAttack()
+void tomAttack()
+{
+    bullet.GetComponent<Bullet>().speed = bulletSpeed;
+    bullet.GetComponent<Bullet>().damage = shootDamage;
+    bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
+    bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
+    Instantiate(bullet, shootPos.position, transform.rotation);
+}
+
+void FireSTD()
+{
+    bullet.GetComponent<Bullet>().speed = bulletSpeed;
+    bullet.GetComponent<Bullet>().damage = shootDamage;
+    bullet.GetComponent<Bullet>().offsetX = 0;
+    bullet.GetComponent<Bullet>().offsetY = 0;
+    Instantiate(bullet, shootPos.position, transform.rotation);
+}
+
+public void playSwosh()
+{
+    soundSFX.PlayOneShot(woosh, audWooshVol);
+}
+
+public void stopedAttack()
+{
+    isAttacking = false;
+}
+public void shoot()
+{
+    Instantiate(bullet, shootPos.position, transform.rotation);
+}
+
+public void hitBoxOn()
+{
+    hitBoxCOL.enabled = true;
+}
+
+public void hitBoxOff()
+{
+    hitBoxCOL.enabled = false;
+}
+
+public void redEyes()
+{
+    Hp = 1;
+    EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+    //RBody.useGravity = false;
+    knowsPlayerLocation = true;
+    agent.speed *= 5;
+    agent.acceleration *= 8;
+    agent.angularSpeed *= 8;
+    //
+    //bunnyFly = true;
+}
+public void startUnFriend()
+{
+    StartCoroutine(Roam());
+    StartCoroutine(unFriend());
+    EyeColor.GetComponent<SkinnedMeshRenderer>().material = OGeye;
+    anim.SetBool("BAttack", false);
+    knowsPlayerLocation = false;
+    hitBoxCOL.enabled = false;
+    agent.speed = 3.5f;
+    agent.acceleration = 16;
+    agent.angularSpeed = 600;
+}
+
+IEnumerator unFriend()
+{
+    yield return new WaitForSeconds(fireRate);
+    isAttacking = false;
+    friendly = false;
+
+}
+
+public void brownAttack()
+{
+    anim.SetBool("BAttack", true);
+    EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+    knowsPlayerLocation = true;
+    agent.speed *= 4;
+    agent.acceleration *= 8;
+    agent.angularSpeed *= 8;
+    roamPauseTime = 0;
+}
+
+
+void found()
+{
+    if (seeSound != null) soundSFX.PlayOneShot(seeSound, audSeeVol);
+    foundPlayer = true;
+}
+
+public void takeDamage(int amount)
+{
+    Hp -= amount;
+    if (EyeColor != null) startUnFriend();
+    if (anim != null) anim.SetBool("BAttack", false);
+    if (hitBoxCOL != null) hitBoxCOL.enabled = false;
+    soundSFX.PlayOneShot(VpainSound, audVpainVol);
+    if (painSound != null) soundSFX.PlayOneShot(painSound, audPainVol);
+
+    if (Hp <= 0)
     {
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = shootDamage;
-        bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
-        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
-        Instantiate(bullet, shootPos.position, transform.rotation);
-    }
+        FaceTarget();
+        //GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<NavMeshAgent>().enabled = false;
 
-    void FireSTD()
-    {
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = shootDamage;
-        bullet.GetComponent<Bullet>().offsetX = 0;
-        bullet.GetComponent<Bullet>().offsetY = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
-    }
-
-    public void playSwosh()
-    {
-        soundSFX.PlayOneShot(woosh, audWooshVol);
-    }
-
-    public void stopedAttack()
-    {
-        isAttacking = false;
-    }
-    public void shoot()
-    {
-        Instantiate(bullet, shootPos.position, transform.rotation);
-    }
-
-    public void hitBoxOn()
-    {
-        hitBoxCOL.enabled = true;
-    }
-
-    public void hitBoxOff()
-    {
-        hitBoxCOL.enabled = false;
-    }
-
-    public void redEyes()
-    {
-        Hp = 1;
-        EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
-        //RBody.useGravity = false;
-        knowsPlayerLocation = true;
-        agent.speed *= 5;
-        agent.acceleration *= 8;
-        agent.angularSpeed *= 8;
-        //
-        //bunnyFly = true;
-    }
-    public void startUnFriend()
-    {
-        StartCoroutine(Roam());
-        StartCoroutine(unFriend());
-        EyeColor.GetComponent<SkinnedMeshRenderer>().material = OGeye;
-        anim.SetBool("BAttack", false);
-        knowsPlayerLocation = false;
-        hitBoxCOL.enabled = false;
-        agent.speed = 3.5f;
-        agent.acceleration = 16;
-        agent.angularSpeed = 600;
-    }
-
-    IEnumerator unFriend()
-    {
-        yield return new WaitForSeconds(fireRate);
-        isAttacking = false;
-        friendly = false;
-
-    }
-
-    public void brownAttack()
-    {
-        anim.SetBool("BAttack", true);
-        EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
-        knowsPlayerLocation = true;
-        agent.speed *= 4;
-        agent.acceleration *= 8;
-        agent.angularSpeed *= 8;
-        roamPauseTime = 0;
-    }
-
-
-    void found()
-    {
-        if (seeSound != null) soundSFX.PlayOneShot(seeSound, audSeeVol);
-        foundPlayer = true;
-    }
-
-    public void takeDamage(int amount)
-    {
-        Hp -= amount;
-        if (EyeColor != null) startUnFriend();
-        if (anim != null) anim.SetBool("BAttack", false);
-        if (hitBoxCOL != null) hitBoxCOL.enabled = false;
-        soundSFX.PlayOneShot(VpainSound, audVpainVol);
-        if (painSound != null) soundSFX.PlayOneShot(painSound, audPainVol);
-
-        if (Hp <= 0)
-        {
-            FaceTarget();
-            //GetComponent<CapsuleCollider>().enabled = false;
-            //GetComponent<NavMeshAgent>().enabled = false;
-
-            soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
-            if (deathSound != null) soundSFX.PlayOneShot(deathSound, audDeathVol);
-            if (mainBody != null)
-            {
-                mainBody.enabled = false;
-                if (secondPart != null) secondPart.enabled = false;
-            }
-            else mainBodyV.gameObject.SetActive(false);
-            VoxelDamage.gameObject.SetActive(false);
-            DeathOBJ.gameObject.SetActive(true);
-            agent.enabled = false;
-            damageCOL.enabled = false;
-            StopAllCoroutines();
-            Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-            transform.rotation = Rot;
-            //StartCoroutine(Death());
-            Invoke("Death", 0.8f);
-
-
-            if (WhereISpawned != null)
-            {
-                whereISpawned.updateEnemyNumber();
-                WhereISpawned.heyIDied();
-                //gameManager.Instance.updateGameGoal(-1);
-            }
-            if (origin != null)
-            {
-                origin.updateObjectNum();
-            }
-        }
-        else
-            StartCoroutine(FlashDamage());
-
-    }
-    IEnumerator FlashDamage()
-    {
-        inPain = true;
-        //if (checkTag()) anim.SetBool("inPain", true);
+        soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+        if (deathSound != null) soundSFX.PlayOneShot(deathSound, audDeathVol);
         if (mainBody != null)
         {
             mainBody.enabled = false;
             if (secondPart != null) secondPart.enabled = false;
         }
         else mainBodyV.gameObject.SetActive(false);
-        VoxelDamage.gameObject.SetActive(true);
-        agent.SetDestination(transform.position);
-        yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
-        if (secondPart != null) secondPart.enabled = true;
-        if (mainBody != null) mainBody.enabled = true;
-        else mainBodyV.gameObject.SetActive(true);
-        if (anim != null) anim.SetTrigger("pain");
-        else Invoke("endPain", 0.142857f);
-
-    }
-    public void readyExplod()
-    {
-        if (!readyToExplod && !IAmExploding)
-        {
-            readyToExplod = true;
-            agent.speed *= 2;
-            agent.acceleration *= 4;
-            agent.angularSpeed *= 4;
-            roamPauseTime = 0;
-            StartCoroutine(fuseOn());
-        }
-    }
-    IEnumerator fuseOn()
-    {
-        yield return new WaitForSeconds(5);
-        ImExplodeing();
-    }
-    public void ImExplodeing()
-    {
-        if (!IAmExploding)
-        {
-            IAmExploding = true;
-            readyToExplod = true;
-            agent.SetDestination(gameManager.Instance.player.transform.position);
-            agent.enabled = false;
-        }
-    }
-    //IEnumerator Explode()
-    //{
-
-    //    yield return new WaitForSeconds();
-    //}
-
-
-    public void endPain()
-    {
-        inPain = false;
-        agent.SetDestination(gameManager.Instance.player.transform.position);
-        //if (checkTag()) anim.SetBool("inPain", false);
-    }
-
-    void FaceTarget()
-    {
+        DeathOBJ.gameObject.SetActive(true);
+        agent.enabled = false;
+        damageCOL.enabled = false;
+        StopAllCoroutines();
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        //transform.rotation = Rot; snap code
-        transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
-    }
-    public void Death()
-    {
-        Destroy(gameObject);
-    }
+        transform.rotation = Rot;
+        //StartCoroutine(Death());
+        Invoke("Death", 0.8f);
 
-    /*public void physics(Vector3 dir)
-    {
-        agent.velocity += dir;   // uncomment when need
-    }*/
 
-    public void OnTriggerEnter(Collider other)
-    {
-        //soundSFX.PlayOneShot(seeSound);
-        if (other.CompareTag("Player")) playerInRange = true;
+        if (WhereISpawned != null)
+        {
+            whereISpawned.updateEnemyNumber();
+            WhereISpawned.heyIDied();
+            //gameManager.Instance.updateGameGoal(-1);
+        }
+        if (origin != null)
+        {
+            origin.updateObjectNum();
+        }
     }
-    public void OnTriggerExit(Collider other)
+    else
+        StartCoroutine(FlashDamage());
+
+}
+IEnumerator FlashDamage()
+{
+    inPain = true;
+    //if (checkTag()) anim.SetBool("inPain", true);
+    if (mainBody != null)
     {
-        //foundPlayer = false;
-        if (other.CompareTag("Player")) playerInRange = false;
-        agent.stoppingDistance = 0;
+        mainBody.enabled = false;
+        if (secondPart != null) secondPart.enabled = false;
     }
+    else mainBodyV.gameObject.SetActive(false);
+    VoxelDamage.gameObject.SetActive(true);
+    agent.SetDestination(transform.position);
+    yield return new WaitForSeconds(0.085714f);
+    VoxelDamage.gameObject.SetActive(false);
+    if (secondPart != null) secondPart.enabled = true;
+    if (mainBody != null) mainBody.enabled = true;
+    else mainBodyV.gameObject.SetActive(true);
+    if (anim != null) anim.SetTrigger("pain");
+    else Invoke("endPain", 0.142857f);
+
+}
+public void readyExplod()
+{
+    if (!readyToExplod && !IAmExploding)
+    {
+        readyToExplod = true;
+        agent.speed *= 2;
+        agent.acceleration *= 4;
+        agent.angularSpeed *= 4;
+        roamPauseTime = 0;
+        StartCoroutine(fuseOn());
+    }
+}
+IEnumerator fuseOn()
+{
+    yield return new WaitForSeconds(5);
+    ImExplodeing();
+}
+public void ImExplodeing()
+{
+    if (!IAmExploding)
+    {
+        IAmExploding = true;
+        readyToExplod = true;
+        agent.SetDestination(gameManager.Instance.player.transform.position);
+        agent.enabled = false;
+    }
+}
+//IEnumerator Explode()
+//{
+
+//    yield return new WaitForSeconds();
+//}
+
+
+public void endPain()
+{
+    inPain = false;
+    agent.SetDestination(gameManager.Instance.player.transform.position);
+    //if (checkTag()) anim.SetBool("inPain", false);
+}
+
+void FaceTarget()
+{
+    Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+    //transform.rotation = Rot; snap code
+    transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
+}
+public void Death()
+{
+    Destroy(gameObject);
+}
+
+/*public void physics(Vector3 dir)
+{
+    agent.velocity += dir;   // uncomment when need
+}*/
+
+public void OnTriggerEnter(Collider other)
+{
+    //soundSFX.PlayOneShot(seeSound);
+    if (other.CompareTag("Player")) playerInRange = true;
+}
+public void OnTriggerExit(Collider other)
+{
+    //foundPlayer = false;
+    if (other.CompareTag("Player")) playerInRange = false;
+    agent.stoppingDistance = 0;
+}
 
 }
 
