@@ -87,6 +87,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
+    bool readyToExplod;
+    bool IAmExploding;
     //bool bunnyFly;
     //bool dead = false;
 
@@ -304,10 +306,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     IEnumerator unFriend()
-    { 
+    {
         yield return new WaitForSeconds(fireRate);
         isAttacking = false;
-      friendly = false;
+        friendly = false;
 
     }
 
@@ -392,13 +394,47 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
-            if (secondPart != null) secondPart.enabled = true;
+        if (secondPart != null) secondPart.enabled = true;
         if (mainBody != null) mainBody.enabled = true;
         else mainBodyV.gameObject.SetActive(true);
         if (anim != null) anim.SetTrigger("pain");
         else Invoke("endPain", 0.142857f);
 
     }
+    public void readyExplod()
+    {
+        if (!readyToExplod)
+        {
+            readyToExplod = true;
+            agent.speed *= 2;
+            agent.acceleration *= 4;
+            agent.angularSpeed *= 4;
+            roamPauseTime = 0;
+            StartCoroutine(fuseOn());
+        }
+    }
+    IEnumerator fuseOn()
+    {
+        yield return new WaitForSeconds(5);
+        ImExplodeing();
+    }
+    public void ImExplodeing()
+    {
+        if (!IAmExploding)
+        {
+            IAmExploding = true;
+            readyToExplod = true;
+            agent.SetDestination(gameManager.Instance.player.transform.position);
+            agent.enabled = false;
+        }
+    }
+    //IEnumerator Explode()
+    //{
+        
+    //    yield return new WaitForSeconds();
+    //}
+    
+
     public void endPain()
     {
         inPain = false;
