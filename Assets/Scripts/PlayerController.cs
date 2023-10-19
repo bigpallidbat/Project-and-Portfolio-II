@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private IInteract actionable;
     [SerializeField] GameObject nade;
     [SerializeField] GameObject throwPos;
+    
 
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -261,8 +262,16 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
         gunModel.transform.localScale = gun.model.transform.localScale;
-        gunModel.transform.rotation = gun.model.transform.rotation;
-        
+
+        //needs to set model rotation to force gun models to face forward
+        //if (gun.ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if(gun.ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
 
         selectedGun = gunList.Count - 1;
 
@@ -309,8 +318,17 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
         //gunModel.transform.localScale = gunList[selectedGun].size.localScale;
         gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
-        gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
-        
+
+        ////needs to set model rotation to force gun models to face forward
+        //if (gunList[selectedGun].ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if (gunList[selectedGun].ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
+
         gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
 
         isShooting = false;
@@ -388,20 +406,28 @@ public class PlayerController : MonoBehaviour, IDamage
 
     }
 
-    public void setBuff(int amount, int ID)
+    public void setBuff(int amount, itemStats.itemType type)
     {
 
-        switch (ID)
+        switch (type)
         {
-            case 0:
-                stats.damageBuff = amount;
+            case itemStats.itemType.healing:
+                
+
                 break;
-            case 1:
-                stats.hpBuff = amount;
+            case itemStats.itemType.Damage:
+                stats.damageBuff = amount; //Damage buff add damage
+
                 break;
 
-            case 2:
-                stats.speedBuff = amount;
+            case itemStats.itemType.Speed:
+                stats.speedBuff = amount; //Speed buff add speed
+                break;
+            case itemStats.itemType.Ammo:
+
+                break;
+            case itemStats.itemType.Health: //Health buffs add HP
+                stats.hpBuff = amount;
                 break;
 
             default: break;
