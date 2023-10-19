@@ -46,7 +46,14 @@ public class ButtonFuntions : MonoBehaviour
     public void levelSelect(int level)
     {
         sceneManager.Instance.nextScene(level);
-        screenManager.Instance.turnOffScreens();
+
+        if(level < 2)
+            screenManager.Instance.turnOffScreens();
+
+        if (Time.timeScale == 0) 
+        {
+            gameManager.Instance.stateUnpause();
+        }
     }
 
     public void BackFromLevelSelect()

@@ -342,6 +342,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void changeGun()
     {
+
+
         shootDamage = gunList[selectedGun].shootDamage;
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
@@ -428,13 +430,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         if (Input.GetButtonDown("Flashlight"))
         {
-            if(flashLight.activeInHierarchy == false)
+            if(flashLight.GetComponent<Light>().enabled == false)
             {
-                flashLight.SetActive(true);
+                flashLight.GetComponent<Light>().enabled = true;
             }
             else
             {
-                flashLight.SetActive(false);
+                flashLight.GetComponent<Light>().enabled = false;
             }
         }
     }
@@ -457,7 +459,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void getSpawnStats()
     {
-        gunList.Add(stats.gunList[0]);
+        for (int i = 0; i < stats.gunCount; i++)
+        {
+            gunList.Add(stats.startingGunList[i]);
+        }
         selectedGun = 0;
         changeGun();
         grenadeCount = stats.grenadeCount;
@@ -473,7 +478,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gunList.Add(stats.gunList[i]);
         }
-        selectedGun = 0; changeGun();
+        selectedGun = 0; 
+        changeGun();
         HP = stats.hpcur;
         HPMax = stats.hpmax;
         medkitCount = stats.medkitCount;
@@ -503,7 +509,10 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if(stats.gunCount > 1)
             stats.gunList.Clear();
-        stats.gunList[0] = stats.startingGunList[0];
+        for(int i = 0; i  < gunList.Count; i++)
+            {
+            stats.gunList.Add(gunList[i]);
+            }
         gunList.Clear();
         stats.hpcur = 0;
         stats.hpmax = HPMax;

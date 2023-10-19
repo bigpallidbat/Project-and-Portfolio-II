@@ -380,7 +380,8 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     }
     public void Death()
     {
-        StartCoroutine(gameManager.Instance.youWin());
+       gameManager.Instance.updateGameGoal();
+
         Destroy(gameObject);
     }
 
