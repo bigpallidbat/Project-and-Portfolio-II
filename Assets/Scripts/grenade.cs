@@ -22,7 +22,7 @@ public class grenade : MonoBehaviour
         //rb.velocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed;
 
         //grenade explodes on start.- Chance
-        StartCoroutine(explode());
+       // StartCoroutine(explode());
     }
     void Update()
     {

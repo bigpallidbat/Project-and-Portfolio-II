@@ -72,6 +72,10 @@ public class PlayerController : MonoBehaviour, IDamage
         maxStam = Stamina;
         origPlayerSpeed = playerSpeed;
         spawnPlayer();
+
+        Debug.Log(HP);
+        Debug.Log(HPMax);
+        Debug.Log(gunList);
     }
 
     void Update()
@@ -228,7 +232,7 @@ public class PlayerController : MonoBehaviour, IDamage
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         transform.rotation = rot;
         controller.enabled = true;
-        getSpawnStats();
+        getSpawnStats(true);
     }
 
     void UpdatePlayerUI()
@@ -370,11 +374,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             medkitCount--;
 
-            int amountToHeal = HPMax - (HP + medkitHeal);
+            int amountToHeal = (HPMax - HP);
+            
 
-            if (amountToHeal > 0)
-                HP += amountToHeal;
-            else HP += 0;
+            if (amountToHeal >= medkitHeal && HP + medkitHeal !> HPMax)
+                HP += medkitHeal;
+            else HP = HPMax;
             gameManager.Instance.updateMedkit(medkitCount);
 
         }
@@ -402,11 +407,12 @@ public class PlayerController : MonoBehaviour, IDamage
         selectedGun = 0;
         changeGun();
         grenadeCount = stats.grenadeCount;
+        medkitCount = stats.medkitCount;
         gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
 
     }
 
-    private void getSpawnStats(bool check)
+    public void getSpawnStats(bool check)
     {
 
         for(int i = 0; i < stats.gunCount; i++)
@@ -416,16 +422,42 @@ public class PlayerController : MonoBehaviour, IDamage
         selectedGun = 0; changeGun();
         HP = stats.hpcur;
         HPMax = stats.hpmax;
+        medkitCount = stats.medkitCount;
+        grenadeCount = stats.grenadeCount;
+
     }
 
-    public void setStats()
+    public void setStats(bool check)
     {
 
-        stats.gunList = gunList;
+        for(int i = 0;i < gunList.Count; i++)
+        {
+            stats.gunList[i] = gunList[i];
+        }
+
+        
+
         stats.gunCount = gunList.Count;
         stats.hpcur = HP;
         stats.hpmax = HPMax;
+        stats.grenadeCount = grenadeCount;
+        stats.medkitCount = medkitCount;
 
+    }
+    public void setStats()
+    {
+        if(stats.gunCount > 1)
+            stats.gunList.Clear();
+        stats.gunList[0] = stats.startingGunList[0];
+        gunList.Clear();
+        stats.hpcur = 0;
+        stats.hpmax = HPMax;
+        stats.gunCount = 1;
+        stats.grenadeCount = 2;
+        stats.hpBuff = 0;
+        stats.speedBuff = 0;
+        stats.damageBuff = 0;
+        stats.medkitCount = 2;
     }
 
     public void setBuff(int amount, itemStats.itemType type)
