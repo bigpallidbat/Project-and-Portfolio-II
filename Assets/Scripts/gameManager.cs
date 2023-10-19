@@ -28,6 +28,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text AmmoCurrent;
     [SerializeField] TMP_Text AmmoMax;
+    [SerializeField] TMP_Text GrenadeCount;
+    [SerializeField] TMP_Text MedkitCount;
     [SerializeField] GameObject playerDamageFlash;
 
     [Header("----- GameMode/Level -----")]
@@ -183,6 +185,16 @@ public class gameManager : MonoBehaviour
         AmmoCurrent.text = cur.ToString("F0");
     }
     
+    public void updateMedkit(int cur)
+    {
+        MedkitCount.text = cur.ToString("F0");
+    }
+
+    public void updateGrenade(int cur)
+    {
+        GrenadeCount.text = cur.ToString("F0");
+    }
+
     public void setCurrLevel(int level)
     {
         currentLevel = level;

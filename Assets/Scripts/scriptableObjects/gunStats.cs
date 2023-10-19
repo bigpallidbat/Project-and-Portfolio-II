@@ -12,11 +12,14 @@ public class gunStats : ScriptableObject
     public int shootdist;
     public int ammoCur;
     public int ammoMax;
+    public int ammoReserve;
+    public int ammoReserveStart;
+    public int ammoReserveMax;
 
     public GameObject model;
     public ParticleSystem hitEffect;
     public ParticleSystem hitEffectEnemy;
     public AudioClip shootSound;
     [Range(0, 1)] public float shootSoundVol;
-    public Transform size;
+    public int ID;
 }

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private IInteract actionable;
     [SerializeField] GameObject nade;
     [SerializeField] GameObject throwPos;
+    
 
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -164,7 +166,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isShooting = true;
             gunList[selectedGun].ammoCur--;
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
@@ -261,12 +263,20 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
         gunModel.transform.localScale = gun.model.transform.localScale;
-        gunModel.transform.rotation = gun.model.transform.rotation;
-        
+
+        //needs to set model rotation to force gun models to face forward
+        //if (gun.ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if(gun.ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
 
         selectedGun = gunList.Count - 1;
 
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
     }
 
     void selectGun()
@@ -309,9 +319,18 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
         //gunModel.transform.localScale = gunList[selectedGun].size.localScale;
         gunModel.transform.localScale = gunList[selectedGun].model.transform.localScale;
-        gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
-        
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+
+        ////needs to set model rotation to force gun models to face forward
+        //if (gunList[selectedGun].ID == 1)
+        //{
+        //    gunModel.transform.rotation = gunList[selectedGun].model.transform.rotation;
+        //}
+        //else if (gunList[selectedGun].ID == 2)
+        //{
+        //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //}
+
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
         isShooting = false;
     }
@@ -320,9 +339,15 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Reload"))
         {
-            gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
-            PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            if (gunList[selectedGun].ammoReserve > 0)
+            {
+                gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+                PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
+                gunList[selectedGun].ammoReserve--;
+                gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
+
+            }
+
         }
     }
 
@@ -336,7 +361,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             nade.GetComponent<grenade>().player = throwPos;
             nade.GetComponent<grenade>().ThrowGrenade();
-
+            grenadeCount--;
+            gameManager.Instance.updateGrenade(grenadeCount);
         }
     }
 
@@ -363,6 +389,7 @@ public class PlayerController : MonoBehaviour, IDamage
         selectedGun = 0;
         changeGun();
         grenadeCount = stats.grenadeCount;
+        gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
 
     }
 
@@ -388,20 +415,28 @@ public class PlayerController : MonoBehaviour, IDamage
 
     }
 
-    public void setBuff(int amount, int ID)
+    public void setBuff(int amount, itemStats.itemType type)
     {
 
-        switch (ID)
+        switch (type)
         {
-            case 0:
-                stats.damageBuff = amount;
+            case itemStats.itemType.healing:
+                
+
                 break;
-            case 1:
-                stats.hpBuff = amount;
+            case itemStats.itemType.Damage:
+                stats.damageBuff = amount; //Damage buff add damage
+
                 break;
 
-            case 2:
-                stats.speedBuff = amount;
+            case itemStats.itemType.Speed:
+                stats.speedBuff = amount; //Speed buff add speed
+                break;
+            case itemStats.itemType.Ammo:
+
+                break;
+            case itemStats.itemType.Health: //Health buffs add HP
+                stats.hpBuff = amount;
                 break;
 
             default: break;
@@ -411,9 +446,13 @@ public class PlayerController : MonoBehaviour, IDamage
     public void itemPickUpEffect(itemStats item)
     {
 
-        if (item.itemName == "Grenade") {
+        if (item.type == itemStats.itemType.grenade) {
             grenadeCount++;
-
+            gameManager.Instance.updateGrenade(grenadeCount);
+        }
+        else if(item.type == itemStats.itemType.healing)
+        {
+            
         }
     }
 
