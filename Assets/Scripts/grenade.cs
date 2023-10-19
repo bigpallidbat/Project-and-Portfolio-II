@@ -8,7 +8,7 @@ public class grenade : MonoBehaviour
     [SerializeField] int upMult;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
-    [SerializeField] float maxThrowAngle = 50.0f; // Maximum angle for upward arc
+    //[SerializeField] float maxThrowAngle = 50.0f; // Maximum angle for upward arc
     [SerializeField] Rigidbody rb;
     [SerializeField] GameObject explosion;
 

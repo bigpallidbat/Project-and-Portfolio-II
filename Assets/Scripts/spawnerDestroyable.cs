@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawnerDestroyable : MonoBehaviour, IDamage
 {
     [SerializeField] List<GameObject> objectList = new List<GameObject>();
+    [SerializeField] GameObject pUP;
     [SerializeField] ParticleSystem onHit;
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] int maxObjectsToSpawn;
@@ -82,7 +83,14 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(waitToDestroy());
         }
+    }
+
+    IEnumerator waitToDestroy()
+    {
+        Instantiate(pUP, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(.3f);
+        Destroy(gameObject);
     }
 }
