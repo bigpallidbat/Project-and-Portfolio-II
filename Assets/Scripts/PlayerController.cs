@@ -368,8 +368,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        // actionable = other.GetComponent<IInteract>();
-        actionable = other.GetComponentInParent<IInteract>();
+        actionable = other.GetComponent<IInteract>();
 
         if (actionable != null)
         {
@@ -423,20 +422,28 @@ public class PlayerController : MonoBehaviour, IDamage
             case itemStats.itemType.healing:
                 
 
+
                 break;
             case itemStats.itemType.Damage:
+
                 stats.damageBuff = amount; //Damage buff add damage
 
                 break;
 
             case itemStats.itemType.Speed:
+
                 stats.speedBuff = amount; //Speed buff add speed
+
                 break;
             case itemStats.itemType.Ammo:
 
+                restoreAmmo(amount); //Restore Ammo
+
                 break;
             case itemStats.itemType.Health: //Health buffs add HP
+
                 stats.hpBuff = amount;
+
                 break;
 
             default: break;
@@ -450,9 +457,17 @@ public class PlayerController : MonoBehaviour, IDamage
             grenadeCount++;
             gameManager.Instance.updateGrenade(grenadeCount);
         }
-        else if(item.type == itemStats.itemType.healing)
+        else
         {
-            
+            setBuff(item.amount, item.type);
+        }
+    }
+
+    void restoreAmmo(int amount)
+    {
+        for(int i = 0; i < gunList.Count; i++)
+        {
+            gunList[i].ammoReserve += amount;
         }
     }
 

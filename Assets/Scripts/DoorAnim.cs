@@ -6,10 +6,12 @@ using UnityEngine;
 public class DoorAnim : MonoBehaviour , IInteract
 {
     [Header("----- Anim Components -----")]
-    [SerializeField] BoxCollider openDoor;
-    [SerializeField] BoxCollider closeDoor;
+    [SerializeField] BoxCollider Door;
     [SerializeField] GameObject leftDoor;
     [SerializeField] GameObject rightDoor;
+    [SerializeField] GameObject rotatorLeft;
+    [SerializeField] GameObject rotatorRight;
+
 
     [SerializeField] float openSpeed;
     [SerializeField] int leftAngle;
@@ -27,6 +29,29 @@ public class DoorAnim : MonoBehaviour , IInteract
         rightOrig = Quaternion.identity; leftOrig = Quaternion.identity;
     }
 
+    IEnumerator doorRotation(Quaternion targRot)
+    {
+        float times = 0f;
+        Quaternion initRot = rightDoor.transform.localRotation;
+
+        Vector3 worldPivPointRight = transform.TransformPoint(rotatorRight.transform.position);
+        Vector3 worldPivPointLeft = transform.TransformPoint(rotatorLeft.transform.position);
+
+        while(times <= 1f )
+        {
+            times += Time.deltaTime * openSpeed;
+
+            Quaternion newRotation = Quaternion.Lerp(initRot, targRot, times);
+
+            Vector3 pivotOffSetRight = worldPivPointRight - rightDoor.transform.position;
+            Vector3 pivotOffSetLeft = worldPivPointLeft - leftDoor.transform.position;
+
+            leftDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetLeft.y ,0);
+            rightDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetRight.y ,0);
+            yield return null;
+        }
+    }
+
     public void Activate()
     {
         
@@ -35,7 +60,9 @@ public class DoorAnim : MonoBehaviour , IInteract
         {
             //rightDoor.transform.rotation = Quaternion.Lerp(leftDoor.transform.rotation, rightOrig, openSpeed * Time.deltaTime);
             //leftDoor.transform.rotation = Quaternion.Lerp(leftDoor.transform.rotation, leftOrig , openSpeed * Time.deltaTime);
-
+            rightOrig = Quaternion.Euler(0, 0, 0);
+            StartCoroutine(doorRotation(rightOrig));
+            isOpen = false;
         }
         else
         {
@@ -44,12 +71,13 @@ public class DoorAnim : MonoBehaviour , IInteract
             //Quaternion rotRight = Quaternion.Euler(0, rightAngle, 0);
             //Quaternion rotLeft = Quaternion.Euler(0, leftAngle, 0);
 
-            //rightDoor.transform.rotation = Quaternion.Lerp(rightOrig, rotRight, openSpeed * Time.deltaTime);
-            //leftDoor.transform.rotation = Quaternion.Lerp(leftOrig, rotLeft, openSpeed * Time.deltaTime);
+            //rightDoor.transform.rotation = Quaternion.Lerp(rightOrig, Quaternion.Euler(0 , rightAngle, 0)  , openSpeed * Time.deltaTime);
+            // leftDoor.transform.rotation = Quaternion.Lerp(leftOrig, Quaternion.Euler(0 , leftAngle, 0), openSpeed * Time.deltaTime);
 
-            rightDoor.transform.Rotate(0, rightAngle * Time.deltaTime, 0);
-            leftDoor.transform.Rotate(0, leftAngle * Time.deltaTime, 0);
+            rightOrig = Quaternion.Euler(0, 90, 0);
+            StartCoroutine (doorRotation(rightOrig));
 
+            isOpen = true;
             
 
         }
