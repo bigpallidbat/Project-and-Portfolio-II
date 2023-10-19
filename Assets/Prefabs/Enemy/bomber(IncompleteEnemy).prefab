@@ -10059,12 +10059,15 @@ MonoBehaviour:
   agent: {fileID: 3295100314043009791}
   anim: {fileID: 3179272438414612501}
   effect: {fileID: 8892061253826610565, guid: d80b627b6e9ff004ebf6f2c6a7c1ade4, type: 3}
+  origin: {fileID: 0}
   HP: 5
   damage: 2
   explosionRange: 0
   aud: {fileID: 6100046046579947765}
   explodeSound: {fileID: 8300000, guid: 09f0ed798e0fa3d45b14906bceebfcaf, type: 3}
+  audExplodeVol: 0.25
   beepSound: {fileID: 8300000, guid: 68fd34323f3e12948b6f1ee370d721d1, type: 3}
+  audBeepVol: 0.25
 --- !u!95 &3179272438414612501
 Animator:
   serializedVersion: 5

@@ -20,7 +20,9 @@ public class enemyBomb : MonoBehaviour, IDamage
 
 
     public AudioClip explodeSound;
+    [Range(0, 1)][SerializeField] float audExplodeVol;
     public AudioClip beepSound;
+    [Range(0, 1)][SerializeField] float audBeepVol;
 
     bool playerInRange;
     bool isExploding;
@@ -103,34 +105,34 @@ public class enemyBomb : MonoBehaviour, IDamage
         
 
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.8F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.7F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.6F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.5F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.4F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.3F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.2F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.2F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.1F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, volume);
+        aud.PlayOneShot(beepSound, audBeepVol);
         yield return new WaitForSeconds(.1F);
         model.material.color = Color.red;
         StartCoroutine(applyDamage());
@@ -140,7 +142,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     {
         Instantiate(effect, transform.position, Quaternion.identity);
         
-        aud.PlayOneShot(explodeSound, volume);
+        aud.PlayOneShot(explodeSound, audExplodeVol);
         IDamage damageable = gameManager.Instance.player.GetComponent<IDamage>();
         RaycastHit hit;
         if (Physics.Raycast(transform.position, playerDir, out hit))
