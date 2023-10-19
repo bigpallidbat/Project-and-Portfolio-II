@@ -10,6 +10,8 @@ using UnityEngine.SocialPlatforms;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] Renderer model;
+    [SerializeField] ParticleSystem effect;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
     [Range(0, 1)][SerializeField] float audPainVol;
@@ -36,7 +38,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject EyeColor;
-    Material OGeye;
     [SerializeField] Material newMaterial;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
@@ -53,10 +54,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
     [SerializeField] float meleeRange;
-    [SerializeField] int strafingSpeed;
+    //[SerializeField] int strafingSpeed;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
-    [SerializeField] int animChangeSpeed;
+    //[SerializeField] int animChangeSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     //[SerializeField] float animSpeed;//uncomment when needed
@@ -72,6 +73,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
+    [SerializeField] int explosionRange;
     public spawnerDestroyable origin;
 
     bool isAttacking = false;
@@ -87,6 +89,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
+    bool readyToExplod;
+    bool IAmExploding;
+    Material OGeye;
     //bool bunnyFly;
     //bool dead = false;
 
@@ -140,7 +145,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
                 if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
-                //if (playerDist < agent.stoppingDistance + 1) strafe();
                 if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
                 else agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
@@ -213,25 +217,8 @@ public class EnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(transform.position);
             }
         }
-        //isStrafing = false;
-        ///}
     }
-    //void srafeLeft()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * -strafingSpeed);
-    //}
-    //void stafeRight()
-    //{
-    //    FaceTarget();
-    //    transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.forward.z + Time.deltaTime * strafingSpeed);
-    //}
-    //bool checkTag()
-    //{
-    //    if (gameObject.CompareTag("lilChick"))
-    //    { return true; }
-    //    else { return false; }
-    //}
+
     IEnumerator attack()
     {
         if (anim != null)
@@ -248,7 +235,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
             bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
             Instantiate(bullet, shootPos.position, transform.rotation);
-            //shootPos.transform.rotation = Quaternion.LookRotation(PlayerDir);
             yield return new WaitForSeconds(fireRate);
             isAttacking = false;
         }
@@ -304,10 +290,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     IEnumerator unFriend()
-    { 
+    {
         yield return new WaitForSeconds(fireRate);
         isAttacking = false;
-      friendly = false;
+        friendly = false;
 
     }
 
@@ -316,7 +302,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         anim.SetBool("BAttack", true);
         EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
         knowsPlayerLocation = true;
-        agent.speed *= 5;
+        agent.speed *= 4;
         agent.acceleration *= 8;
         agent.angularSpeed *= 8;
         roamPauseTime = 0;
@@ -332,6 +318,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        if (EyeColor != null) startUnFriend();
         if (anim != null) anim.SetBool("BAttack", false);
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound, audVpainVol);
@@ -381,18 +368,57 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         inPain = true;
         //if (checkTag()) anim.SetBool("inPain", true);
-        if (mainBody != null) mainBody.enabled = false;
+        if (mainBody != null)
+        {
+            mainBody.enabled = false;
+            if (secondPart != null) secondPart.enabled = false;
+        }
         else mainBodyV.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
+        if (secondPart != null) secondPart.enabled = true;
         if (mainBody != null) mainBody.enabled = true;
         else mainBodyV.gameObject.SetActive(true);
         if (anim != null) anim.SetTrigger("pain");
         else Invoke("endPain", 0.142857f);
 
     }
+    public void readyExplod()
+    {
+        if (!readyToExplod && !IAmExploding)
+        {
+            readyToExplod = true;
+            agent.speed *= 2;
+            agent.acceleration *= 4;
+            agent.angularSpeed *= 4;
+            roamPauseTime = 0;
+            StartCoroutine(fuseOn());
+        }
+    }
+    IEnumerator fuseOn()
+    {
+        yield return new WaitForSeconds(5);
+        ImExplodeing();
+    }
+    public void ImExplodeing()
+    {
+        if (!IAmExploding)
+        {
+            IAmExploding = true;
+            readyToExplod = true;
+            agent.SetDestination(gameManager.Instance.player.transform.position);
+            agent.enabled = false;
+        }
+    }
+    //IEnumerator Explode()
+    //{
+        
+    //    yield return new WaitForSeconds();
+    //}
+    
+
     public void endPain()
     {
         inPain = false;

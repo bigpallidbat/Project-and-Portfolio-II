@@ -429,6 +429,9 @@ MonoBehaviour:
   damage: 1
   sound: {fileID: 6240006689363750147}
   Hit: {fileID: 8300000, guid: 905aae1cd88c75a4eb60975629112383, type: 3}
+  audHitVol: 1
+  usesBAttack: 0
+  enemy: {fileID: 0}
 --- !u!82 &6240006689363750147
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1588,7 +1591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8771544740828283675}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.49751914, z: -0, w: 0.86745304}
+  m_LocalRotation: {x: 0, y: -0.49751914, z: 0, w: 0.86745304}
   m_LocalPosition: {x: -22.1775, y: 0, z: 3.3493423}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
@@ -1600,7 +1603,7 @@ Transform:
   - {fileID: 3030787449822749053}
   - {fileID: 7671177766643869541}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -59.672, z: 0}
 --- !u!95 &1993868457796431993
 Animator:
   serializedVersion: 5
@@ -1636,12 +1639,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3755915861514716332}
   painSound: {fileID: 8300000, guid: 1dafc655eadc45242aa1eeacaf43646d, type: 3}
+  audPainVol: 1
   deathSound: {fileID: 8300000, guid: 49b777c44f3eeb14cb35f4f34714dea3, type: 3}
+  audDeathVol: 1
   attckSound: {fileID: 8300000, guid: 5deb12cf60be64c42b2e3ba253565037, type: 3}
+  audAttackVol: 1
   VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  audVpainVol: 1
   VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  audVdeathVol: 1
   seeSound: {fileID: 8300000, guid: 0f967872e129f4143a2433d44ea5beb7, type: 3}
-  swosh: {fileID: 8300000, guid: 7a757608784b30845a404915f0bf1ca4, type: 3}
+  audSeeVol: 1
+  woosh: {fileID: 8300000, guid: 7a757608784b30845a404915f0bf1ca4, type: 3}
+  audWooshVol: 1
   mainBody: {fileID: 431346940790464907}
   secondPart: {fileID: 0}
   mainBodyV: {fileID: 0}
@@ -1679,6 +1689,7 @@ MonoBehaviour:
   bulletSpeed: 0
   shotoffSet: 0
   hitBoxCOL: {fileID: 3290679225269668348}
+  origin: {fileID: 0}
   leftChecker: 0
   rightChecker: 0
   inStafingRange: 0
@@ -1789,7 +1800,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.125
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600
