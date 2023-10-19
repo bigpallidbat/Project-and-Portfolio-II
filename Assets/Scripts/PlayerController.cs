@@ -529,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gunList[i].ammoReserve += amount;
         }
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur,gunList[selectedGun].ammoReserve);
     }
 
 }
