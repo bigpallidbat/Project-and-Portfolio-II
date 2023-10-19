@@ -150,9 +150,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectList: []
+  onHit: {fileID: 1908619969883801341, guid: fc333cebcca91bc40a74db67292d3ade, type: 3}
   objectToSpawn: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
   maxObjectsToSpawn: 4
-  timeBetweenSpawns: 1
+  timeBetweenSpawns: 3
   spawnPos:
   - {fileID: 1643823560554387795}
   - {fileID: 8176483210641538275}
@@ -199,7 +200,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 14
-  m_Center: {x: -0.25, y: 0.75, z: -0.5}
+  m_Center: {x: -5, y: 0.75, z: -0.5}
 --- !u!64 &218757245030505249
 MeshCollider:
   m_ObjectHideFlags: 0
