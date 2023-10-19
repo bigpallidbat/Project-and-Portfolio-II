@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AlexsBossAI : MonoBehaviour
+public class AlexsBossAI : MonoBehaviour , IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
@@ -27,7 +27,6 @@ public class AlexsBossAI : MonoBehaviour
 
     [Header("----- Enemy States -----")]
     [SerializeField] int Hp;
-    [SerializeField] bool knowsPlayerLocation;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
     [SerializeField] int viewAngle;
