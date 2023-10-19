@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701662490496739331}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.49761963, z: -0, w: 0.8673954}
+  m_LocalRotation: {x: 0, y: -0.4976174, z: 0, w: 0.86739665}
   m_LocalPosition: {x: -0.25, y: 1, z: -5.249999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701662490496739331}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d99c3b68e8b4fd04d83c619688fc7e9b, type: 3}
   m_Name: 
@@ -155,10 +155,12 @@ MonoBehaviour:
   bullet: {fileID: 0}
   fireRate: 0
   shootAngle: 0
+  objectList: []
   objectToSpawn: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
   maxObjectsToSpawn: 0
   timeBetweenSpawn: 0
   spawnPos: []
+  WhereIspawned: {fileID: 0}
   origin: {fileID: 0}
 --- !u!114 &4628454794815255302
 MonoBehaviour:
@@ -167,19 +169,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701662490496739331}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4052a375436e9dd489b51b457845e585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 0}
+  effect: {fileID: 0}
   agent: {fileID: 5440413955648891952}
   painSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  audPainVol: 0
   deathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  audDeathVol: 0
   attckSound: {fileID: 0}
+  audAttackVol: 0
   VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  audVpainVol: 0
   VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
+  audVdeathVol: 0
   seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
-  swosh: {fileID: 0}
+  audSeeVol: 0
+  woosh: {fileID: 0}
+  audWooshVol: 0
   mainBody: {fileID: 0}
   secondPart: {fileID: 0}
   mainBodyV: {fileID: 6512061257714533475}
@@ -197,14 +208,13 @@ MonoBehaviour:
   MaxHp: 9
   Hp: 9
   friendly: 0
+  isBoss: 0
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 0
   meleeRange: 0
-  strafingSpeed: 10
   TargetFaceSpeed: 60
   soundSFX: {fileID: 8500446963058439131}
-  animChangeSpeed: 0
   viewAngle: 50
   shootAngle: 22
   roamDist: 2
@@ -212,11 +222,16 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
+  spawnPos: {fileID: 0}
   fireRate: 0.375
   shootDamage: 1
   bulletSpeed: 30
   shotoffSet: 1.26
   hitBoxCOL: {fileID: 0}
+  explosionRange: 0
+  origin: {fileID: 0}
   leftChecker: 0
   rightChecker: 0
   inStafingRange: 0

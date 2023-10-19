@@ -50,6 +50,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int MaxHp;
     public int Hp;
     public bool friendly;
+    [SerializeField] bool isBoss;
     [SerializeField] bool knowsPlayerLocation;
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
@@ -68,6 +69,9 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject enemy1;
+    [SerializeField] GameObject enemy2;
+    [SerializeField] Transform spawnPos;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
@@ -75,7 +79,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Collider hitBoxCOL;
     [SerializeField] int explosionRange;
     public spawnerDestroyable origin;
-
+    int DiceRoll = 20;
     bool isAttacking = false;
     bool inPain;
     bool playerInRange = false;
@@ -219,25 +223,125 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
+   
+
     IEnumerator attack()
     {
-        if (anim != null)
+        isAttacking = true;
+        if (isBoss)
         {
-            isAttacking = true;
-            anim.SetTrigger("attack");
-            soundSFX.PlayOneShot(attckSound, audAttackVol);
+            FireSTD();
+            if (Hp <= 99) tomAttack();
+            if (Hp < 92) tomAttack();
+            if (Hp < 84) tomAttack();
+            if (Hp < 76) tomAttack();
+            if (Hp < 68) tomAttack();
+            if (Hp < 60) tomAttack();
+            if (Hp < 52) tomAttack();
+            if (Hp < 44) tomAttack();
+            if (Hp < 36) tomAttack();
+            if (Hp < 28) tomAttack();
+            if (Hp < 20) tomAttack();
+            if (Hp < 12) tomAttack();
+            if (Hp < 6) tomAttack();
+            if (Hp < 3) tomAttack();
+            DiceRoll = Random.Range(0, 20);
+            switch (DiceRoll)
+            {
+                case 0:
+                    Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    break;
+                case 1:
+                    if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 2:
+                    if (Hp < 80) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 3:
+                    if (Hp < 70) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 4:
+                    if (Hp < 60) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 5:
+                    if (Hp < 50) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 6:
+                    if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 7:
+                    if (Hp < 10) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 8:
+                    if (Hp < 90) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 9:
+                    if (Hp < 80) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 10:
+                    if (Hp < 70) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 11:
+                    if (Hp < 60) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 12:
+                    if (Hp < 50) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 13:
+                    if (Hp < 40) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 14:
+                    if (Hp < 30) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 15:
+                    if (Hp < 20) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                case 16:
+                    if (Hp < 10) Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    break;
+                default: break;
+            }
+            yield return new WaitForSeconds(fireRate);
         }
         else
         {
-            isAttacking = true;
-            bullet.GetComponent<Bullet>().speed = bulletSpeed;
-            bullet.GetComponent<Bullet>().damage = shootDamage;
-            bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
-            bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
-            Instantiate(bullet, shootPos.position, transform.rotation);
-            yield return new WaitForSeconds(fireRate);
-            isAttacking = false;
+            if (anim != null)
+            {
+                anim.SetTrigger("attack");
+                soundSFX.PlayOneShot(attckSound, audAttackVol);
+            }
+            else
+            {
+                tomAttack();
+                yield return new WaitForSeconds(fireRate);
+            }
         }
+        isAttacking = false;
+    }
+
+    void tomAttack()
+    {
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = shootDamage;
+        bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
+        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    void FireSTD()
+    {
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = shootDamage;
+        bullet.GetComponent<Bullet>().offsetX = 0;
+        bullet.GetComponent<Bullet>().offsetY = 0;
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
     public void playSwosh()
@@ -414,10 +518,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     //IEnumerator Explode()
     //{
-        
+
     //    yield return new WaitForSeconds();
     //}
-    
+
 
     public void endPain()
     {
