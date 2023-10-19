@@ -89,6 +89,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
 
     IEnumerator waitToDestroy()
     {
+        gameManager.Instance.updateSpawners();
         Instantiate(pUP, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(.3f);
         Destroy(gameObject);

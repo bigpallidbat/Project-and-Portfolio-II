@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class AlexsBossAI : MonoBehaviour , IDamage
 {
@@ -27,6 +29,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
 
     [Header("----- Enemy States -----")]
     [SerializeField] int Hp;
+    private int HpMax;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
     [SerializeField] int viewAngle;
@@ -74,6 +77,8 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         soundSFX = GetComponent<AudioSource>();
         goRight = Random.Range(0, 2) == 0;
         stoppingDistOrig = agent.stoppingDistance;
+        HpMax = Hp;
+        updateHpUI();
     }
 
     // Update is called once per frame
@@ -315,6 +320,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        updateHpUI();
         soundSFX.PlayOneShot(VpainSound, audVpainVol);
         if (Hp < 70) timeBetweenSpawn = 1;
         if (Hp <= 0)
@@ -374,6 +380,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     }
     public void Death()
     {
+        StartCoroutine(gameManager.Instance.youWin());
         Destroy(gameObject);
     }
 
@@ -405,6 +412,12 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         {
             startSpawning = false;
         }
+    }
+
+    void updateHpUI()
+    {
+        gameManager.Instance.BossHPBar.fillAmount = (float)Hp / HpMax;
+        gameManager.Instance.BossHpFill.gameObject.SetActive(true);
     }
 
 }
