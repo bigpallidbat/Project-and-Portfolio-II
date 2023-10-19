@@ -40,6 +40,10 @@ public class Spawner : MonoBehaviour
             {
                 objectSpawned.GetComponent<EnemyAI>().WhereISpawned = this;
             }
+            else if(objectSpawned.GetComponent<enemyBomb>() != null)
+            {
+                objectSpawned.GetComponent<enemyBomb>().origin = this;
+            }
             else if(objectSpawned.GetComponent<itemPickup>() != null)
             {
                 objectSpawned.GetComponent<itemPickup>().orgin = this;

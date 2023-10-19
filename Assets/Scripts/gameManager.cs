@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class gameManager : MonoBehaviour
     public Image playerHpBar;
     public Image playerStamBar;
     [SerializeField] TMP_Text enemiesRemainingText;
+    [SerializeField] TMP_Text EnemyText;
     [SerializeField] TMP_Text AmmoCurrent;
     [SerializeField] TMP_Text AmmoMax;
     [SerializeField] TMP_Text GrenadeCount;
@@ -34,14 +36,18 @@ public class gameManager : MonoBehaviour
 
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
-
-   // enum GameMode { SpecialEnemy = 1, EnemyCount, SpawnerDestroy, ItemRecovery };
+    [SerializeField] List<GameObject> spawnerList; 
+    enum GameMode { SpecialEnemy = 1, SpawnerDestroy, WaveSurvival };
     
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
     static int currentLevel;
     GameObject Door;
+    int goalAmount;
+    public static bool miniGoalAcquired;
+    
+
 
     // Start is called before the first frame update
     void Awake()
@@ -70,8 +76,30 @@ public class gameManager : MonoBehaviour
         }
 
 
+        if (currentLevel == 4)
+        {
+            if (!miniGoalAcquired) 
+            { 
+                spawnerDestroyable[] objs = GameObject.FindObjectsOfType<spawnerDestroyable>();
 
-        DontDestroyOnLoad(this);
+                for (int i = 0; i < objs.Length; i++)
+                {
+                    spawnerList.Add(objs[i].gameObject);
+                    goalAmount++;
+                }
+                updateGameGoal(miniGoalAcquired);
+            }
+            else if (miniGoalAcquired)
+            {
+                updateGameGoal(miniGoalAcquired);
+            }
+        }
+        else if(currentLevel == 2 || currentLevel == 3)
+        {
+
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -127,6 +155,20 @@ public class gameManager : MonoBehaviour
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(true);
+    }
+
+    public void updateGameGoal(bool check)
+    {
+        if (check)
+        {
+            EnemyText.text = "Enter The gate and Destroy the Boss";
+            enemiesRemainingText.text = enemiesRemaining.ToString("0f");
+        }
+        else
+        {
+            EnemyText.text = "Destroy All 3 Spawners to open the gate!";
+            enemiesRemainingText.text = enemiesRemaining.ToString("0f");
+        }
     }
 
     public IEnumerator youWin()

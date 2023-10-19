@@ -10,12 +10,14 @@ public class enemyBomb : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
     [SerializeField] ParticleSystem effect;
+    public Spawner origin;
 
     [Header("---- Enemy Stats -----")]
     [SerializeField] int HP;
     [SerializeField] int damage;
     [SerializeField] int explosionRange;
     [SerializeField] AudioSource aud;
+
 
     public AudioClip explodeSound;
     public AudioClip beepSound;
@@ -35,7 +37,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     {
         if (!isExploding)
         {
-            anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
+            anim.SetFloat("speed", agent.velocity.normalized.magnitude);
             if (playerInRange && canSeePlayer())
             {
             }
@@ -69,6 +71,8 @@ public class enemyBomb : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.Instance.player.transform.position);
         if (HP <= 0)
         {
+            if (origin != null)
+                origin.heyIDied();
             Destroy(gameObject);
         }
     }
@@ -99,34 +103,34 @@ public class enemyBomb : MonoBehaviour, IDamage
         
 
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.8F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.7F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.6F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.5F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.4F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.3F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.2F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.2F);
         model.material.color = Color.red;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.1F);
         model.material.color = colorOrig;
-        aud.PlayOneShot(beepSound, 5);
+        aud.PlayOneShot(beepSound, volume);
         yield return new WaitForSeconds(.1F);
         model.material.color = Color.red;
         StartCoroutine(applyDamage());
@@ -136,7 +140,7 @@ public class enemyBomb : MonoBehaviour, IDamage
     {
         Instantiate(effect, transform.position, Quaternion.identity);
         
-        aud.PlayOneShot(explodeSound, 5);
+        aud.PlayOneShot(explodeSound, volume);
         IDamage damageable = gameManager.Instance.player.GetComponent<IDamage>();
         RaycastHit hit;
         if (Physics.Raycast(transform.position, playerDir, out hit))
@@ -150,7 +154,11 @@ public class enemyBomb : MonoBehaviour, IDamage
                 }
             }
         }
+
+        if (origin != null)
+            origin.heyIDied();
         model.enabled = false;
+
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
