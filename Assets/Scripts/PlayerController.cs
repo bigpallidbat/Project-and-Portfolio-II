@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour, IDamage
     float origPlayerSpeed;
     [SerializeField] playerStats stats;
     [SerializeField] int grenadeCount;
+    [SerializeField] int medkitCount;
+    [SerializeField] int medkitHeal;
 
 
     [Header("----- Gun States -----")]
@@ -207,7 +209,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
-        HP = HPMax;
+        HP = HPMax + stats.hpBuff;
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
@@ -218,7 +220,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void spawnPlayer(quaternion rot)
     {
         if (HP > 0)
-            HPMax = HP;
+            stats.hpcur = HP;
         else HP = curHP;
 
         UpdatePlayerUI();
@@ -364,6 +366,18 @@ public class PlayerController : MonoBehaviour, IDamage
             grenadeCount--;
             gameManager.Instance.updateGrenade(grenadeCount);
         }
+        if (Input.GetButtonDown("Heal") && medkitCount > 0)
+        {
+            medkitCount--;
+
+            int amountToHeal = HPMax - (HP + medkitHeal);
+
+            if (amountToHeal > 0)
+                HP += amountToHeal;
+            else HP += 0;
+            gameManager.Instance.updateMedkit(medkitCount);
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -420,8 +434,10 @@ public class PlayerController : MonoBehaviour, IDamage
         switch (type)
         {
             case itemStats.itemType.healing:
-                
 
+                medkitHeal = amount;
+                medkitCount++;
+                gameManager.Instance.updateMedkit(medkitCount);
 
                 break;
             case itemStats.itemType.Damage:
