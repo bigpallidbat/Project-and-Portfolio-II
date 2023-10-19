@@ -17,6 +17,9 @@ MonoBehaviour:
   shootdist: 25
   ammoCur: 28
   ammoMax: 30
+  ammoReserve: 0
+  ammoReserveStart: 7
+  ammoReserveMax: 30
   model: {fileID: 7690090395703641352, guid: 3a1d2665bb95a40428342975c5ea4ee1, type: 3}
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
   hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}

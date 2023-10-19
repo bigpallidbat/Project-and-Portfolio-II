@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isShooting = true;
             gunList[selectedGun].ammoCur--;
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         selectedGun = gunList.Count - 1;
 
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
     }
 
     void selectGun()
@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour, IDamage
         //    gunModel.transform.rotation = Quaternion.Euler(0, 0, 0);
         //}
 
-        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+        gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
         isShooting = false;
     }
@@ -338,9 +338,15 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Reload"))
         {
-            gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
-            PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
+            if (gunList[selectedGun].ammoReserve > 0)
+            {
+                gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+                PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
+                gunList[selectedGun].ammoReserve--;
+                gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
+
+            }
+
         }
     }
 
@@ -381,6 +387,7 @@ public class PlayerController : MonoBehaviour, IDamage
         selectedGun = 0;
         changeGun();
         grenadeCount = stats.grenadeCount;
+        gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
 
     }
 
