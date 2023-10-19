@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 7e6240f1a4acfee4d9f9827237bd09a7, type: 2}
 --- !u!1 &86002764
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +297,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &371501748
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -40.74073
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 52.47261
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8673954
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.49761963
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -59.685
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004080060693958152, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532025840482077191, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
+      propertyPath: m_Name
+      value: Tomus
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 117b23f006e34b649b02f5dff0951140, type: 3}
 --- !u!1001 &618400781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1142,6 +1199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gladiator Low Poly Arena
       objectReference: {fileID: 0}
+    - target: {fileID: 5299434333307771761, guid: 40221b0bb861105428ce21daa19a5cb7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1163,3 +1224,4 @@ SceneRoots:
   - {fileID: 826982983}
   - {fileID: 618400781}
   - {fileID: 257181054}
+  - {fileID: 371501748}
