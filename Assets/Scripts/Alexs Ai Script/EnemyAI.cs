@@ -316,7 +316,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         anim.SetBool("BAttack", true);
         EyeColor.GetComponent<SkinnedMeshRenderer>().material = newMaterial;
         knowsPlayerLocation = true;
-        agent.speed *= 5;
+        agent.speed *= 4;
         agent.acceleration *= 8;
         agent.angularSpeed *= 8;
         roamPauseTime = 0;
@@ -332,6 +332,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         Hp -= amount;
+        if (EyeColor != null) startUnFriend();
         if (anim != null) anim.SetBool("BAttack", false);
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(VpainSound, audVpainVol);
@@ -381,12 +382,17 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         inPain = true;
         //if (checkTag()) anim.SetBool("inPain", true);
-        if (mainBody != null) mainBody.enabled = false;
+        if (mainBody != null)
+        {
+            mainBody.enabled = false;
+            if (secondPart != null) secondPart.enabled = false;
+        }
         else mainBodyV.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
+            if (secondPart != null) secondPart.enabled = true;
         if (mainBody != null) mainBody.enabled = true;
         else mainBodyV.gameObject.SetActive(true);
         if (anim != null) anim.SetTrigger("pain");
