@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject gunModel2;
+    [SerializeField] GameObject gunModel3;
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
@@ -276,6 +277,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gun.ID == 1)
         {
+            gunModel3.SetActive(false);
             gunModel2.SetActive(false);
             gunModel.SetActive(true);
             gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
@@ -285,11 +287,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if(gun.ID == 2)
         {
-            gunModel2.SetActive(false);
+            gunModel3.SetActive(false);
+            gunModel.SetActive(false);
             gunModel2.SetActive(true);
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
             gunModel2.transform.localScale = gun.model.transform.localScale;
+        }
+
+        if(gun.ID == 3)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(false);
+            gunModel3.SetActive(true);
+            gunModel3.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel3.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel3.transform.localScale = gun.model.transform.localScale;
         }
       
         selectedGun = gunList.Count - 1;
@@ -336,6 +349,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gunList[selectedGun].ID == 1)
         {
+            gunModel3.SetActive(false);
             gunModel2.SetActive(false);
             gunModel.SetActive(true);
             gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
@@ -345,13 +359,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (gunList[selectedGun].ID == 2)
         {
+            gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
         }   gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;
 
-
+        if (gunList[selectedGun].ID == 3)
+        {
+            gunModel2.SetActive(false);
+            gunModel.SetActive(false);
+            gunModel3.SetActive(true);
+            gunModel3.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel3.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel3.transform.localScale = gunList[selectedGun].model.transform.localScale;
+        }
 
 
 
