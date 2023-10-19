@@ -33,6 +33,8 @@ public class bossAI : MonoBehaviour
     [SerializeField] int timeBetweenSpawn;
     [SerializeField] Transform[] spawnPos;
 
+    [SerializeField] Spawner WhereIspawned;
+
     int curObjectsSpawned;
     bool isSpawning;
     bool startSpawning;
@@ -144,7 +146,7 @@ public class bossAI : MonoBehaviour
             GameObject objectClone = Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
             objectList.Add(objectClone);
             //Cannot convert bossAI to Spawner on "this" ?
-            //objectClone.GetComponent<EnemyAI>().WhereISpawned = this;
+            objectClone.GetComponent<EnemyAI>().WhereISpawned = this.GetComponent<Spawner>();
 
             yield return new WaitForSeconds(timeBetweenSpawn);
             isSpawning = false;
@@ -177,15 +179,6 @@ public class bossAI : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             startSpawning = false;
-
-            //destroys spawned enemies once out of view
-            for(int i = 0; i < objectList.Count; i++)
-            {
-                Destroy(objectList[i]);
-            }
-            objectList.Clear();
-
-            curObjectsSpawned = 0;
         }
     }
 

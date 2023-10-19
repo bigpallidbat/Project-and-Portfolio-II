@@ -163,7 +163,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (hit.collider.transform.position != transform.position && damgable != null)
                 {
                     damgable.takeDamage(shootDamage);
-                    Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    if (!hit.collider.GetComponent<spawnerDestroyable>())
+                    {
+                        Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    }
                 }
                 else
                 {

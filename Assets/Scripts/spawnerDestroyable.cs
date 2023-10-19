@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawnerDestroyable : MonoBehaviour, IDamage
 {
     [SerializeField] List<GameObject> objectList = new List<GameObject>();
+    [SerializeField] ParticleSystem onHit;
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] int maxObjectsToSpawn;
     [SerializeField] int timeBetweenSpawns;
@@ -38,6 +39,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
             curObjectsSpawned++;
             GameObject objectClone = Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
             objectList.Add(objectClone);
+            objectClone.GetComponent<EnemyAI>().origin = this;
             yield return new WaitForSeconds(timeBetweenSpawns);
             isSpawning = false;
         }
@@ -76,8 +78,9 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        Instantiate(onHit, transform.position, Quaternion.identity);
 
-        if(HP <= 0)
+        if (HP <= 0)
         {
             Destroy(gameObject);
         }
