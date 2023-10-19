@@ -229,6 +229,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &320819059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 769779022568018945, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1051350826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &662772832 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5644721473931055456, guid: cd9e75a424e61ca4aaeaaaf487cbef65, type: 3}
@@ -514,6 +525,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: MedkitCount
+      value: 
+      objectReference: {fileID: 320819059}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: GrenadeCount
+      value: 
+      objectReference: {fileID: 1525751608}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -624,7 +643,7 @@ PrefabInstance:
     - target: {fileID: 208160170207221322, guid: cd9e75a424e61ca4aaeaaaf487cbef65, type: 3}
       propertyPath: objectToSpawn
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3799010392788827360, guid: 46424dd2e5c2ae1409058745481b2544, type: 3}
     - target: {fileID: 208160170207221322, guid: cd9e75a424e61ca4aaeaaaf487cbef65, type: 3}
       propertyPath: maxObjectToSpawn
       value: 3
@@ -832,6 +851,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3647500253707810840, guid: cd9e75a424e61ca4aaeaaaf487cbef65, type: 3}
   m_PrefabInstance: {fileID: 1005110520}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525751608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5574579502741419907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1051350826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &7941318593991111296
 MeshFilter:
   m_ObjectHideFlags: 0
