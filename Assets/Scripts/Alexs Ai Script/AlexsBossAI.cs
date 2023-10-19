@@ -44,11 +44,9 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     [Range(0, 3)][SerializeField] float shotoffSet;
 
     [Header("----- Spawner Stats -----")]
-    [SerializeField] List<GameObject> objectList = new List<GameObject>();
-    [SerializeField] GameObject objectToSpawn;
     [SerializeField] int maxObjectsToSpawn;
     [SerializeField] int timeBetweenSpawn;
-    [SerializeField] Transform[] spawnPos;
+    [SerializeField] Transform spawnPos;
     [SerializeField] GameObject enemy1;
     [SerializeField] GameObject enemy2;
 
@@ -90,7 +88,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
             }
             else if (inPain) agent.SetDestination(transform.position);
             else agent.SetDestination(gameManager.Instance.player.transform.position);
-            if (startSpawning && curObjectsSpawned < maxObjectsToSpawn)
+            if (startSpawning)// && curObjectsSpawned < maxObjectsToSpawn)
             {
                 StartCoroutine(spawn());
             }
@@ -152,128 +150,117 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         if (!isSpawning)
         {
             isSpawning = true;
-            GameObject objectClone = forSpawn();
-            objectList.Add(objectClone);
-
-            objectClone.GetComponent<EnemyAI>().WhereISpawned = this.GetComponent<Spawner>();
-
+            DiceRoll = Random.Range(0, 20);
+            switch (DiceRoll)
+            {
+                case 0:
+                    Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 1:
+                    if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 2:
+                    if (Hp < 80) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 3:
+                    if (Hp < 70) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 4:
+                    if (Hp < 60) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 5:
+                    if (Hp < 50) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 6:
+                    if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 7:
+                    if (Hp < 10) Instantiate(enemy2, spawnPos.position, transform.rotation);
+                    else Instantiate(enemy1, spawnPos.position, transform.rotation);
+                    curObjectsSpawned++;
+                    break;
+                case 8:
+                    if (Hp < 90)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 9:
+                    if (Hp < 80)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 10:
+                    if (Hp < 70)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 11:
+                    if (Hp < 60)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 12:
+                    if (Hp < 50)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 13:
+                    if (Hp < 40)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 14:
+                    if (Hp < 30)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 15:
+                    if (Hp < 20)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                case 16:
+                    if (Hp < 10)
+                    {
+                        Instantiate(enemy1, spawnPos.position, transform.rotation);
+                        curObjectsSpawned++;
+                    }
+                    break;
+                default:
+                    break;
+            }
             yield return new WaitForSeconds(timeBetweenSpawn);
             isSpawning = false;
         }
-    }
-    private GameObject forSpawn()
-    {
-        GameObject objectClone = null;
-        DiceRoll = Random.Range(0, 20);
-        switch (DiceRoll)
-        {
-            case 0:
-                objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 1:
-                if (Hp < 90) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 2:
-                if (Hp < 80) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 3:
-                if (Hp < 70) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 4:
-                if (Hp < 60) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 5:
-                if (Hp < 50) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 6:
-                if (Hp < 20) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 7:
-                if (Hp < 10) objectClone = Instantiate(enemy2, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                else objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                curObjectsSpawned++;
-                break;
-            case 8:
-                if (Hp < 90)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 9:
-                if (Hp < 80)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 10:
-                if (Hp < 70)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 11:
-                if (Hp < 60)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 12:
-                if (Hp < 50)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 13:
-                if (Hp < 40)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 14:
-                if (Hp < 30)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 15:
-                if (Hp < 20)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            case 16:
-                if (Hp < 10)
-                {
-                    objectClone = Instantiate(enemy1, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
-                    curObjectsSpawned++;
-                }
-                break;
-            default:
-                objectClone = null;
-                break;
-        }
-        return objectClone;
     }
     IEnumerator attack()
     {
@@ -329,7 +316,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     {
         Hp -= amount;
         soundSFX.PlayOneShot(VpainSound, audVpainVol);
-
+        if (Hp < 70) timeBetweenSpawn = 1;
         if (Hp <= 0)
         {
             FaceTarget();
@@ -378,13 +365,11 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     {
         inPain = false;
         agent.SetDestination(gameManager.Instance.player.transform.position);
-        //if (checkTag()) anim.SetBool("inPain", false);
     }
 
     void FaceTarget()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        //transform.rotation = Rot; snap code
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
     }
     public void Death()
