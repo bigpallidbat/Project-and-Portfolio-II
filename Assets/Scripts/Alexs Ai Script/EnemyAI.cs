@@ -442,7 +442,7 @@ public void ImExplodeing()
 public void endPain()
 {
     inPain = false;
-    agent.SetDestination(gameManager.Instance.player.transform.position);
+    if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     //if (checkTag()) anim.SetBool("inPain", false);
 }
 
