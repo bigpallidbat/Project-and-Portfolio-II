@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -8,6 +9,10 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource PlayerSounds;
+
+    [SerializeField] Collider actionRange;
+    private bool canActivate;
+    private IInteract actionable;
 
     [Header("----- player state -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -23,6 +28,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float runCost;
     [SerializeField] float ChargeRate;
     float origPlayerSpeed;
+    [SerializeField] playerStats stats;
 
 
     [Header("----- Gun States -----")]
@@ -106,6 +112,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Sprint();
         Reload();
+        inputs();
 
         groundedPlayer = controller.isGrounded;
 
@@ -163,7 +170,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (hit.collider.transform.position != transform.position && damgable != null)
                 {
                     damgable.takeDamage(shootDamage);
-                    Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    if (!hit.collider.GetComponent<spawnerDestroyable>())
+                    {
+                        Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                    }
                 }
                 else
                 {
@@ -196,6 +206,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         controller.enabled = true;
+        getSpawnStats();
     }
     
     public void spawnPlayer(quaternion rot)
@@ -209,6 +220,7 @@ public class PlayerController : MonoBehaviour, IDamage
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         transform.rotation = rot;
         controller.enabled = true;
+        getSpawnStats();
     }
 
     void UpdatePlayerUI()
@@ -302,5 +314,78 @@ public class PlayerController : MonoBehaviour, IDamage
             PlayerSounds.PlayOneShot(audReload[UnityEngine.Random.Range(0, audReload.Length)], audReloadVol);
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoMax);
         }
+    }
+
+    void inputs()
+    {
+        if (Input.GetButtonDown("Action") && canActivate)
+        {
+            actionable.Activate();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // actionable = other.GetComponent<IInteract>();
+        actionable = other.GetComponentInParent<IInteract>();
+
+        if (actionable != null)
+        {
+            canActivate = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        actionable = null;
+        canActivate = false;
+    }
+
+    private void getSpawnStats()
+    {
+        gunList = stats.gunList;
+
+    }
+
+    private void getSpawnStats(bool check)
+    {
+        gunList = stats.gunList;
+        HP = stats.hpcur;
+        HPMax = stats.hpmax;
+    }
+
+    public void setStats()
+    {
+
+        stats.gunList = gunList;
+        stats.gunCount = gunList.Count;
+        stats.hpcur = HP;
+        stats.hpmax = HPMax;
+
+    }
+
+    public void setBuff(int amount, int ID)
+    {
+
+        switch (ID)
+        {
+            case 0:
+                stats.damageBuff = amount;
+                break;
+            case 1:
+                stats.hpBuff = amount;
+                break;
+
+            case 2:
+                stats.speedBuff = amount;
+                break;
+
+            default: break;
+        }
+    }
+
+    public void itemPickUpEffect(itemStats item)
+    {
+
     }
 }
