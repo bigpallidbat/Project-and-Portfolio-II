@@ -1577,7 +1577,7 @@ GameObject:
   - component: {fileID: 2927305475703919832}
   - component: {fileID: 6717660830155432321}
   m_Layer: 6
-  m_Name: LilChick
+  m_Name: lilChick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1637,21 +1637,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4052a375436e9dd489b51b457845e585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 0}
+  effect: {fileID: 0}
   agent: {fileID: 3755915861514716332}
   painSound: {fileID: 8300000, guid: 1dafc655eadc45242aa1eeacaf43646d, type: 3}
-  audPainVol: 1
+  audPainVol: 0.5
   deathSound: {fileID: 8300000, guid: 49b777c44f3eeb14cb35f4f34714dea3, type: 3}
-  audDeathVol: 1
+  audDeathVol: 0.5
   attckSound: {fileID: 8300000, guid: 5deb12cf60be64c42b2e3ba253565037, type: 3}
-  audAttackVol: 1
+  audAttackVol: 0.5
   VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
-  audVpainVol: 1
+  audVpainVol: 0.5
   VdeathSound: {fileID: 8300000, guid: fba62fbaa6e67fe43b43da4ece203007, type: 3}
-  audVdeathVol: 1
+  audVdeathVol: 0.5
   seeSound: {fileID: 8300000, guid: 0f967872e129f4143a2433d44ea5beb7, type: 3}
-  audSeeVol: 1
+  audSeeVol: 0.5
   woosh: {fileID: 8300000, guid: 7a757608784b30845a404915f0bf1ca4, type: 3}
-  audWooshVol: 1
+  audWooshVol: 0.5
   mainBody: {fileID: 431346940790464907}
   secondPart: {fileID: 0}
   mainBodyV: {fileID: 0}
@@ -1669,14 +1671,13 @@ MonoBehaviour:
   MaxHp: 5
   Hp: 4
   friendly: 0
+  isBoss: 0
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 1
   meleeRange: 3
-  strafingSpeed: 0
   TargetFaceSpeed: 20
   soundSFX: {fileID: 6421938020295844344}
-  animChangeSpeed: 40
   viewAngle: 80
   shootAngle: 25
   roamDist: 20
@@ -1684,11 +1685,15 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 0}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
+  spawnPos: {fileID: 0}
   fireRate: 10
   shootDamage: 2
   bulletSpeed: 0
   shotoffSet: 0
   hitBoxCOL: {fileID: 3290679225269668348}
+  explosionRange: 0
   origin: {fileID: 0}
   leftChecker: 0
   rightChecker: 0
