@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5891e4a87fbf2df47adb856d63d92ea4, type: 3}
   m_Name: Player Stats
   m_EditorClassIdentifier: 
+  startingGunList:
+  - {fileID: 11400000, guid: 556268e4f885ad64397e27b4b8084f0f, type: 2}
   gunList:
   - {fileID: 11400000, guid: 556268e4f885ad64397e27b4b8084f0f, type: 2}
-  gunCount: 1
+  gunCount: 11
   selectedGun: 0
-  hpcur: 0
-  hpmax: 0
+  hpcur: 4
+  hpmax: 4
   grenadeCount: 2
+  medkitCount: 4
   damageBuff: 0
-  hpBuff: 0
+  hpBuff: 3
   speedBuff: 0

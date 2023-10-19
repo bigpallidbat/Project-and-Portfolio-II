@@ -56,6 +56,7 @@ public class gameManager : MonoBehaviour
             if (!sceneManager.scenechange)
             {
                 playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+                playerScript.setStats();
             }
             else if (sceneManager.scenechange)
             {
@@ -68,7 +69,9 @@ public class gameManager : MonoBehaviour
             stateUnpause();
         }
 
-        
+
+
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame

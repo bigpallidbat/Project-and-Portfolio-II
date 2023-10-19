@@ -36,8 +36,14 @@ public class Spawner : MonoBehaviour
             isSpawning = true;
             int arrayPos = Random.Range(0, spawnPos.Length);
             GameObject objectSpawned = Instantiate(objectToSpawn, spawnPos[arrayPos].position, objectToSpawn.transform.rotation);
-
-            objectSpawned.GetComponent<EnemyAI>().WhereISpawned = this;
+            if (objectSpawned.GetComponent<EnemyAI>() != null)
+            {
+                objectSpawned.GetComponent<EnemyAI>().WhereISpawned = this;
+            }
+            else if(objectSpawned.GetComponent<itemPickup>() != null)
+            {
+                objectSpawned.GetComponent<itemPickup>().orgin = this;
+            }
 
             objectList.Add(objectSpawned);
             numberOfObjectSpawned++;
@@ -50,7 +56,7 @@ public class Spawner : MonoBehaviour
     public void heyIDied()
     {
         numberOfObjectSpawned--;
-        maxObjectToSpawn--;
+        //maxObjectToSpawn--;
     }
 
     private void OnTriggerEnter(Collider other)
