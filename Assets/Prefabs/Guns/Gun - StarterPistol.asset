@@ -15,10 +15,11 @@ MonoBehaviour:
   shootRate: 0.8
   shootDamage: 1
   shootdist: 45
-  ammoCur: 0
+  ammoCur: 9
   ammoMax: 15
-  model: {fileID: 0}
-  hitEffect: {fileID: 0}
-  hitEffectEnemy: {fileID: 0}
-  shootSound: {fileID: 0}
-  shootSoundVol: 0
+  model: {fileID: 140927560053299499, guid: a41e1af13624251468eb030a7e0af7aa, type: 3}
+  hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
+  hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}
+  shootSound: {fileID: 8300000, guid: 54e8bcf58a05fd04b998f7c951645bbc, type: 3}
+  shootSoundVol: 0.3
+  size: {fileID: 2771652144340086165, guid: a41e1af13624251468eb030a7e0af7aa, type: 3}

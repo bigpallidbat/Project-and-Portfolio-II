@@ -17,8 +17,11 @@ public class itemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            
             other.GetComponent<PlayerController>().itemPickUpEffect(item);
+
             Destroy(gameObject);
+
         }
     }
 

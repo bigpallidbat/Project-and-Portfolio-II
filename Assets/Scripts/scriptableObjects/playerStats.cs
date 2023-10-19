@@ -12,6 +12,7 @@ public class playerStats : ScriptableObject
     public int selectedGun;
     public int hpcur;
     public int hpmax;
+    public int grenadeCount;
 
     [Header("----- Player Buffs -----")]
     public int damageBuff;
