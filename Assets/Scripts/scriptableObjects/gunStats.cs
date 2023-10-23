@@ -15,6 +15,9 @@ public class gunStats : ScriptableObject
     public int ammoReserve;
     public int ammoReserveStart;
     public int ammoReserveMax;
+    public Vector3 ShootPos;
+    public GameObject projectile;
+    public float projectileSpeed;
 
     public GameObject model;
     public ParticleSystem hitEffect;

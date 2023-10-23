@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
+    [SerializeField] Transform shootPos;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip[] audDamage;
@@ -175,24 +177,27 @@ public class PlayerController : MonoBehaviour, IDamage
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
-            {
-                IDamage damgable = hit.collider.GetComponent<IDamage>();
+            Instantiate(gunList[selectedGun].projectile,  shootPos.position, transform.rotation);
+            //Instantiate(bullet, shootPos.position, transform.rotation);
 
-                if (hit.collider.transform.position != transform.position && damgable != null)
-                {
-                    damgable.takeDamage(shootDamage + stats.damageBuff);
-                    if (!hit.collider.GetComponent<spawnerDestroyable>())
-                    {
-                        Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
-                    }
-                }
-                else
-                {
-                    Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-                }
-            }
+            //RaycastHit hit;
+            //if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
+            //{
+            //    IDamage damgable = hit.collider.GetComponent<IDamage>();
+
+            //    if (hit.collider.transform.position != transform.position && damgable != null)
+            //    {
+            //        damgable.takeDamage(shootDamage + stats.damageBuff);
+            //        if (!hit.collider.GetComponent<spawnerDestroyable>())
+            //        {
+            //            (gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+            //    }
+            //}
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
@@ -290,6 +295,7 @@ public class PlayerController : MonoBehaviour, IDamage
             gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
+            shootPos.position = gun.ShootPos;
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
             gunModel2.transform.localScale = gun.model.transform.localScale;
@@ -364,6 +370,7 @@ public class PlayerController : MonoBehaviour, IDamage
             gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
+            shootPos.position = gunList[selectedGun].ShootPos;
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
         }   gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;

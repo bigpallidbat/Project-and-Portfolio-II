@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     [Range(0, 1)][SerializeField] float audWooshVol;
     [SerializeField] GameObject mainBodyV;
     [SerializeField] GameObject VoxelDamage;
+    [SerializeField] MeshRenderer voxelColor;
     [SerializeField] GameObject DeathOBJ;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
@@ -30,18 +32,21 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     [Header("----- Enemy States -----")]
     [SerializeField] int Hp;
     private int HpMax;
+    int HpCheck;
     [SerializeField] int TargetFaceSpeed;
     public AudioSource soundSFX;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
-    public spawnerWave whereISpawned;
-    public Spawner WhereISpawned;
 
     [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
+    [SerializeField] float reAttackRate;
     [SerializeField] float fireRate;
+    [SerializeField] float att1Rate;
+    [SerializeField] float att1multiRate;
+    float att1CurFireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
     [Range(0, 3)][SerializeField] float shotoffSet;
@@ -53,16 +58,14 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     [SerializeField] GameObject enemy1;
     [SerializeField] GameObject enemy2;
 
-    [SerializeField] Spawner WhereIspawned;
-
     int curObjectsSpawned;
     bool isSpawning;
     bool startSpawning;
 
-    public spawnerDestroyable origin;
     int DiceRoll = 20;
     bool isAttacking;
     bool inPain;
+    bool isInvincible;
     bool playerInRange;
     float angleToPlayer;
     float stoppingDistOrig;
@@ -70,16 +73,20 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     public bool rightChecker;
     public bool inStafingRange;
     public bool goRight;
+    public bool cutSceneOver;
 
     // Start is called before the first frame update
     void Start()
     {
+        //agent.enabled = false;
+        //isInvincible = true;
+        att1CurFireRate = att1Rate;
         soundSFX = GetComponent<AudioSource>();
         goRight = Random.Range(0, 2) == 0;
-        stoppingDistOrig = agent.stoppingDistance;
         HpMax = Hp;
         updateHpUI();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -99,6 +106,11 @@ public class AlexsBossAI : MonoBehaviour , IDamage
             }
         }
     }
+    public void StartFight()
+    {
+        isInvincible = false;
+        agent.enabled = true;
+    }
     bool CanSeePlayer()
     {
         PlayerDir = gameManager.Instance.player.transform.position - headPos.position;
@@ -117,6 +129,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
 
                 if (angleToPlayer <= shootAngle && !isAttacking)// && playerDist <= meleeRange)
                 {
+                    FaceTarget();
                     StartCoroutine(attack());
                 }
                 return true;
@@ -270,6 +283,128 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     IEnumerator attack()
     {
         isAttacking = true;
+        StartCoroutine(attack1());
+        //DiceRoll = Random.Range(0, 20);
+        //switch (DiceRoll)
+        //{
+        //    case 0:
+        //        Instantiate(enemy2, spawnPos.position, transform.rotation);
+
+
+        //        break;
+        //    case 1:
+        //        if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 2:
+        //        if (Hp < 80) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 3:
+        //        if (Hp < 70) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 4:
+        //        if (Hp < 60) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 5:
+        //        if (Hp < 50) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 6:
+        //        if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 7:
+        //        if (Hp < 10) Instantiate(enemy2, spawnPos.position, transform.rotation);
+        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //        curObjectsSpawned++;
+        //        break;
+        //    case 8:
+        //        if (Hp < 90)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 9:
+        //        if (Hp < 80)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 10:
+        //        if (Hp < 70)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 11:
+        //        if (Hp < 60)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 12:
+        //        if (Hp < 50)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 13:
+        //        if (Hp < 40)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 14:
+        //        if (Hp < 30)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 15:
+        //        if (Hp < 20)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    case 16:
+        //        if (Hp < 10)
+        //        {
+        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
+        //            curObjectsSpawned++;
+        //        }
+        //        break;
+        //    default:
+        //        break;
+        //}
+        yield return null;
+        //isAttacking = false;
+    }
+
+    IEnumerator attack1()
+    {
+        att1CurFireRate = (Hp * att1multiRate) + 0.25f;
+        //HpCheck = HpMax;
+        //HpCheck -= Hp;
+        //att1CurFireRate = HpCheck * att1multiRate;
+        for (int i = 3; i > 0; i--)
+        {
         FireSTD();
         if (Hp <= 99) tomAttack();
         if (Hp < 92) tomAttack();
@@ -285,6 +420,23 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         if (Hp < 12) tomAttack();
         if (Hp < 6) tomAttack();
         if (Hp < 3) tomAttack();
+        yield return new WaitForSeconds(att1CurFireRate);
+        }
+        yield return new WaitForSeconds(reAttackRate);
+        isAttacking = false;
+    }
+    IEnumerator attack2()
+    {
+        yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
+    }
+    IEnumerator attack3()
+    {
+        yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
+    }
+    IEnumerator attack4()
+    {
         yield return new WaitForSeconds(fireRate);
         isAttacking = false;
     }
@@ -336,18 +488,6 @@ public class AlexsBossAI : MonoBehaviour , IDamage
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
             Invoke("Death", 0.8f);
-
-
-            if (WhereISpawned != null)
-            {
-                whereISpawned.updateEnemyNumber();
-                WhereISpawned.heyIDied();
-                //gameManager.Instance.updateGameGoal(-1);
-            }
-            if (origin != null)
-            {
-                origin.updateObjectNum();
-            }
         }
         else
             StartCoroutine(FlashDamage());
@@ -370,7 +510,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     public void endPain()
     {
         inPain = false;
-        agent.SetDestination(gameManager.Instance.player.transform.position);
+        if (gameManager.Instance.player != null) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
 
     void FaceTarget()
@@ -396,7 +536,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         //Enemies start spawning
         if (other.CompareTag("Player"))
         {
-            startSpawning = true;
+            //startSpawning = true;
         }
     }
 
