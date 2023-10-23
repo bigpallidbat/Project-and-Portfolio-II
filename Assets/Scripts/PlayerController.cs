@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour, IDamage
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
-            Instantiate(gunList[selectedGun].projectile,  shootPos.position, transform.rotation);
+            Instantiate(gunList[selectedGun].projectile,  shootPos.position, shootPos.transform.rotation);
             //Instantiate(bullet, shootPos.position, transform.rotation);
 
             //RaycastHit hit;
@@ -280,6 +280,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
 
 
+
         if (gun.ID == 1)
         {
             gunModel3.SetActive(false);
@@ -370,10 +371,11 @@ public class PlayerController : MonoBehaviour, IDamage
             gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
-            shootPos.position = gunList[selectedGun].ShootPos;
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
-        }   gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;
+            gunModel2.transform.localScale = gunList[selectedGun].model.transform.localScale;
+            shootPos.localPosition = gunList[selectedGun].ShootPos;
+        }   
 
         if (gunList[selectedGun].ID == 3)
         {

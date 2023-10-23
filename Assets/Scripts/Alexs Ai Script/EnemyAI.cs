@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Drawing;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,7 +51,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int MaxHp;
     public int Hp;
     public bool friendly;
-    [SerializeField] bool isBoss;
     [SerializeField] bool knowsPlayerLocation;
     [SerializeField] bool ambusher; // may get ride of
     [SerializeField] bool meleeOnly;
@@ -79,7 +79,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Collider hitBoxCOL;
     [SerializeField] int explosionRange;
     public spawnerDestroyable origin;
-    int DiceRoll = 20;
     bool isAttacking = false;
     bool inPain;
     bool playerInRange = false;
@@ -96,10 +95,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool readyToExplod;
     bool IAmExploding;
     Material OGeye;
-    //bool bunnyFly;
+    bool bunnyFly;
     //bool dead = false;
 
-    Color Mcolor;
+    //Color Mcolor;
     // Start is called before the first frame update
     void Start()
     {
@@ -111,12 +110,17 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (EyeColor != null) OGeye = EyeColor.GetComponent<SkinnedMeshRenderer>().material;
 
     }
+    public void huntDownPlayer()
+    {
+        knowsPlayerLocation = true;
 
+    }
     // Update is called once per frame
     void Update()
     {
         if (agent.isActiveAndEnabled)
         {
+            //if (bunnyFly) Vector3.Lerp()
             if (anim != null) anim.SetFloat("speed", agent.velocity.normalized.magnitude);
             //if (bunnyFly && mainBodyV.transform.position.y < 0.95f) mainBodyV.transform.position = new Vector3 (mainBodyV.transform.position.x, mainBodyV.transform.position.y + Time.deltaTime * 20, mainBodyV.transform.position.z);
             if (!friendly)
@@ -294,7 +298,7 @@ public void redEyes()
     agent.acceleration *= 8;
     agent.angularSpeed *= 8;
     //
-    //bunnyFly = true;
+    bunnyFly = true;
 }
 public void startUnFriend()
 {
