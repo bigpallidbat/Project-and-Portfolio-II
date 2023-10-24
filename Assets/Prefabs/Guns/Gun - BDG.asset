@@ -15,11 +15,14 @@ MonoBehaviour:
   shootRate: 0.4
   shootDamage: 2
   shootdist: 100
-  ammoCur: 2
+  ammoCur: 28
   ammoMax: 60
-  ammoReserve: 40
+  ammoReserve: 36
   ammoReserveStart: 40
   ammoReserveMax: 80
+  ShootPos: {x: 0, y: 0, z: 0}
+  projectile: {fileID: 4821185415007250156, guid: f4270ad0c4ebd3d4c9f918d4cc2c3fde, type: 3}
+  projectileSpeed: 180
   model: {fileID: 220877443674962753, guid: d8b013f3e06e92849ab07c776c33ec4b, type: 3}
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
   hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}

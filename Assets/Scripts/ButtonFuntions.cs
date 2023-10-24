@@ -30,6 +30,8 @@ public class ButtonFuntions : MonoBehaviour
     public void mainMenu()
     {
         SceneManager.LoadScene(1);
+        gameManager.Instance.stateUnpauseWithCursor();
+
     }
     public void startGame()
     {

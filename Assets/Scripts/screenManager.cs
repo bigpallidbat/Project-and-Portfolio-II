@@ -21,6 +21,7 @@ public class screenManager : MonoBehaviour
     {
         Instance = this;
         SceneCheck();
+        
     }
 
     void SceneCheck()

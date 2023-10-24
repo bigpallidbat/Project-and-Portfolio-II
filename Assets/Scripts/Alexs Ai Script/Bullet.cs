@@ -28,6 +28,13 @@ public class Bullet : MonoBehaviour
     {
         if (other.isTrigger) return;
 
+        Debug.Log(other.gameObject.layer);
+
+        if (other.gameObject.layer == 0)
+        {
+            Destroy(gameObject);
+        }
+
         IDamage damagable = other.GetComponent<IDamage>();
 
         if (damagable != null)

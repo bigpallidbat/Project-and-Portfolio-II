@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour, IDamage
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
             Instantiate(gunList[selectedGun].projectile,  shootPos.position, shootPos.transform.rotation);
-            //Instantiate(bullet, shootPos.position, transform.rotation);
+            
 
             //RaycastHit hit;
             //if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))

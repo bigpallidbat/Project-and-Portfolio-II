@@ -48,6 +48,7 @@ public class gameManager : MonoBehaviour
     GameObject Door;
     int goalAmount;
     public static bool miniGoalAcquired;
+    static bool firstBootUp;
     
 
 
@@ -55,7 +56,12 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        timeScaleOrig = Time.timeScale;
+        if (!firstBootUp)
+        {
+            timeScaleOrig = Time.timeScale;
+            firstBootUp = true;        
+        }
+
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         if (currentLevel > 1)
         {
@@ -144,14 +150,28 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    public void stateUnpauseWithCursor()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = timeScaleOrig;
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = null;
+        }
+    }
+
     public void stateUnpause()
     {
         isPaused = !isPaused;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = null;
+        }
     }
 
     public void updateGameGoal(int amount)
