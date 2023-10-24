@@ -120,7 +120,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (agent.isActiveAndEnabled)
         {
-            //if (bunnyFly) Vector3.Lerp()
+            if (bunnyFly && agent.baseOffset < 1) agent.baseOffset = Mathf.Lerp(agent.baseOffset, 1, Time.deltaTime * 4);
             if (anim != null) anim.SetFloat("speed", agent.velocity.normalized.magnitude);
             //if (bunnyFly && mainBodyV.transform.position.y < 0.95f) mainBodyV.transform.position = new Vector3 (mainBodyV.transform.position.x, mainBodyV.transform.position.y + Time.deltaTime * 20, mainBodyV.transform.position.z);
             if (!friendly)
