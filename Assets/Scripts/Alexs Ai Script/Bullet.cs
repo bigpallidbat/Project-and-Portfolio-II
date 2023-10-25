@@ -9,16 +9,17 @@ public class Bullet : MonoBehaviour
 
     [Header("----- Bullet stats -----")]
      public int damage;
-     public int speed;
+     public float speed;
     public float offsetX;
     public float offsetY;
     [SerializeField] float DestroyTime;
     [SerializeField] bool playerBullet;
+    public Vector3 dir;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (playerBullet) rb.velocity = transform.forward * speed;
+        if (playerBullet) rb.velocity = dir * speed;
         else rb.velocity = (new Vector3(gameManager.Instance.player.transform.position.x + offsetX, gameManager.Instance.player.transform.position.y + offsetY, gameManager.Instance.player.transform.position.z + offsetY) - transform.position).normalized * speed;
         //Vector3.Angle();
         Destroy(gameObject, DestroyTime);

@@ -122,7 +122,7 @@ public class TurretSystem : MonoBehaviour, IDamage
 
         if(HP <= 0 )
         {
-
+            Destroy(gameObject);
         }
     }
 

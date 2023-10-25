@@ -48,7 +48,6 @@ public class gameManager : MonoBehaviour
     GameObject Door;
     int goalAmount;
     public static bool miniGoalAcquired;
-    static bool firstBootUp;
     
 
 
@@ -56,18 +55,15 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if (!firstBootUp)
-        {
-            timeScaleOrig = Time.timeScale;
-            firstBootUp = true;        
-        }
+
+        timeScaleOrig = Time.timeScale;
 
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         if (currentLevel > 1)
         {
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
-            if (!sceneManager.scenechange || DoorController.doorNumber == 0)
+            if (!sceneManager.scenechange || DoorController.doorNumber == -1)
             {
                 miniGoalAcquired = false; 
                 playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
@@ -223,9 +219,10 @@ public class gameManager : MonoBehaviour
 
     public void sendDoor(int doornum)
     {
+            sceneManager.scenechange = false;
         if (findDoor(doornum))
         {
-            sceneManager.scenechange = false;
+
             playerScript.spawnPlayer(Quaternion.Euler(0, 0, 0));
         }
 

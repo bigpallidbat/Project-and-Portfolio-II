@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7acd4f66b91a049882116808d8c4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 2674485990342959229}
+  gate: {fileID: 8009311835267989413}
 --- !u!33 &3112892568351262633
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -576,8 +578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b4d9fae0fd2314e89e0f4bc2a5d807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneIndex: 0
-  DN: 4
+  nextSceneIndex: 5
+  DN: -1
   doorSpawn: {fileID: 3173790369147588321}
 --- !u!33 &5711048921363898662
 MeshFilter:
