@@ -39,7 +39,7 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList; 
-    enum Levels { SpecialEnemy = 1, SpawnerDestroy };
+    enum Levels {MainMenu ,SpecialEnemy , SpawnerDestroy, Boss };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -75,6 +75,7 @@ public class gameManager : MonoBehaviour
 
             }
         }
+        
         if (isPaused)
         {
             stateUnpause();

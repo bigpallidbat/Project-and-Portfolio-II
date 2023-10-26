@@ -193,23 +193,26 @@ public class PlayerController : MonoBehaviour, IDamage
 
                     gunList[selectedGun].projectile.GetComponent<Bullet>().dir = toTarget;
 
+                if (!gunList[selectedGun].IsRaycast)
+                    Instantiate(gunList[selectedGun].projectile, shootPos.position, shootPos.transform.rotation);
+                else
+                {
+                    if (hit.collider.transform.position != transform.position && damgable != null)
+                    {
 
-                    Instantiate(gunList[selectedGun].projectile,  shootPos.position, shootPos.transform.rotation);
-                //if (hit.collider.transform.position != transform.position && damgable != null)
-                //{
 
 
-
-                //    damgable.takeDamage(shootDamage + stats.damageBuff);
-                //    if (!hit.collider.GetComponent<spawnerDestroyable>())
-                //    {
-                //        Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
-                //    }
-                //}
-                //else
-                //{
-                //   // Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-                //}
+                        damgable.takeDamage(shootDamage + stats.damageBuff);
+                        if (!hit.collider.GetComponent<spawnerDestroyable>())
+                        {
+                            Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+                        }
+                    }
+                    else
+                    {
+                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                    }
+                }
             }
 
             yield return new WaitForSeconds(shootRate);
@@ -287,11 +290,14 @@ public class PlayerController : MonoBehaviour, IDamage
     public void setGunStats(gunStats gun)
     {
         gunList.Add(gun);
-
-        shootDamage = gun.shootDamage;
+        if(gun.IsRaycast) shootDamage = gun.shootDamage;
+        
+        else gun.projectile.GetComponent<Bullet>().damage = gun.shootDamage;
+       
         shootdist = gun.shootdist;
         shootRate = gun.shootRate;
-        gun.projectile.GetComponent<Bullet>().speed = gun.projectileSpeed;
+        if(!gun.IsRaycast) gun.projectile.GetComponent<Bullet>().speed = gun.projectileSpeed;
+
 
 
         if (gun.ID == 1)
@@ -364,11 +370,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
 
 
-        shootDamage = gunList[selectedGun].shootDamage;
+        if(gunList[selectedGun].IsRaycast) shootDamage = gunList[selectedGun].shootDamage;
+        else gunList[selectedGun].projectile.GetComponent<Bullet>().damage = gunList[selectedGun].shootDamage;
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
 
-        gunList[selectedGun].projectile.GetComponent<Bullet>().speed = gunList[selectedGun].projectileSpeed;
+        if(!gunList[selectedGun].IsRaycast) gunList[selectedGun].projectile.GetComponent<Bullet>().speed = gunList[selectedGun].projectileSpeed;
 
         if (gunList[selectedGun].ID == 1)
         {
