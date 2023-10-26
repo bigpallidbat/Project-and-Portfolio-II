@@ -17,12 +17,12 @@ MonoBehaviour:
   shootdist: 45
   ammoCur: 15
   ammoMax: 15
-  ammoReserve: 8
+  ammoReserve: 9
   ammoReserveStart: 10
   ammoReserveMax: 35
   ShootPos: {x: 0.003, y: 0.502, z: 1.247}
   projectile: {fileID: 4821185415007250156, guid: f4270ad0c4ebd3d4c9f918d4cc2c3fde, type: 3}
-  projectileSpeed: 300
+  projectileSpeed: 150
   model: {fileID: 140927560053299499, guid: a41e1af13624251468eb030a7e0af7aa, type: 3}
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
   hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}

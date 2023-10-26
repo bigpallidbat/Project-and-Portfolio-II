@@ -39,7 +39,7 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList; 
-    //enum GameMode { SpecialEnemy = 1, SpawnerDestroy, WaveSurvival };
+    enum Levels { SpecialEnemy = 1, SpawnerDestroy };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -48,7 +48,7 @@ public class gameManager : MonoBehaviour
     GameObject Door;
     int goalAmount;
     public static bool miniGoalAcquired;
-    
+    static Levels currentlevel;
 
 
     // Start is called before the first frame update
