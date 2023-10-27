@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class elevatorController : MonoBehaviour
+public class elevatorController : MonoBehaviour, IInteract
 {
     [Header("----- Elevator Components -----")]
     [SerializeField] BoxCollider trigger;
@@ -11,12 +11,16 @@ public class elevatorController : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] Animator anim;
 
+    private Transform originalPos;
     private bool isRising;
+    private bool toRise;
+    private bool isTop;
+    private float speed;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        originalPos = transform;
     }
 
     // Update is called once per frame
@@ -33,8 +37,11 @@ public class elevatorController : MonoBehaviour
 
             trigger.enabled = false;
             barrier.enabled = true;
-            if(!isRising)
-            StartCoroutine(elevatorAnimate());
+            if (!isRising)
+            {
+                toRise = true;
+            }
+            //StartCoroutine(elevatorAnimate());
 
         }
     }
@@ -44,6 +51,7 @@ public class elevatorController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.gameObject.transform.SetParent(null, true);
+            toRise = false;
         }
     }
 
@@ -57,5 +65,33 @@ public class elevatorController : MonoBehaviour
         anim.Play("Static");
         isRising = false;
         trigger.enabled = true;
+    }
+
+    private void RISE()
+    {
+        if (!isTop)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, elevatorDestination.position, speed * Time.deltaTime);
+            if(transform.position == elevatorDestination.position)
+            {
+                isTop = true;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, originalPos.position, speed * Time.deltaTime);
+            if(transform.position == originalPos.position)
+            {
+                isTop = false;
+            }
+        }
+    }
+
+    public void Activate()
+    {
+        if (toRise)
+        {
+            RISE();
+        }
     }
 }
