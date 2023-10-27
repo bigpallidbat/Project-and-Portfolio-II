@@ -24,11 +24,9 @@ public class TurretSystem : MonoBehaviour, IDamage
     [SerializeField] int FiringRange;
     [SerializeField] float Frequency;
     [SerializeField] float offSet;
-    [SerializeField] float warmUpTime;
 
     bool canFire;
     bool isFiring;
-    bool warmedUp;
     Transform targetLocal;
     float currentRotSpeed;
 
@@ -44,9 +42,7 @@ public class TurretSystem : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
- 
-         AimAndFire();
-        
+        AimAndFire();
     }
 
     void AimAndFire()
@@ -60,7 +56,6 @@ public class TurretSystem : MonoBehaviour, IDamage
 
             RaycastHit hit;
             Debug.DrawRay(shootPos.position, targetPos, Color.blue);
-            
             if (Physics.Raycast(shootPos.position, targetPos, out hit))
             {
                 if (canFire && hit.collider.CompareTag(tagName))
@@ -77,19 +72,8 @@ public class TurretSystem : MonoBehaviour, IDamage
 
 
                     //start coroutine bulletStorm
-                    if (warmedUp)
-                    {
-                        if (!isFiring)
-                        {
-
-                            StartCoroutine(bulletStorm());
-                        }
-                    }
-                    else
-                    {
-                        StartCoroutine(warmUP());
-                    }
-
+                    if(!isFiring)
+                        StartCoroutine(bulletStorm());
                 }
                 else
                 {
@@ -101,18 +85,9 @@ public class TurretSystem : MonoBehaviour, IDamage
                     muzzleFlash.Stop();
                     //set isFiring to false
                     isFiring = false;
-                    warmedUp = false;
                 }
             }
         }
-    }
-
-    IEnumerator warmUP()
-    {
-        yield return new WaitForSeconds(warmUpTime);
-
-        warmedUp = true;
-
     }
 
     IEnumerator bulletStorm()
@@ -147,7 +122,7 @@ public class TurretSystem : MonoBehaviour, IDamage
 
         if(HP <= 0 )
         {
-            Destroy(gameObject);
+
         }
     }
 

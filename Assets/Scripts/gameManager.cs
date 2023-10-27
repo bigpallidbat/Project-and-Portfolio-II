@@ -39,7 +39,7 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList; 
-    enum Levels {MainMenu ,SpecialEnemy , SpawnerDestroy, Boss };
+    //enum GameMode { SpecialEnemy = 1, SpawnerDestroy, WaveSurvival };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -48,22 +48,26 @@ public class gameManager : MonoBehaviour
     GameObject Door;
     int goalAmount;
     public static bool miniGoalAcquired;
-    static Levels currentlevel;
+    static bool firstBootUp;
+    
 
 
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
-
-        timeScaleOrig = Time.timeScale;
+        if (!firstBootUp)
+        {
+            timeScaleOrig = Time.timeScale;
+            firstBootUp = true;        
+        }
 
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         if (currentLevel > 1)
         {
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
-            if (!sceneManager.scenechange || DoorController.doorNumber == -1)
+            if (!sceneManager.scenechange || DoorController.doorNumber == 0)
             {
                 miniGoalAcquired = false; 
                 playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
@@ -75,7 +79,6 @@ public class gameManager : MonoBehaviour
 
             }
         }
-        
         if (isPaused)
         {
             stateUnpause();
@@ -220,10 +223,9 @@ public class gameManager : MonoBehaviour
 
     public void sendDoor(int doornum)
     {
-            sceneManager.scenechange = false;
         if (findDoor(doornum))
         {
-
+            sceneManager.scenechange = false;
             playerScript.spawnPlayer(Quaternion.Euler(0, 0, 0));
         }
 

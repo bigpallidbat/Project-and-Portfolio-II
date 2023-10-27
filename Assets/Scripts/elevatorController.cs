@@ -29,21 +29,11 @@ public class elevatorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.transform.SetParent(gameObject.transform, true);
-
             trigger.enabled = false;
             barrier.enabled = true;
             if(!isRising)
             StartCoroutine(elevatorAnimate());
 
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.gameObject.transform.SetParent(null, true);
         }
     }
 

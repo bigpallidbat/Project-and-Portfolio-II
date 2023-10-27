@@ -174,46 +174,30 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             isShooting = true;
             gunList[selectedGun].ammoCur--;
-
-
-            
-
             PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
             gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
 
- 
+            Instantiate(gunList[selectedGun].projectile,  shootPos.position, shootPos.transform.rotation);
+            
 
+            //RaycastHit hit;
+            //if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
+            //{
+            //    IDamage damgable = hit.collider.GetComponent<IDamage>();
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
-            {
-                IDamage damgable = hit.collider.GetComponent<IDamage>();
-
-                    Vector3 toTarget =  (hit.point - shootPos.position).normalized;
-
-                    gunList[selectedGun].projectile.GetComponent<Bullet>().dir = toTarget;
-
-                if (!gunList[selectedGun].IsRaycast)
-                    Instantiate(gunList[selectedGun].projectile, shootPos.position, shootPos.transform.rotation);
-                else
-                {
-                    if (hit.collider.transform.position != transform.position && damgable != null)
-                    {
-
-
-
-                        damgable.takeDamage(shootDamage + stats.damageBuff);
-                        if (!hit.collider.GetComponent<spawnerDestroyable>())
-                        {
-                            Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
-                        }
-                    }
-                    else
-                    {
-                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-                    }
-                }
-            }
+            //    if (hit.collider.transform.position != transform.position && damgable != null)
+            //    {
+            //        damgable.takeDamage(shootDamage + stats.damageBuff);
+            //        if (!hit.collider.GetComponent<spawnerDestroyable>())
+            //        {
+            //            (gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+            //    }
+            //}
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
@@ -290,13 +274,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void setGunStats(gunStats gun)
     {
         gunList.Add(gun);
-        if(gun.IsRaycast) shootDamage = gun.shootDamage;
-        
-        else gun.projectile.GetComponent<Bullet>().damage = gun.shootDamage;
-       
+
+        shootDamage = gun.shootDamage;
         shootdist = gun.shootdist;
         shootRate = gun.shootRate;
-        if(!gun.IsRaycast) gun.projectile.GetComponent<Bullet>().speed = gun.projectileSpeed;
 
 
 
@@ -370,12 +351,10 @@ public class PlayerController : MonoBehaviour, IDamage
     {
 
 
-        if(gunList[selectedGun].IsRaycast) shootDamage = gunList[selectedGun].shootDamage;
-        else gunList[selectedGun].projectile.GetComponent<Bullet>().damage = gunList[selectedGun].shootDamage;
+        shootDamage = gunList[selectedGun].shootDamage;
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
 
-        if(!gunList[selectedGun].IsRaycast) gunList[selectedGun].projectile.GetComponent<Bullet>().speed = gunList[selectedGun].projectileSpeed;
 
         if (gunList[selectedGun].ID == 1)
         {
