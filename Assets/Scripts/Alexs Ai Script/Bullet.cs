@@ -13,12 +13,12 @@ public class Bullet : MonoBehaviour
     public float offsetX;
     public float offsetY;
     [SerializeField] float DestroyTime;
-    [SerializeField] bool straight;
+    [SerializeField] bool playerBullet;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (straight) rb.velocity = (transform.forward + new Vector3(offsetX,offsetY,0)) * speed;
+        if (playerBullet) rb.velocity = transform.forward * speed;
         else rb.velocity = (new Vector3(gameManager.Instance.player.transform.position.x + offsetX, gameManager.Instance.player.transform.position.y + offsetY, gameManager.Instance.player.transform.position.z + offsetY) - transform.position).normalized * speed;
         //Vector3.Angle();
         Destroy(gameObject, DestroyTime);

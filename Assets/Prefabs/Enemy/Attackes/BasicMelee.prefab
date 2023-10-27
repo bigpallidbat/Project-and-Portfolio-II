@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1488192068297531635}
   - component: {fileID: 4944989310618401739}
   - component: {fileID: 7462097426863264124}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BasicMelee
-  m_TagString: EnemyBullet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,10 +70,7 @@ MonoBehaviour:
   rb: {fileID: 7462097426863264124}
   damage: 2
   speed: 2
-  offsetX: 0
-  offsetY: 0
   DestroyTime: 0.1
-  straight: 0
 --- !u!54 &7462097426863264124
 Rigidbody:
   m_ObjectHideFlags: 0
