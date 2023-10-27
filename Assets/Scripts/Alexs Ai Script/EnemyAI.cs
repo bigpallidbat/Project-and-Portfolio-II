@@ -79,6 +79,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Collider hitBoxCOL;
     [SerializeField] int explosionRange;
     public spawnerDestroyable origin;
+
     bool isAttacking = false;
     bool inPain;
     bool playerInRange = false;
