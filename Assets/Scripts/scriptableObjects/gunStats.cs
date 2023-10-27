@@ -25,4 +25,5 @@ public class gunStats : ScriptableObject
     public AudioClip shootSound;
     [Range(0, 1)] public float shootSoundVol;
     public int ID;
+    public bool IsRaycast;
 }
