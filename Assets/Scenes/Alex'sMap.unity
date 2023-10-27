@@ -1452,6 +1452,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726e329e1719c8f42949342e6a5b42e3, type: 3}
+--- !u!23 &1328659477 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 55291cbb50efe324a93af718f766447f, type: 3}
+  m_PrefabInstance: {fileID: 1941425332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1333097999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2563,9 +2568,14 @@ MonoBehaviour:
   audWooshVol: 0
   mainBodyV: {fileID: 5610229625809069953}
   VoxelDamage: {fileID: 1941425334}
-  voxelColor: {fileID: 0}
+  VoxelRender: {fileID: 1328659477}
+  Normal: {fileID: 2100000, guid: 8b1b3b41de4888d44bcec87ecb276de3, type: 2}
+  Negive: {fileID: 2100000, guid: 5072a70bd7dd56a45a455e2bbca4e090, type: 2}
+  Black: {fileID: 2100000, guid: 0f34b4e7b00d5304abbe1feadf39d70b, type: 2}
+  White: {fileID: 2100000, guid: 58b41b2c348039e4bbbb586acf461c3b, type: 2}
   DeathOBJ: {fileID: 76097083813843646}
   shootPos: {fileID: 2157812691071334452}
+  stompPos: {fileID: 0}
   headPos: {fileID: 3453119414311060734}
   leftCheck: {fileID: 8144646369667912912}
   rightCheck: {fileID: 2379073545113819597}
@@ -2578,6 +2588,8 @@ MonoBehaviour:
   roamDist: 0
   roamPauseTime: 0
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
+  bulletS: {fileID: 0}
+  shockWave: {fileID: 0}
   reAttackRate: 2
   fireRate: 10
   att1Rate: 0

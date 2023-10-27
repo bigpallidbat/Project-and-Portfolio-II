@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class AlexsBossAI : MonoBehaviour , IDamage
+public class AlexsBossAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
@@ -20,14 +20,20 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     [Range(0, 1)][SerializeField] float audWooshVol;
     [SerializeField] GameObject mainBodyV;
     [SerializeField] GameObject VoxelDamage;
-    [SerializeField] MeshRenderer voxelColor;
+    [SerializeField] MeshRenderer VoxelRender;
+    [SerializeField] Material Normal;
+    [SerializeField] Material Negive;
+    [SerializeField] Material Black;
+    [SerializeField] Material White;
     [SerializeField] GameObject DeathOBJ;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform stompPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject leftCheck;
     [SerializeField] GameObject rightCheck;
     [SerializeField] Collider damageCOL;
     Vector3 PlayerDir;
+    float playerDist;
 
     [Header("----- Enemy States -----")]
     [SerializeField] int Hp;
@@ -42,6 +48,8 @@ public class AlexsBossAI : MonoBehaviour , IDamage
 
     [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject bulletS;
+    [SerializeField] GameObject shockWave;
     [SerializeField] float reAttackRate;
     [SerializeField] float fireRate;
     [SerializeField] float att1Rate;
@@ -74,6 +82,16 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     public bool inStafingRange;
     public bool goRight;
     public bool cutSceneOver;
+    bool att2part1;
+    bool att2part2;
+    bool att2part3;
+    bool att2part4;
+    bool doingAttack;
+    bool jumping;
+    bool jumpLanding;
+    bool flyingUp;
+    bool slamDown;
+    bool gournded;
 
     // Start is called before the first frame update
     void Start()
@@ -93,16 +111,90 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     {
         if (agent.isActiveAndEnabled)
         {
-
-            if (playerInRange && CanSeePlayer() && !inPain)
+            if (doingAttack)
             {
-                agent.SetDestination(gameManager.Instance.player.transform.position);
+                playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
+                if (att2part1)
+                {
+                    if (agent.baseOffset < 1.8f)
+                    {
+                        agent.baseOffset = Mathf.Lerp(agent.baseOffset, 2, Time.deltaTime * 8);
+                        Debug.Log(agent.baseOffset.ConvertTo<float>());
+                    }
+                    else
+                    {
+                        att2part1 = false;
+                        att2part2 = true;
+                    }
+                }
+                if (att2part2)
+                {
+                    if (agent.baseOffset > 1.2f)
+                    {
+                        agent.baseOffset = Mathf.Lerp(agent.baseOffset, 1, Time.deltaTime * 8);
+                    }
+                    else
+                    {
+                        att2part2 = false;
+                        agent.speed *= 2;
+                        agent.acceleration *= 8;
+                        agent.angularSpeed *= 8;
+                        att2part3 = true;
+                        StartCoroutine(startSlamDown());
+                    }
+                }
+                if (att2part3)
+                {
+                    agent.SetDestination(gameManager.Instance.player.transform.position);
+                    if (agent.baseOffset < 22.8f)
+                    {
+                        agent.baseOffset = Mathf.Lerp(agent.baseOffset, 23, Time.deltaTime * 8);
+                    }
+                    else //if (playerDist < 12.22f)
+                    {
+                        att2part3 = false;
+                        agent.speed /= 2;
+                        agent.acceleration /= 8;
+                        agent.angularSpeed /= 8;
+                        att2part4 = true;
+                    }
+                }
+                if (att2part4)
+                {
+                    if (slamDown && agent.baseOffset > 1.2f)
+                    {
+                        agent.baseOffset = Mathf.Lerp(agent.baseOffset, 1, Time.deltaTime * 32);
+                        agent.SetDestination(transform.position);
+                    }
+                    else if (slamDown)
+                    {
+                        doingAttack = false;
+                        slamDown = false;
+                        StartCoroutine(endAttack());
+                        att2part4 = false;
+                        agent.baseOffset = 1;
+                        for (int i = 0; i < 32; i++)
+                        {
+                            float angle = i * 11.25f;
+                            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+                            Instantiate(shockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
+                        }
+                    }
+                }
             }
-            else if (inPain) agent.SetDestination(transform.position);
-            else agent.SetDestination(gameManager.Instance.player.transform.position);
-            if (startSpawning)// && curObjectsSpawned < maxObjectsToSpawn)
+            else
             {
-                StartCoroutine(spawn());
+                agent.baseOffset = 1;
+                if (playerInRange && CanSeePlayer() && !inPain)
+                {
+                    agent.SetDestination(gameManager.Instance.player.transform.position);
+                }
+                else if (inPain) agent.SetDestination(transform.position);
+                else agent.SetDestination(gameManager.Instance.player.transform.position);
+                if (startSpawning)// && curObjectsSpawned < maxObjectsToSpawn)
+                {
+                    StartCoroutine(spawn());
+                }
             }
         }
     }
@@ -283,14 +375,12 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     IEnumerator attack()
     {
         isAttacking = true;
-        StartCoroutine(attack1());
-        //DiceRoll = Random.Range(0, 20);
+        StartCoroutine(attack2());
+        //DiceRoll = Random.Range(0, 9);
         //switch (DiceRoll)
         //{
         //    case 0:
         //        Instantiate(enemy2, spawnPos.position, transform.rotation);
-
-
         //        break;
         //    case 1:
         //        if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
@@ -327,69 +417,6 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
         //        curObjectsSpawned++;
         //        break;
-        //    case 8:
-        //        if (Hp < 90)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 9:
-        //        if (Hp < 80)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 10:
-        //        if (Hp < 70)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 11:
-        //        if (Hp < 60)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 12:
-        //        if (Hp < 50)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 13:
-        //        if (Hp < 40)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 14:
-        //        if (Hp < 30)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 15:
-        //        if (Hp < 20)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
-        //    case 16:
-        //        if (Hp < 10)
-        //        {
-        //            Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //            curObjectsSpawned++;
-        //        }
-        //        break;
         //    default:
         //        break;
         //}
@@ -405,49 +432,53 @@ public class AlexsBossAI : MonoBehaviour , IDamage
         //att1CurFireRate = HpCheck * att1multiRate;
         for (int i = 3; i > 0; i--)
         {
-        FireSTD();
-        if (Hp <= 99) tomAttack();
-        if (Hp < 92) tomAttack();
-        if (Hp < 84) tomAttack();
-        if (Hp < 76) tomAttack();
-        if (Hp < 68) tomAttack();
-        if (Hp < 60) tomAttack();
-        if (Hp < 52) tomAttack();
-        if (Hp < 44) tomAttack();
-        if (Hp < 36) tomAttack();
-        if (Hp < 28) tomAttack();
-        if (Hp < 20) tomAttack();
-        if (Hp < 12) tomAttack();
-        if (Hp < 6) tomAttack();
-        if (Hp < 3) tomAttack();
-        yield return new WaitForSeconds(att1CurFireRate);
+            if (inPain) break;
+            FireSTD();
+            for (int j = 99; j > Hp; j -= 12) tomAttack();
+            yield return new WaitForSeconds(att1CurFireRate);
         }
-        yield return new WaitForSeconds(reAttackRate);
+
         isAttacking = false;
     }
     IEnumerator attack2()
     {
-        yield return new WaitForSeconds(fireRate);
-        isAttacking = false;
+        ///jumping = true;
+        att2part1 = true;
+        doingAttack = true;
+        isInvincible = true;
+        yield return null;
+        // isAttacking = false;
+    }
+    IEnumerator startSlamDown()
+    {
+
+        yield return new WaitForSeconds(1);
+        slamDown = true;
     }
     IEnumerator attack3()
     {
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(reAttackRate);
         isAttacking = false;
     }
     IEnumerator attack4()
     {
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(reAttackRate);
         isAttacking = false;
     }
-
+    IEnumerator endAttack()
+    {
+        isInvincible = false;
+        doingAttack = false;
+        yield return new WaitForSeconds(reAttackRate);
+        isAttacking = false;
+    }
     void tomAttack()
     {
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = shootDamage;
-        bullet.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
-        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        bulletS.GetComponent<Bullet>().speed = bulletSpeed;
+        bulletS.GetComponent<Bullet>().damage = shootDamage;
+        bulletS.GetComponent<Bullet>().offsetX = Random.Range(-shotoffSet, shotoffSet);
+        bulletS.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSet, shotoffSet);
+        Instantiate(bulletS, shootPos.position, transform.rotation);
     }
 
     void FireSTD()
@@ -471,45 +502,59 @@ public class AlexsBossAI : MonoBehaviour , IDamage
 
     public void takeDamage(int amount)
     {
-        Hp -= amount;
-        updateHpUI();
-        soundSFX.PlayOneShot(VpainSound, audVpainVol);
-        if (Hp < 70) timeBetweenSpawn = 1;
-        if (Hp <= 0)
+        if (!isInvincible)
         {
-            FaceTarget();
-            soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
-            mainBodyV.gameObject.SetActive(false);
-            VoxelDamage.gameObject.SetActive(false);
-            DeathOBJ.gameObject.SetActive(true);
-            agent.enabled = false;
-            damageCOL.enabled = false;
-            StopAllCoroutines();
-            Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-            transform.rotation = Rot;
-            Invoke("Death", 0.8f);
+            Hp -= amount;
+            updateHpUI();
+            soundSFX.PlayOneShot(VpainSound, audVpainVol);
+            if (Hp < 70) timeBetweenSpawn = 1;
+            if (Hp <= 0)
+            {
+                FaceTarget();
+                soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+                mainBodyV.gameObject.SetActive(false);
+                VoxelDamage.gameObject.SetActive(false);
+                DeathOBJ.gameObject.SetActive(true);
+                agent.enabled = false;
+                damageCOL.enabled = false;
+                StopAllCoroutines();
+                Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+                transform.rotation = Rot;
+                Invoke("Death", 0.8f);
+            }
+            else
+                StartCoroutine(FlashDamage());
         }
-        else
-            StartCoroutine(FlashDamage());
-
     }
     IEnumerator FlashDamage()
     {
         inPain = true;
-        //if (checkTag()) anim.SetBool("inPain", true);
+        isInvincible = true;
         mainBodyV.gameObject.SetActive(false);
         VoxelDamage.gameObject.SetActive(true);
         agent.SetDestination(transform.position);
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = White;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Negive;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Black;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Normal;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = White;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Negive;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Black;
+        yield return new WaitForSeconds(0.028571f);
+        VoxelRender.material = Normal;
         yield return new WaitForSeconds(0.085714f);
         VoxelDamage.gameObject.SetActive(false);
         mainBodyV.gameObject.SetActive(true);
-        Invoke("endPain", 0.142857f);
-
-    }
-
-    public void endPain()
-    {
+        StartCoroutine(attack());
         inPain = false;
+        isInvincible = false;
         if (gameManager.Instance.player != null) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
 
@@ -520,7 +565,7 @@ public class AlexsBossAI : MonoBehaviour , IDamage
     }
     public void Death()
     {
-       gameManager.Instance.updateGameGoal();
+        gameManager.Instance.updateGameGoal();
 
         Destroy(gameObject);
     }
