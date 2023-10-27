@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4944989310618401739}
   - component: {fileID: 7462097426863264124}
   - component: {fileID: 2478000797701950012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicBulletNoAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,8 @@ MonoBehaviour:
   offsetX: 0
   offsetY: 0
   DestroyTime: 10
-  playerBullet: 1
+  playerBullet: 0
+  nonAim: 1
   dir: {x: 0, y: 0, z: 0}
 --- !u!54 &7462097426863264124
 Rigidbody:
