@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3838743457786544351}
   - component: {fileID: 3990142919921343724}
   - component: {fileID: 6951846870542604003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5450961746517650194}
   PlayerSounds: {fileID: 6951846870542604003}
-  actionRaange: 10
+  actionRange: 0
   nade: {fileID: 2167477435043757623, guid: bbac6e471120a5748b54190c3e01e94c, type: 3}
   throwPos: {fileID: 5472720250748628038}
   flashLight: {fileID: 4733154752317458796}

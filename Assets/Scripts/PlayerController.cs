@@ -13,9 +13,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource PlayerSounds;
 
-    [SerializeField] Collider actionRange;
-    private bool canActivate;
-    private IInteract actionable;
+    [SerializeField] float actionRange;
+
+
     [SerializeField] GameObject nade;
     [SerializeField] GameObject throwPos;
     [SerializeField] GameObject flashLight;
@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private Coroutine recharge;
     int selectedGun;
     bool footstepsPlaying;
+    private IInteract actionable;
 
     private void Start()
     {
@@ -431,11 +432,17 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+ 
+
     void inputs()
     {
-        if (Input.GetButtonDown("Action") && canActivate)
+        if (Input.GetButtonDown("Action"))
         {
-            actionable.Activate();
+            if(actionable != null)
+            {
+                actionable.Activate();
+            }
+            
         }
         if (Input.GetButtonDown("Grenade") && grenadeCount > 0)
         {
@@ -471,21 +478,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        actionable = other.GetComponent<IInteract>();
-
-        if (actionable != null)
-        {
-            canActivate = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        actionable = null;
-        canActivate = false;
-    }
 
     private void getSpawnStats()
     {
@@ -613,6 +605,11 @@ public class PlayerController : MonoBehaviour, IDamage
             gunList[i].ammoReserve += amount;
         }
         gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur,gunList[selectedGun].ammoReserve);
+    }
+
+    public void SetActionable(IInteract obj)
+    {
+        actionable = obj;
     }
 
 }
