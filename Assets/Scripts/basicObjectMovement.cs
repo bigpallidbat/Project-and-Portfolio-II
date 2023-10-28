@@ -14,8 +14,8 @@ public class basicObjectMovement : MonoBehaviour
     
     void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
-        StartCoroutine(Destroy());
+            transform.position += transform.forward * speed * Time.deltaTime;
+            StartCoroutine(Destroy());
     }
 
     IEnumerator Destroy()
