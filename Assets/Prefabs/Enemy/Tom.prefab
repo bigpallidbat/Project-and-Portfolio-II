@@ -174,7 +174,6 @@ MonoBehaviour:
   MaxHp: 6
   Hp: 3
   friendly: 0
-  isBoss: 0
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 0
@@ -194,6 +193,7 @@ MonoBehaviour:
   fireRate: 0.5
   shootDamage: 1
   bulletSpeed: 20
+  bulletLifeSpan: 5
   shotoffSet: 1
   hitBoxCOL: {fileID: 0}
   explosionRange: 0

@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
      public float speed;
     public float offsetX;
     public float offsetY;
-    [SerializeField] float DestroyTime;
+    public float DestroyTime;
     [SerializeField] bool playerBullet;
     [SerializeField] bool nonAim;
     public Vector3 dir;
