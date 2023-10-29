@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5573738854614782507}
   - component: {fileID: 1488192068297531635}
+  - component: {fileID: 4978216936062933416}
   - component: {fileID: 2781429919389649716}
   - component: {fileID: 4944989310618401739}
   - component: {fileID: 7462097426863264124}
@@ -53,10 +54,33 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &4978216936062933416
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821185415007250156}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 10
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 4.5}
 --- !u!96 &2781429919389649716
 TrailRenderer:
   serializedVersion: 3
@@ -183,12 +207,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7462097426863264124}
-  damage: 1
-  speed: 300
+  damage: 2
+  speed: 180
   offsetX: 0
   offsetY: 0
   DestroyTime: 10
   playerBullet: 1
+  nonAim: 0
+  dir: {x: -0.98481786, y: -0.072645895, z: 0.15765908}
 --- !u!54 &7462097426863264124
 Rigidbody:
   m_ObjectHideFlags: 0
