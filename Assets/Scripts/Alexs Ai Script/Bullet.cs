@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         if (playerBullet) rb.velocity = dir * speed;
-        else if (nonAim) rb.velocity = transform.forward * speed;
+        else if (nonAim) rb.velocity = (new Vector3(transform.forward.x + offsetX, transform.forward.y + offsetY, transform.forward.z)).normalized * speed;
         else rb.velocity = (new Vector3(gameManager.Instance.player.transform.position.x + offsetX, gameManager.Instance.player.transform.position.y + offsetY, gameManager.Instance.player.transform.position.z + offsetY) - transform.position).normalized * speed;
         //Vector3.Angle();
         Destroy(gameObject, DestroyTime);

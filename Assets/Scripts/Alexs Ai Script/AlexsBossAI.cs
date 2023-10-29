@@ -57,7 +57,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     float att1CurFireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
-    [Range(0, 3)][SerializeField] float shotoffSet;
+    [Range(0, 5)][SerializeField] float shotoffSet;
 
     [Header("----- Spawner Stats -----")]
     [SerializeField] int maxObjectsToSpawn;
@@ -375,7 +375,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     IEnumerator attack()
     {
         isAttacking = true;
-        StartCoroutine(attack2());
+        StartCoroutine(attack1());
         //DiceRoll = Random.Range(0, 9);
         //switch (DiceRoll)
         //{
@@ -409,11 +409,6 @@ public class AlexsBossAI : MonoBehaviour, IDamage
         //        break;
         //    case 6:
         //        if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 7:
-        //        if (Hp < 10) Instantiate(enemy2, spawnPos.position, transform.rotation);
         //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
         //        curObjectsSpawned++;
         //        break;
