@@ -11,16 +11,16 @@ public class elevatorController : MonoBehaviour, IInteract
     [SerializeField] Rigidbody rb;
     [SerializeField] Animator anim;
 
-    private Transform originalPos;
+    [SerializeField] Transform originalPos;
     private bool isRising;
     private bool toRise;
     private bool isTop;
-    private float speed;
+    [SerializeField] float speed;
 
     // Start is called before the first frame update
     void Start()
     {
-        originalPos = transform;
+        originalPos.position = transform.position;
     }
 
     // Update is called once per frame
@@ -33,14 +33,13 @@ public class elevatorController : MonoBehaviour, IInteract
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.transform.SetParent(gameObject.transform, true);
+            other.GetComponent<PlayerController>().SetActionable(this);
+
+            //other.gameObject.transform.SetParent(gameObject.transform, true);
 
             trigger.enabled = false;
             barrier.enabled = true;
-            if (!isRising)
-            {
-                toRise = true;
-            }
+            
             //StartCoroutine(elevatorAnimate());
 
         }
@@ -50,6 +49,7 @@ public class elevatorController : MonoBehaviour, IInteract
     {
         if (other.CompareTag("Player"))
         {
+            other.GetComponent<PlayerController>().SetActionable(null);
             other.gameObject.transform.SetParent(null, true);
             toRise = false;
         }
@@ -89,9 +89,8 @@ public class elevatorController : MonoBehaviour, IInteract
 
     public void Activate()
     {
-        if (toRise)
-        {
-            RISE();
-        }
+        gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
+        RISE();
+        
     }
 }
