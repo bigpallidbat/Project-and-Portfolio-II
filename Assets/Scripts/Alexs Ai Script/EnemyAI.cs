@@ -353,6 +353,7 @@ public void takeDamage(int amount)
 
     if (Hp <= 0)
     {
+        StopAllCoroutines();
         FaceTarget();
         //GetComponent<CapsuleCollider>().enabled = false;
         //GetComponent<NavMeshAgent>().enabled = false;
@@ -369,7 +370,6 @@ public void takeDamage(int amount)
         DeathOBJ.gameObject.SetActive(true);
         agent.enabled = false;
         damageCOL.enabled = false;
-        StopAllCoroutines();
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
         transform.rotation = Rot;
         //StartCoroutine(Death());
