@@ -48,12 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e302d2493bdae19488a92055dd9bce1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPlayer: {fileID: 0}
   speed: 5
   destroyTime: 8
   damage: 0
+  pingPongDis: 0
   damageIT: 0
-  stayON: 1
+  pingPong: 0
 --- !u!33 &7072659741499486028
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
