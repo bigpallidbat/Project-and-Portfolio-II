@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource PlayerSounds;
 
-    [SerializeField] float actionRange;
+    
 
 
     [SerializeField] GameObject nade;
