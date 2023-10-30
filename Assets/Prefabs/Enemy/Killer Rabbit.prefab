@@ -280,7 +280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2415315910386711285}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.332, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -903,6 +903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4052a375436e9dd489b51b457845e585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 0}
+  effect: {fileID: 0}
   agent: {fileID: 6500297123589384198}
   painSound: {fileID: 8300000, guid: 8f0446ced92411c46bb67a4880037f3a, type: 3}
   audPainVol: 1
@@ -939,10 +941,8 @@ MonoBehaviour:
   ambusher: 0
   meleeOnly: 0
   meleeRange: 10
-  strafingSpeed: 0
   TargetFaceSpeed: 70
   soundSFX: {fileID: 1629175053941665820}
-  animChangeSpeed: 0
   viewAngle: 45
   shootAngle: 30
   roamDist: 3
@@ -950,11 +950,16 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 8460197353797011613}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
+  spawnPos: {fileID: 0}
   fireRate: 0
   shootDamage: 999
   bulletSpeed: 0
+  bulletLifeSpan: 0
   shotoffSet: 0
   hitBoxCOL: {fileID: 5049709218174092558}
+  explosionRange: 0
   origin: {fileID: 0}
   leftChecker: 0
   rightChecker: 0
@@ -1530,7 +1535,7 @@ Transform:
   m_GameObject: {fileID: 8460197353797011613}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.017000318, y: 1.7, z: 0.75}
+  m_LocalPosition: {x: -0.017000318, y: 0.207, z: 0.938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
