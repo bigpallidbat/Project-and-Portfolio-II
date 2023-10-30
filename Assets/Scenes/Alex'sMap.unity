@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1701662490496739331, guid: 737d8687ba70ad14caad21ba79ab83f4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4628454794815255302, guid: 737d8687ba70ad14caad21ba79ab83f4, type: 3}
       propertyPath: bulletLifeSpan
@@ -196,18 +196,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1237899123409151626, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.207
-      objectReference: {fileID: 0}
-    - target: {fileID: 1237899123409151626, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.938
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615472004367294315, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4988056034151114997, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
       propertyPath: m_Name
       value: Killer Rabbit
@@ -215,30 +203,6 @@ PrefabInstance:
     - target: {fileID: 4988056034151114997, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500297123589384198, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_BaseOffset
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919068408965953459, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919068408965953459, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919068408965953459, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919068408965953459, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919068408965953459, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1050,7 +1014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_LocalPosition.x

@@ -87,11 +87,11 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     bool att2part3;
     bool att2part4;
     bool doingAttack;
-    bool jumping;
-    bool jumpLanding;
-    bool flyingUp;
     bool slamDown;
-    bool gournded;
+    //bool jumping;
+   // bool jumpLanding;
+    //bool flyingUp;
+    //bool gournded;
 
     // Start is called before the first frame update
     void Start()

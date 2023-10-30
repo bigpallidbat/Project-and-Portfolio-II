@@ -1671,7 +1671,6 @@ MonoBehaviour:
   MaxHp: 5
   Hp: 4
   friendly: 0
-  isBoss: 0
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 1
@@ -1685,12 +1684,11 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 0}
-  enemy1: {fileID: 0}
-  enemy2: {fileID: 0}
   spawnPos: {fileID: 0}
   fireRate: 10
   shootDamage: 2
   bulletSpeed: 0
+  bulletLifeSpan: 0
   shotoffSet: 0
   hitBoxCOL: {fileID: 3290679225269668348}
   explosionRange: 0

@@ -69,8 +69,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
-    [SerializeField] GameObject enemy1;
-    [SerializeField] GameObject enemy2;
     [SerializeField] Transform spawnPos;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
@@ -104,7 +102,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Start()
     {
         Hp = MaxHp;
-        bullet.GetComponent<Bullet>().DestroyTime = bulletLifeSpan;
+        if (bullet != null)
+        {
+            bullet.GetComponent<Bullet>().DestroyTime = bulletLifeSpan;
+        }
         soundSFX = GetComponent<AudioSource>();
         StartingPos = transform.position;
         goRight = Random.Range(0, 2) == 0;
