@@ -20,7 +20,7 @@ public class elevatorController : MonoBehaviour, IInteract
     // Start is called before the first frame update
     void Start()
     {
-        originalPos.position = transform.position;
+        originalPos.localPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class elevatorController : MonoBehaviour, IInteract
         {
             other.GetComponent<PlayerController>().SetActionable(this);
 
-            //other.gameObject.transform.SetParent(gameObject.transform, true);
+            //other.gameObject.transform.SetParent(gameObject.transform);
 
             trigger.enabled = false;
             barrier.enabled = true;
@@ -49,8 +49,8 @@ public class elevatorController : MonoBehaviour, IInteract
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().SetActionable(null);
-            other.gameObject.transform.SetParent(null, true);
+            gameManager.Instance.playerScript.SetActionable(null);
+            //other.gameObject.transform.SetParent(null);
             toRise = false;
         }
     }
@@ -71,25 +71,32 @@ public class elevatorController : MonoBehaviour, IInteract
     {
         if (!isTop)
         {
-            transform.position = Vector3.MoveTowards(transform.position, elevatorDestination.position, speed * Time.deltaTime);
-            if(transform.position == elevatorDestination.position)
+          while (!isTop)
             {
-                isTop = true;
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, elevatorDestination.localPosition, speed * Time.deltaTime);
+                if (transform.localPosition == elevatorDestination.localPosition)
+                {
+                    isTop = true;
+                }
+
             }
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, originalPos.position, speed * Time.deltaTime);
-            if(transform.position == originalPos.position)
+            while (isTop)
             {
-                isTop = false;
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, originalPos.localPosition, speed * Time.deltaTime);
+                if (transform.localPosition == originalPos.localPosition)
+                {
+                    isTop = false;
+                }
             }
         }
     }
 
     public void Activate()
     {
-        gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
+        //gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
         RISE();
         
     }
