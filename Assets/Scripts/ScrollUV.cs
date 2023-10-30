@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ScrollUV : MonoBehaviour
 {
+    [SerializeField] GameObject myPlayer;
     [SerializeField] float scrollSpeed = 0.5f;
     [SerializeField] int damage;
+    [SerializeField] float timeBetweenDamage;
+    [SerializeField] bool damageOverTime;
     Renderer rend;
 
 
@@ -25,10 +28,41 @@ public class ScrollUV : MonoBehaviour
         if (other.isTrigger)
             return;
 
-        IDamage damagable = other.GetComponent<IDamage>();
+        if (damageOverTime == true)
+        {
+            StartCoroutine(DamageStart());
+        }
+        else
+        {
+            IDamage damagable = other.GetComponent<IDamage>();
+            if (damagable != null)
+            {
+                damagable.takeDamage(damage);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.isTrigger)
+            return;
+        StopAllCoroutines();
+    }
+
+    private IEnumerator DamageStart()
+    {
+        yield return new WaitForSeconds(.01f);
+        StartCoroutine(damageIncrement());
+    }
+
+    private IEnumerator damageIncrement()
+    {
+        yield return new WaitForSeconds(timeBetweenDamage);
+        IDamage damagable = myPlayer.GetComponent<IDamage>();
         if (damagable != null)
         {
             damagable.takeDamage(damage);
         }
+        StartCoroutine(damageIncrement());
     }
 }
