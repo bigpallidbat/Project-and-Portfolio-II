@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6052684016796989126
+--- !u!1 &8743878258754557967
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,66 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3875416643878967507}
-  - component: {fileID: 3998554445357023354}
-  - component: {fileID: 5069856675802786705}
-  - component: {fileID: 6177117347264614114}
-  - component: {fileID: 8656482185494052505}
+  - component: {fileID: 4105644224226261435}
+  - component: {fileID: 7905711027008685075}
+  - component: {fileID: 2036533556710597736}
+  - component: {fileID: 889865907862483088}
   m_Layer: 0
-  m_Name: LowPolyRock-Moving
+  m_Name: LowPolyRock-Moving (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3875416643878967507
+--- !u!4 &4105644224226261435
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6052684016796989126}
+  m_GameObject: {fileID: 8743878258754557967}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -84, y: -0.0874925, z: 5}
-  m_LocalScale: {x: 72.73004, y: 341.14346, z: 134.98506}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -5.02, y: -0, z: 0}
+  m_LocalScale: {x: 72.73004, y: 341.14343, z: 134.98506}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 151315833247839724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &3998554445357023354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6052684016796989126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e302d2493bdae19488a92055dd9bce1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.05
-  destroyTime: 0
-  damage: 0
-  pingPongDis: 43
-  damageIT: 0
-  pingPong: 1
---- !u!33 &5069856675802786705
+--- !u!33 &7905711027008685075
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6052684016796989126}
+  m_GameObject: {fileID: 8743878258754557967}
   m_Mesh: {fileID: -5495902117074765545, guid: 576cbc7855b43874b87abfef58d05e4f, type: 3}
---- !u!23 &6177117347264614114
+--- !u!23 &2036533556710597736
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6052684016796989126}
+  m_GameObject: {fileID: 8743878258754557967}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -103,13 +84,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8656482185494052505
+--- !u!64 &889865907862483088
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6052684016796989126}
+  m_GameObject: {fileID: 8743878258754557967}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -125,3 +106,92 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 576cbc7855b43874b87abfef58d05e4f, type: 3}
+--- !u!1 &9097466850036084691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 151315833247839724}
+  - component: {fileID: 2492004342906103625}
+  - component: {fileID: 7734537685725401048}
+  - component: {fileID: 3643922882462557690}
+  m_Layer: 0
+  m_Name: LowPolyRock-Moving
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &151315833247839724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097466850036084691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -80, y: 0.5, z: 12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4105644224226261435}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2492004342906103625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097466850036084691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e302d2493bdae19488a92055dd9bce1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.25
+  destroyTime: 0
+  damage: 0
+  pingPongDis: 19.5
+  timeBeforeSink: 0
+  damageIT: 0
+  basicMove: 0
+  pingPong: 1
+  rockSink: 0
+--- !u!114 &7734537685725401048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097466850036084691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3579efb2869fd4e94fb6d57d441e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &3643922882462557690
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097466850036084691}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 1, z: 2}
+  m_Center: {x: -4.75, y: 1, z: 0.25}

@@ -57,12 +57,13 @@ public class ScrollUV : MonoBehaviour
 
     private IEnumerator damageIncrement()
     {
-        yield return new WaitForSeconds(timeBetweenDamage);
+        yield return new WaitForSeconds(.01f);
         IDamage damagable = myPlayer.GetComponent<IDamage>();
         if (damagable != null)
         {
             damagable.takeDamage(damage);
         }
+        yield return new WaitForSeconds(timeBetweenDamage);
         StartCoroutine(damageIncrement());
     }
 }

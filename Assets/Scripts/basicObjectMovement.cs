@@ -9,8 +9,14 @@ public class basicObjectMovement : MonoBehaviour
     [SerializeField] float destroyTime;
     [SerializeField] int damage;
     [SerializeField] float pingPongDis;
+    [SerializeField] float timeBeforeSink;
     [SerializeField] bool damageIT;
+    [SerializeField] bool basicMove;
     [SerializeField] bool pingPong;
+    [SerializeField] bool pingPongRotated;
+    [SerializeField] bool rockSink;
+
+    bool player = false;
 
     private Vector3 pointA;
     private Vector3 pointB;
@@ -18,26 +24,38 @@ public class basicObjectMovement : MonoBehaviour
     //public simpleObjectSpawner orgin;
     private void Start()
     {
-        pointA = transform.position;
-        pointB = new Vector3(transform.position.x + pingPongDis, transform.position.y, transform.position.z);
+        if (pingPongRotated == false)
+        {
+            pointA = transform.position;
+            pointB = new Vector3(transform.position.x + pingPongDis, transform.position.y, transform.position.z);
+        }
+        else
+        {
+            pointA = transform.position;
+            pointB = new Vector3(transform.position.x, transform.position.y, transform.position.z + pingPongDis);
+        }
     }
 
     void Update()
     {
         if (pingPong == true)
         {
-            float time = Mathf.PingPong(Time.time * speed, 1);
-            transform.position = Vector3.Lerp(pointA, pointB, time);
+            PingPong();
         }
-        else
+        else if (basicMove == true)
         {
-            transform.position += transform.forward * speed * Time.deltaTime;
-            StartCoroutine(Destroy());
+            BasicMove();
         }
+        else if (rockSink == true && player == true)
+        {
+            StartCoroutine(RockSink());
+        }
+
     }
 
     IEnumerator Destroy()
     {
+        gameManager.Instance.playerScript.gameObject.transform.SetParent(null);
         yield return new WaitForSeconds(destroyTime);
         Destroy(gameObject);
     }
@@ -47,10 +65,34 @@ public class basicObjectMovement : MonoBehaviour
         if (other.isTrigger)
             return;
 
+        if (other.CompareTag("Player"))
+        {
+            player = true;
+        }
+
         IDamage damagable = other.GetComponent<IDamage>();
         if (damagable != null && damageIT == true)
         {
             damagable.takeDamage(damage);
         }
+    }
+
+    private void PingPong()
+    {
+        float time = Mathf.PingPong(Time.time * speed, 1);
+        transform.position = Vector3.Lerp(pointA, pointB, time);
+    }
+
+    private void BasicMove()
+    {
+        transform.position += transform.forward * speed * Time.deltaTime;
+        StartCoroutine(Destroy());
+    }
+
+    IEnumerator RockSink()
+    {
+        yield return new WaitForSeconds(timeBeforeSink);
+        transform.position += -transform.right * speed * Time.deltaTime;
+        StartCoroutine(Destroy());
     }
 }
