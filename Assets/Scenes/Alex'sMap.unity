@@ -6432,7 +6432,7 @@ NavMeshAgent:
   m_AngularSpeed: 600
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -6479,16 +6479,17 @@ MonoBehaviour:
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 0
-  meleeRange: 0
+  meleeRange: 13
   TargetFaceSpeed: 30
   soundSFX: {fileID: 0}
   viewAngle: 90
-  shootAngle: 22
+  shootAngle: 100
   roamDist: 10
   roamPauseTime: 1
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
+  ammoMax: 3
   fireRate: 0.5
   shootDamage: 1
   bulletSpeed: 20
@@ -6562,7 +6563,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80

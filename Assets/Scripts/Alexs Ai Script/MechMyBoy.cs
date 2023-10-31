@@ -51,12 +51,14 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     [Header("----- Attack States -----")]
     [SerializeField] GameObject bullet;
+    [Range(1, 32)][SerializeField] int ammoMax;
     [SerializeField] float fireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
     [SerializeField] int bulletLifeSpan;
     [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
+    int ammoAmount;
     public spawnerDestroyable origin;
     bool isAttacking = false;
     bool inPain;
@@ -69,10 +71,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     void Start()
     {
         Hp = MaxHp;
-        if (bullet != null)
-        {
-            bullet.GetComponent<Bullet>().DestroyTime = bulletLifeSpan;
-        }
+        ammoAmount = ammoMax;
         soundSFX = GetComponent<AudioSource>();
         StartingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
@@ -155,11 +154,24 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         isAttacking = true;
         anim.SetTrigger("attack");
+        ammoAmount--;
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-        yield return new WaitForSeconds(fireRate);
-        isAttacking = false;
-    }
+        if (ammoAmount <= 0)
+        {
 
+            anim.SetBool("reload", true);
+            inPain = true;
+        }
+        else
+        {
+            yield return new WaitForSeconds(fireRate);
+            isAttacking = false;
+        }
+    }
+    public void reload()
+    {
+        ammoAmount = ammoMax;
+    }
     void FireSTD()
     {
         bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
@@ -174,6 +186,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void stopedAttack()
     {
         isAttacking = false;
+        inPain = false;
     }
     public void hitBoxOn()
     {
@@ -195,8 +208,9 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
-        if (infected) soundSFX.PlayOneShot(VpainSound, audVpainVol);
-        soundSFX.PlayOneShot(painSound, audPainVol);
+
+        // Rest of your code...
+
         if (Hp <= 0)
         {
             StopAllCoroutines();
@@ -208,28 +222,81 @@ public class MechMyBoy : MonoBehaviour, IDamage
                 mainBodyV.gameObject.SetActive(false);
                 VoxelDamage.gameObject.SetActive(false);
                 DeathOBJ.gameObject.SetActive(true);
-            Invoke("Death", 0.8f);
-            Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-            transform.rotation = Rot;
+                Invoke("Death", 0.8f);
+                Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+                transform.rotation = Rot;
             }
-            else anim.SetBool("die", true);
-            agent.enabled = false;
-            damageCOL.enabled = false;
-            if (WhereISpawned != null)
+            else
             {
-                whereISpawned.updateEnemyNumber();
-                WhereISpawned.heyIDied();
-                //gameManager.Instance.updateGameGoal(-1);
+                anim.SetBool("die", true);
             }
-            if (origin != null)
-            {
-                origin.updateObjectNum();
-            }
+
+            // Delay before disabling components
+            StartCoroutine(DisableComponentsAfterDelay(1.0f)); // You can adjust the delay time as needed
         }
         else
+        {
             StartCoroutine(FlashDamage());
-
+        }
     }
+
+    IEnumerator DisableComponentsAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        agent.enabled = false;
+        damageCOL.enabled = false;
+
+        if (WhereISpawned != null)
+        {
+            whereISpawned.updateEnemyNumber();
+            WhereISpawned.heyIDied();
+            //gameManager.Instance.updateGameGoal(-1);
+        }
+        if (origin != null)
+        {
+            origin.updateObjectNum();
+        }
+    }
+    //public void takeDamage(int amount)
+    //{
+    //    Hp -= amount;
+    //    if (hitBoxCOL != null) hitBoxCOL.enabled = false;
+    //    if (infected) soundSFX.PlayOneShot(VpainSound, audVpainVol);
+    //    soundSFX.PlayOneShot(painSound, audPainVol);
+    //    if (Hp <= 0)
+    //    {
+    //        StopAllCoroutines();
+    //        FaceTarget();
+    //        soundSFX.PlayOneShot(deathSound, audDeathVol);
+    //        if (infected)
+    //        {
+    //            soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+    //            mainBodyV.gameObject.SetActive(false);
+    //            VoxelDamage.gameObject.SetActive(false);
+    //            DeathOBJ.gameObject.SetActive(true);
+    //        Invoke("Death", 0.8f);
+    //        Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+    //        transform.rotation = Rot;
+    //        }
+    //        else anim.SetBool("die", true);
+    //        agent.enabled = false;
+    //        damageCOL.enabled = false;
+    //        if (WhereISpawned != null)
+    //        {
+    //            whereISpawned.updateEnemyNumber();
+    //            WhereISpawned.heyIDied();
+    //            //gameManager.Instance.updateGameGoal(-1);
+    //        }
+    //        if (origin != null)
+    //        {
+    //            origin.updateObjectNum();
+    //        }
+    //    }
+    //    else
+    //        StartCoroutine(FlashDamage());
+
+    //}
     IEnumerator FlashDamage()
     {
         inPain = true;
@@ -251,14 +318,21 @@ public class MechMyBoy : MonoBehaviour, IDamage
         if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
         //if (checkTag()) anim.SetBool("inPain", false);
     }
-
     void FaceTarget()
     {
-        //Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        //transform.rotation = Rot; snap code
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
-        //transform.rotation = Quaternion.Lerp(new Quaternion(transform.rotation.x *0, transform.rotation.y, transform.rotation.z * 0, transform.rotation.w), Rot, Time.deltaTime * TargetFaceSpeed);
+        Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+        Quaternion newYRotation = Quaternion.Euler(0f, Rot.eulerAngles.y, 0f); // Create a new Quaternion with only Y rotation
+
+        // Use Quaternion.Lerp to smoothly rotate towards the new Y rotation
+        transform.rotation = Quaternion.Lerp(transform.rotation, newYRotation, Time.deltaTime * TargetFaceSpeed);
     }
+    //void FaceTarget()
+    //{
+    //    Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+    //    //transform.rotation = Rot; snap code
+    //    //transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
+    //    transform.rotation = Quaternion.Lerp(new Quaternion(transform.rotation.x * 0, transform.rotation.y, transform.rotation.z * 0, transform.rotation.w), Rot, Time.deltaTime * TargetFaceSpeed);
+    //}
     public void Death()
     {
         Destroy(gameObject);
