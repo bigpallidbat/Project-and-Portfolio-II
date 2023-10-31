@@ -156,7 +156,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
         isAttacking = true;
         anim.SetTrigger("attack");
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-        yield return null;
+        yield return new WaitForSeconds(fireRate);
+        isAttacking = false;
     }
 
     void FireSTD()
@@ -211,8 +212,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
             Quaternion Rot = Quaternion.LookRotation(PlayerDir);
             transform.rotation = Rot;
             }
-            else anim.SetTrigger("die");
-            //agent.enabled = false;
+            else anim.SetBool("die", true);
+            agent.enabled = false;
             damageCOL.enabled = false;
             if (WhereISpawned != null)
             {
@@ -253,9 +254,10 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     void FaceTarget()
     {
-        Quaternion Rot = Quaternion.LookRotation(PlayerDir);
+        //Quaternion Rot = Quaternion.LookRotation(PlayerDir);
         //transform.rotation = Rot; snap code
-        transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * TargetFaceSpeed);
+        //transform.rotation = Quaternion.Lerp(new Quaternion(transform.rotation.x *0, transform.rotation.y, transform.rotation.z * 0, transform.rotation.w), Rot, Time.deltaTime * TargetFaceSpeed);
     }
     public void Death()
     {
