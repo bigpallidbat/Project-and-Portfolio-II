@@ -158,7 +158,6 @@ public class MechMyBoy : MonoBehaviour, IDamage
         soundSFX.PlayOneShot(attckSound, audAttackVol);
         if (ammoAmount <= 0)
         {
-
             anim.SetBool("reload", true);
             inPain = true;
         }
@@ -170,6 +169,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     }
     public void reload()
     {
+        anim.SetBool("reload", false);
         ammoAmount = ammoMax;
     }
     void FireSTD()
