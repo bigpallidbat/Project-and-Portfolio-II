@@ -6466,7 +6466,7 @@ MonoBehaviour:
   BossHPBar: {fileID: 7132421582351981933}
   BossHpFill: {fileID: 8091932176054092028}
   enemiesRemainingText: {fileID: 3746347457029596010}
-  EnemyText: {fileID: 5179067729941873383}
+  GoalText: {fileID: 0}
   AmmoCurrent: {fileID: 5810471112961559347}
   AmmoMax: {fileID: 5537973893885067045}
   GrenadeCount: {fileID: 5574579502741419907}
@@ -7997,7 +7997,7 @@ GameObject:
   - component: {fileID: 4696708419608281589}
   - component: {fileID: 35432287564637302}
   - component: {fileID: 6970046438993815685}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

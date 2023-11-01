@@ -53,7 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5450961746517650194}
   PlayerSounds: {fileID: 6951846870542604003}
-  actionRange: 0
   nade: {fileID: 2167477435043757623, guid: bbac6e471120a5748b54190c3e01e94c, type: 3}
   throwPos: {fileID: 5472720250748628038}
   flashLight: {fileID: 4733154752317458796}
@@ -74,9 +73,9 @@ MonoBehaviour:
   gunModel: {fileID: 8222893367937395141}
   gunModel2: {fileID: 1476130285204094175}
   gunModel3: {fileID: 898542009256245567}
-  shootRate: 0
+  shootRate: 0.257142
   shootDamage: 1
-  shootdist: 0
+  shootdist: 100
   shootPos: {fileID: 2723914604039188210}
   audDamage:
   - {fileID: 8300000, guid: c5f292dfcc98f9940a6349dfc7561676, type: 3}
@@ -620,7 +619,7 @@ Transform:
   m_GameObject: {fileID: 2760170802497502600}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.003, y: 0.502, z: 1.247}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
