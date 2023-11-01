@@ -39,6 +39,7 @@ public class gameManager : MonoBehaviour
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList; 
+
     enum Levels {MainMenu ,SpecialEnemy , SpawnerDestroy, Boss };
     
     public bool isPaused;
@@ -58,8 +59,8 @@ public class gameManager : MonoBehaviour
 
         timeScaleOrig = Time.timeScale;
 
-        currentLevel = SceneManager.GetActiveScene().buildIndex;
-        if (currentLevel > 1)
+
+        if (currentlevel != Levels.MainMenu)
         {
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
@@ -81,7 +82,6 @@ public class gameManager : MonoBehaviour
             stateUnpause();
         }
 
-        checkLevel();
         
     }
 
@@ -102,40 +102,13 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void checkLevel()
-    {
-        if (currentLevel == 4)
-        {
-            if (!miniGoalAcquired)
-            {
-                spawnerDestroyable[] objs = GameObject.FindObjectsOfType<spawnerDestroyable>();
-
-                for (int i = 0; i < objs.Length; i++)
-                {
-                    spawnerList.Add(objs[i].gameObject);
-                    goalAmount++;
-                }
-                updateGameGoal(miniGoalAcquired);
-            }
-            else if (miniGoalAcquired)
-            {
-                updateGameGoal(miniGoalAcquired);
-            }
-        }
-
-        if(currentLevel != 5)
-        {
-            BossHpFill.gameObject.SetActive(false);
-            
-        }
-    }
+   
     public void updateSpawners()
     {
         goalAmount--;
         if( goalAmount <= 0)
         {
             miniGoalAcquired = true;
-            updateGameGoal(miniGoalAcquired);
         }
     }
 
@@ -183,25 +156,24 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal()
     {
-        statePause();
-        menuActive = menuWin;
-        menuActive.SetActive(true);
-    }
+        //statePause();
+        //menuActive = menuWin;
+        //menuActive.SetActive(true);
 
-    public void updateGameGoal(bool check)
-    {
-        if (check)
+        if(currentlevel == Levels.SpecialEnemy)
         {
-            EnemyText.text = "Enter The gate and Destroy the Boss";
-            enemiesRemainingText.text = enemiesRemaining.ToString("0f");
-        }
-        else
-        {
-            EnemyText.text = "Destroy All 3 Spawners to open the gate!";
-            enemiesRemainingText.text = enemiesRemaining.ToString("0f");
-        }
-    }
 
+        }
+        else if(currentlevel == Levels.SpawnerDestroy)
+        {
+
+        }
+        else if(currentlevel == Levels.Boss)
+        {
+
+        }
+
+    }
 
 
     public IEnumerator youWin()
@@ -276,6 +248,6 @@ public class gameManager : MonoBehaviour
 
     public void setCurrLevel(int level)
     {
-        currentLevel = level;
+        currentlevel = (Levels)level;
     }
 }

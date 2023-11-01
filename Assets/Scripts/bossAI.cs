@@ -52,8 +52,8 @@ public class bossAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Update game goal here? Since this acts as spawner.
-        gameManager.Instance.updateGameGoal(maxObjectsToSpawn);
+        //Update game goal here? Since this acts as spawner.  
+        //gameManager.Instance.updateGameGoal(maxObjectsToSpawn);  Commented Out to prevent script errors
         oColor = model.material.color;
         //gameManager.instance.updateGameGoal(1);
         startPos = transform.position;
@@ -89,7 +89,7 @@ public class bossAI : MonoBehaviour
         HP -= damage;
         if (HP <= 0)
         {
-            gameManager.Instance.updateGameGoal(-1);
+            // gameManager.Instance.updateGameGoal(-1); Commented Out to prevent script errors
             //Destroy(gameObject);
             anim.SetBool("Death", true);
             agent.enabled = false;

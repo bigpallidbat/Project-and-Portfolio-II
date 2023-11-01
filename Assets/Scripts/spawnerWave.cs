@@ -17,7 +17,7 @@ public class spawnerWave : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.Instance.updateGameGoal(maxObjectToSpawn);
+        //gameManager.Instance.updateGameGoal(maxObjectToSpawn); Commented Out to prevent script errors
     }
 
     // Update is called once per frame
