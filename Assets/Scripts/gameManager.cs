@@ -29,7 +29,7 @@ public class gameManager : MonoBehaviour
     public Image BossHPBar;
     public Image BossHpFill;
     [SerializeField] TMP_Text enemiesRemainingText;
-    [SerializeField] TMP_Text EnemyText;
+    [SerializeField] TMP_Text GoalText;
     [SerializeField] TMP_Text AmmoCurrent;
     [SerializeField] TMP_Text AmmoMax;
     [SerializeField] TMP_Text GrenadeCount;
@@ -144,16 +144,6 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void updateGameGoal(int amount)
-    {
-        enemiesRemaining += amount;
-        enemiesRemainingText.text = enemiesRemaining.ToString("0");
-
-        if (enemiesRemaining <= 0)
-        {
-            StartCoroutine(youWin());
-        }
-    }
     public void updateGameGoal()
     {
         //statePause();
@@ -173,6 +163,74 @@ public class gameManager : MonoBehaviour
 
         }
 
+
+        
+    }
+
+    private void checkGoal()
+    {
+        if (enemiesRemaining <= 0)
+        {
+            updateGameGoal();
+        }
+    }
+
+    public void minorUpdateGoal(int amount)
+    {
+        if (currentlevel == Levels.SpecialEnemy)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = amount.ToString();
+
+            checkGoal();
+        }
+        else if (currentlevel == Levels.SpawnerDestroy)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = amount.ToString();
+
+            checkGoal();
+        }
+        else if (currentlevel == Levels.Boss)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = amount.ToString();
+
+            checkGoal();
+
+        }
+    }
+
+    private void setGameGoal(int amount)
+    {
+        if (currentlevel == Levels.SpecialEnemy)
+        {
+            GoalText.text = "Ascend the Tower and defeat the Irregularity!";
+            enemiesRemainingText.text = amount.ToString();
+        }
+        else if (currentlevel == Levels.SpawnerDestroy)
+        {
+            GoalText.text = "Traverse the Farmland and destroy the enemy hives";
+            enemiesRemainingText.text = amount.ToString();
+        }
+        else if (currentlevel == Levels.Boss)
+        {
+            GoalText.text = "Defeat Tomas the Destroyer";
+            enemiesRemainingText.text = amount.ToString();
+        }
+    }
+
+    void catchGoal()
+    {
+        List<GameObject> objs = new List<GameObject>();
+        GameObject[] js = GameObject.FindGameObjectsWithTag("Goal Point");
+
+        for(int i = 0; i < js.Length; i++)
+        {
+            objs.Add(js[i]);
+        }
+        enemiesRemaining = objs.Count;
+        setGameGoal(objs.Count);
     }
 
 

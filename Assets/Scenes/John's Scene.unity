@@ -6826,7 +6826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2492004342906103625, guid: 534bdb0a13b78d24f80d9964e60d6772, type: 3}
       propertyPath: rockSink
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9097466850036084691, guid: 534bdb0a13b78d24f80d9964e60d6772, type: 3}
       propertyPath: m_Name
@@ -12598,6 +12598,10 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8271031108047878713, guid: 192255344c7354a45a28ed05e378f6a6, type: 3}
+      propertyPath: m_TagString
+      value: Goal Point
+      objectReference: {fileID: 0}
     - target: {fileID: 8989935342386990050, guid: 192255344c7354a45a28ed05e378f6a6, type: 3}
       propertyPath: m_Name
       value: PickleJar
@@ -12672,6 +12676,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 964597723057630181, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
+      propertyPath: m_TagString
+      value: SpawnerD
+      objectReference: {fileID: 0}
     - target: {fileID: 2994823087669811495, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 29.44
@@ -12715,6 +12723,10 @@ PrefabInstance:
     - target: {fileID: 5445503985423380714, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
       propertyPath: m_Name
       value: HenHouse complete
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778905642963868064, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
+      propertyPath: m_TagString
+      value: Goal Point
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13297,6 +13309,10 @@ PrefabInstance:
     - target: {fileID: 1468938419409960107, guid: 1f6a7995fe0628a4cbd79de615d7e73f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312714094649222812, guid: 1f6a7995fe0628a4cbd79de615d7e73f, type: 3}
+      propertyPath: m_TagString
+      value: Goal Point
       objectReference: {fileID: 0}
     - target: {fileID: 4709321649918560752, guid: 1f6a7995fe0628a4cbd79de615d7e73f, type: 3}
       propertyPath: pUP
