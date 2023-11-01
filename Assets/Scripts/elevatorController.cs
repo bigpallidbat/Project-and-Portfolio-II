@@ -36,8 +36,8 @@ public class elevatorController : MonoBehaviour, IInteract
             other.GetComponent<PlayerController>().SetActionable(this);
 
             //other.gameObject.transform.SetParent(gameObject.transform);
-
-            trigger.enabled = false;
+            toRise = true;
+            //trigger.enabled = false;
             barrier.enabled = true;
             
             //StartCoroutine(elevatorAnimate());
@@ -50,7 +50,7 @@ public class elevatorController : MonoBehaviour, IInteract
         if (other.CompareTag("Player"))
         {
             gameManager.Instance.playerScript.SetActionable(null);
-            //other.gameObject.transform.SetParent(null);
+            other.gameObject.transform.SetParent(null);
             toRise = false;
         }
     }
@@ -67,18 +67,20 @@ public class elevatorController : MonoBehaviour, IInteract
         trigger.enabled = true;
     }
 
-    private void RISE()
+     IEnumerator RISE()
     {
+        isRising = true;
         if (!isTop)
         {
           while (!isTop)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, elevatorDestination.localPosition, speed * Time.deltaTime);
+                
                 if (transform.localPosition == elevatorDestination.localPosition)
                 {
                     isTop = true;
                 }
-
+                yield return null;
             }
         }
         else
@@ -86,18 +88,24 @@ public class elevatorController : MonoBehaviour, IInteract
             while (isTop)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, originalPos.localPosition, speed * Time.deltaTime);
+               
                 if (transform.localPosition == originalPos.localPosition)
                 {
                     isTop = false;
                 }
+                yield return null;
             }
         }
+        isRising = false;
     }
 
     public void Activate()
     {
-        //gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
-        RISE();
-        
+        if (!isRising)
+        {
+            gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
+            StartCoroutine(RISE());
+        }
+        //StartCoroutine(elevatorAnimate());
     }
 }

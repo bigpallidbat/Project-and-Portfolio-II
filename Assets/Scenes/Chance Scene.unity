@@ -22076,6 +22076,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elevator 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2804278485790485928, guid: 88b7332a8e80e6149a686f46e29bc6f0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6539404734451634914, guid: 88b7332a8e80e6149a686f46e29bc6f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -22323,10 +22327,6 @@ PrefabInstance:
     - target: {fileID: 3509989311943418710, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4943319024688459587, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: Doors.Array.data[0]
@@ -22831,10 +22831,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 134802678}
     m_Modifications:
-    - target: {fileID: 2702961005066806607, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
-      propertyPath: m_Name
-      value: Elevator origin
-      objectReference: {fileID: 0}
     - target: {fileID: 2756219328034346930, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -22875,12 +22871,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4894122270136076551, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4900396374812483230, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
-      propertyPath: m_LocalPosition.z
+    - target: {fileID: 6308953393913328362, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6644397462916159347, guid: 9b6644cf07c994e409ad1b6253540eb6, type: 3}
