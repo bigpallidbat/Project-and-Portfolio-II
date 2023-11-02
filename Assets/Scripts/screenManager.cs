@@ -20,10 +20,12 @@ public class screenManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if (gameManager.currentlevel == 0)
+        if (gameManager.currentlevel == gameManager.Levels.MainMenu)
         {
-            Logorun();
+            // Logorun();
+            Debug.Log(gameManager.currentlevel);
         }
+        
         
     }
 

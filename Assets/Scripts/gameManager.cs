@@ -38,7 +38,8 @@ public class gameManager : MonoBehaviour
 
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
-    [SerializeField] List<GameObject> spawnerList; 
+    [SerializeField] List<GameObject> spawnerList;
+    [SerializeField] GameObject EndDoor;
 
    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss , Devwork = 10 };
     
@@ -59,9 +60,10 @@ public class gameManager : MonoBehaviour
 
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
-        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
         if (currentlevel != Levels.MainMenu)
         {
+            
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
             if (!sceneManager.scenechange || DoorController.doorNumber == -1)
@@ -75,6 +77,7 @@ public class gameManager : MonoBehaviour
                 sendDoor(DoorController.doorNumber);
 
             }
+            catchGoal();
         }
         
         if (isPaused)
@@ -311,4 +314,6 @@ public class gameManager : MonoBehaviour
     {
         currentlevel = (Levels)level;
     }
+
+
 }
