@@ -15,6 +15,7 @@ public class basicObjectMovement : MonoBehaviour
     [SerializeField] bool pingPong;
     [SerializeField] bool pingPongRotated;
     [SerializeField] bool rockSink;
+    [SerializeField] bool destroyOnContact;
 
     bool player = false;
 
@@ -74,6 +75,10 @@ public class basicObjectMovement : MonoBehaviour
         if (damagable != null && damageIT == true)
         {
             damagable.takeDamage(damage);
+            if(destroyOnContact == true)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

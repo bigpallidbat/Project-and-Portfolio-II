@@ -49,7 +49,13 @@ MonoBehaviour:
   speed: 5
   destroyTime: 8.25
   damage: 10
+  pingPongDis: 0
+  timeBeforeSink: 0
   damageIT: 1
+  basicMove: 1
+  pingPong: 0
+  pingPongRotated: 0
+  rockSink: 0
 --- !u!33 &2187340312651545814
 MeshFilter:
   m_ObjectHideFlags: 0

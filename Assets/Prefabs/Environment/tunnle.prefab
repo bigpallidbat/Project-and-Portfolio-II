@@ -1089,6 +1089,59 @@ Transform:
   - {fileID: 7957614498076472113}
   m_Father: {fileID: 5696292920601124530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6680519717418415143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857136965277074680}
+  - component: {fileID: 656000875341156058}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857136965277074680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680519717418415143}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.49705803, z: -0, w: 0.8677173}
+  m_LocalPosition: {x: 86.8251, y: 1.75, z: 28.264233}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1468938419409960107}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &656000875341156058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680519717418415143}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6950058971345358837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,6 +1322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectList: []
+  pUP: {fileID: 1404550393557571591, guid: c390c2d4cab3d974a8d81f3a37bcacb4, type: 3}
+  pUpSpawn: {fileID: 6680519717418415143}
   onHit: {fileID: 1459098220430390434, guid: c76e9b6e2a8d38c4dac7cbcec168ca44, type: 3}
   objectToSpawn: {fileID: 6593359936793298260, guid: 4cde80bba400d0c43b6e4d1f588ebeff, type: 3}
   maxObjectsToSpawn: 4
@@ -1691,6 +1746,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1857136965277074680}
   - {fileID: 4581938717510442049}
   - {fileID: 6226869882067344811}
   - {fileID: 571497767844739716}

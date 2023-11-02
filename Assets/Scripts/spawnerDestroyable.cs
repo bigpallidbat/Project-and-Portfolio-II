@@ -6,6 +6,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
 {
     [SerializeField] List<GameObject> objectList = new List<GameObject>();
     [SerializeField] GameObject pUP;
+    [SerializeField] GameObject pUpSpawn;
     [SerializeField] ParticleSystem onHit;
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] int maxObjectsToSpawn;
@@ -90,7 +91,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
     IEnumerator waitToDestroy()
     {
         gameManager.Instance.updateSpawners();
-        Instantiate(pUP, transform.position, Quaternion.identity);
+        Instantiate(pUP, pUpSpawn.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(.3f);
         Destroy(gameObject);
     }
