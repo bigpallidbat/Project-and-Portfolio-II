@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class MechMyBoy : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] Rigidbody rb;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] AudioClip painSound;
     [Range(0, 1)][SerializeField] float audPainVol;
@@ -86,10 +87,11 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         if (agent.isActiveAndEnabled)
         {
-            if (!reloading)
+            anim.SetFloat("speed", agent.velocity.normalized.magnitude);
+            if (!friendly)
             {
-                anim.SetFloat("speed", agent.velocity.normalized.magnitude);
-                if (!friendly)
+                if (reloading) agent.SetDestination(transform.position);
+                else
                 {
                     if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
                     if (playerInRange && CanSeePlayer() && !inPain)
@@ -98,13 +100,13 @@ public class MechMyBoy : MonoBehaviour, IDamage
                         {
                             StartCoroutine(Roam());
                         }
+
                     }
                     else if (inPain) agent.SetDestination(transform.position);
                     else if (!ambusher) StartCoroutine(Roam());
                 }
-                else StartCoroutine(Roam());
             }
-            else agent.SetDestination(transform.position);
+            else StartCoroutine(Roam());
         }
     }
     bool CanSeePlayer()
@@ -120,7 +122,6 @@ public class MechMyBoy : MonoBehaviour, IDamage
             {
 
                 if (!foundPlayer) found();
-                if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
                 agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
@@ -128,8 +129,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
                 if (angleToPlayer <= shootAngle && !isAttacking)
                 {
-                    if (!meleeOnly) StartCoroutine(attack());
-                    else if (playerDist <= meleeRange) StartCoroutine(attack());
+                    if (!meleeOnly || !reloading) StartCoroutine(attack());
+                    else if (playerDist <= meleeRange || !reloading) StartCoroutine(attack());
                 }
                 return true;
             }
@@ -158,6 +159,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator attack()
     {
+
         isAttacking = true;
         anim.SetTrigger("attack");
         ammoAmount--;
@@ -167,6 +169,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
         {
             reloading = true;
             anim.SetTrigger("Reload");
+            agent.SetDestination(transform.position);
             //anim.SetBool("reload", true);
         }
         else
@@ -180,6 +183,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
         ammoAmount = ammoMax;
         isAttacking = false;
         reloading = false;
+        agent.SetDestination(gameManager.Instance.player.transform.position);
     }
     void FireSTD()
     {
@@ -236,11 +240,12 @@ public class MechMyBoy : MonoBehaviour, IDamage
             }
             else
             {
+                anim.StopPlayback();
                 anim.SetBool("die", true);
+                rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             }
 
-            // Delay before disabling components
-            StartCoroutine(DisableComponentsAfterDelay(1.0f)); // You can adjust the delay time as needed
+            StartCoroutine(DisableComponentsAfterDelay(1.0f));
         }
         else
         {
@@ -286,7 +291,6 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         inPain = false;
         if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
-        //if (checkTag()) anim.SetBool("inPain", false);
     }
     void FaceTarget()
     {
