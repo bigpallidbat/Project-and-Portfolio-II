@@ -20,27 +20,27 @@ public class screenManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        SceneCheck();
+        if (gameManager.currentlevel == 0)
+        {
+            Logorun();
+        }
         
     }
 
-    void SceneCheck()
+    void Logorun()
     {
+        background.gameObject.SetActive(true);
+        screenImg = screenList[0];
+        screenImg.gameObject.SetActive(true);
+        StartCoroutine(Logo());
         
-        
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            background.gameObject.SetActive(true);
-            screenImg = screenList[0];
-            screenImg.gameObject.SetActive(true);
-            StartCoroutine(Logo());
-        }
-        else if(SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            background.gameObject.SetActive(true);
-            screenImg = screenList[1];
-            screenImg.gameObject.SetActive(true);
-        }
+    }
+
+    void mainMenu()
+    {
+        background.gameObject.SetActive(true);
+        screenImg = screenList[1];
+        screenImg.gameObject.SetActive(true);
     }
 
     IEnumerator Logo()
@@ -51,7 +51,8 @@ public class screenManager : MonoBehaviour
 
         screenImg.enabled = false;
         yield return new WaitForSeconds(.5f);
-        sceneManager.Instance.nextScene(1);
+
+        mainMenu();
     }
 
     public void turnOffScreens()

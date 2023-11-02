@@ -40,7 +40,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList; 
 
-    enum Levels {Devwork ,SpecialEnemy , SpawnerDestroy, Boss, MainMenu = 5};
+   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -49,7 +49,7 @@ public class gameManager : MonoBehaviour
     GameObject Door;
     int goalAmount;
     public static bool miniGoalAcquired;
-    static Levels currentlevel;
+    public static Levels currentlevel;
 
 
     // Start is called before the first frame update
@@ -58,8 +58,8 @@ public class gameManager : MonoBehaviour
         Instance = this;
 
         timeScaleOrig = Time.timeScale;
-
-
+        emergencyCheck();
+        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
         if (currentlevel != Levels.MainMenu)
         {
             player = GameObject.FindWithTag("Player");
@@ -85,6 +85,14 @@ public class gameManager : MonoBehaviour
         
     }
 
+    void emergencyCheck()
+    {
+        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            currentlevel = Levels.Devwork;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -94,12 +102,7 @@ public class gameManager : MonoBehaviour
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
         }
-        if(Input.GetButtonDown("Inventory") && menuActive == null)
-        {
-            statePause();
-            menuActive = menuInv;
-            menuActive.SetActive(isPaused);
-        }
+ 
     }
 
    

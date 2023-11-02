@@ -13,7 +13,7 @@ public class elevatorController : MonoBehaviour, IInteract
 
     [SerializeField] Transform originalPos;
     private bool isRising;
-    private bool toRise;
+   // private bool toRise;
     private bool isTop;
     [SerializeField] float speed;
 
@@ -36,7 +36,6 @@ public class elevatorController : MonoBehaviour, IInteract
             other.GetComponent<PlayerController>().SetActionable(this);
 
             //other.gameObject.transform.SetParent(gameObject.transform);
-            toRise = true;
             //trigger.enabled = false;
             barrier.enabled = true;
             
@@ -51,7 +50,6 @@ public class elevatorController : MonoBehaviour, IInteract
         {
             gameManager.Instance.playerScript.SetActionable(null);
             other.gameObject.transform.SetParent(null);
-            toRise = false;
         }
     }
 

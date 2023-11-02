@@ -35,7 +35,7 @@ public class ButtonFuntions : MonoBehaviour
     }
     public void startGame()
     {
-        sceneManager.Instance.nextScene(2);
+        sceneManager.Instance.nextScene(1);
         screenManager.Instance.turnOffScreens();
     }
 
@@ -48,7 +48,7 @@ public class ButtonFuntions : MonoBehaviour
     public void levelSelect(int level)
     {
         sceneManager.Instance.nextScene(level);
-
+        
         if(level < 2)
             screenManager.Instance.turnOffScreens();
 
