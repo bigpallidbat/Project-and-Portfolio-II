@@ -40,7 +40,7 @@ public class enemyBomb : MonoBehaviour, IDamage
         if (!isExploding)
         {
             anim.SetFloat("speed", agent.velocity.normalized.magnitude);
-            if (playerInRange && canSeePlayer())
+            if (canSeePlayer()) // && playerInRange
             {
             }
         }

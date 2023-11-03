@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void updateHP()
     {
-        HPMax = HPMax + stats.hpBuff;
+        HPMax = stats.hpmax + stats.hpBuff;
         HP += stats.hpBuff;
         UpdatePlayerUI();
     }
@@ -481,7 +481,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void getSpawnStats()
     {
-        for (int i = 0; i < stats.gunCount; i++)
+        for (int i = 0; i < stats.startingGunList.Count; ++i)
         {
             gunList.Add(stats.startingGunList[i]);
         }
@@ -496,7 +496,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void getSpawnStats(bool check)
     {
         gunList.Clear();
-        for(int i = 0; i < stats.gunCount; i++)
+        for(int i = 0; i < stats.gunCount; ++i)
         {
             gunList.Add(stats.gunList[i]);
         }
@@ -513,7 +513,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         stats.gunList.Clear();
 
-        for(int i = 0;i < gunList.Count; i++)
+        for(int i = 0;i < gunList.Count; ++i)
         {
             stats.gunList.Add(gunList[i]);
         }
@@ -525,15 +525,16 @@ public class PlayerController : MonoBehaviour, IDamage
         stats.hpmax = HPMax;
         stats.grenadeCount = grenadeCount;
         stats.medkitCount = medkitCount;
+        stats.hpBuff = 0;
 
     }
     public void setStats()
     {
         if(stats.gunCount > 1)
             stats.gunList.Clear();
-        for(int i = 0; i  < gunList.Count; i++)
+        for(int i = 0; i  < gunList.Count; ++i)
             {
-            stats.gunList.Add(gunList[i]);
+            stats.gunList.Add(stats.startingGunList[i]);
             }
         gunList.Clear();
         stats.hpcur = 0;

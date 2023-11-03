@@ -70,7 +70,6 @@ public class gameManager : MonoBehaviour
             {
                 miniGoalAcquired = false; 
                 playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
-                playerScript.setStats();
             }
             else if (sceneManager.scenechange)
             {
@@ -93,6 +92,18 @@ public class gameManager : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
         {
             currentlevel = Levels.Devwork;
+        }
+        else if((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 ) && currentlevel == Levels.MainMenu)
+        {
+            currentlevel = Levels.SpecialEnemy;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 3 && currentlevel == Levels.MainMenu)
+        {
+            currentlevel = Levels.SpawnerDestroy;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            currentlevel= Levels.Boss;
         }
     }
 
