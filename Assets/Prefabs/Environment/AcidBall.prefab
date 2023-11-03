@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e302d2493bdae19488a92055dd9bce1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  destroyTime: 20
+  speed: 6
+  destroyTime: 8
   damage: 1
   pingPongDis: 0
   timeBeforeSink: 0
@@ -59,6 +59,7 @@ MonoBehaviour:
   pingPongRotated: 0
   rockSink: 0
   destroyOnContact: 1
+  woodLog: 0
 --- !u!33 &3246304632646920404
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -190,8 +191,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.03082855
-        value: 0
+        time: 0.080923155
+        value: 0.0041503906
         inSlope: 0
         outSlope: 0
         tangentMode: 0

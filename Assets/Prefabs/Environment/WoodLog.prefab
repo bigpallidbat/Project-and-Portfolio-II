@@ -56,7 +56,10 @@ MonoBehaviour:
   damageIT: 0
   basicMove: 0
   pingPong: 0
+  pingPongRotated: 0
   rockSink: 0
+  destroyOnContact: 0
+  woodLog: 0
 --- !u!33 &6522968544289046805
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -227,7 +230,10 @@ MonoBehaviour:
   damageIT: 0
   basicMove: 1
   pingPong: 0
+  pingPongRotated: 0
   rockSink: 0
+  destroyOnContact: 0
+  woodLog: 1
 --- !u!114 &6189516150900031456
 MonoBehaviour:
   m_ObjectHideFlags: 0
