@@ -502,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10156,7 +10156,7 @@ MonoBehaviour:
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 1
-  meleeRange: 2
+  meleeRange: 3
   TargetFaceSpeed: 60
   soundSFX: {fileID: 415152852810444843}
   viewAngle: 90

@@ -140,7 +140,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator Roam()
     {
-        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        if (agent.remainingDistance < 0.05f && !destinationChosen && !isAttacking)
         {
             destinationChosen = true;
             agent.stoppingDistance = 0;
@@ -161,19 +161,22 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         isAttacking = true;
         anim.SetTrigger("attack");
-        if (!meleeOnly) ammoAmount--;
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-        if (!meleeOnly) yield return new WaitForSeconds(fireRate);
-        else yield return null;
-        if (ammoAmount <= 0)
+        //else yield return null;
+        if (!meleeOnly)
         {
-            reloading = true;
-            anim.SetTrigger("Reload");
-            agent.SetDestination(transform.position);
-        }
-        else if (!meleeOnly)
-        {
-            isAttacking = false;
+            ammoAmount--;
+            yield return new WaitForSeconds(fireRate);
+            if (ammoAmount <= 0)
+            {
+                reloading = true;
+                anim.SetTrigger("Reload");
+                agent.SetDestination(transform.position);
+            }
+            else
+            {
+                isAttacking = false;
+            }
         }
     }
     public void reload()
@@ -207,7 +210,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void playSwosh()
     {
         soundSFX.PlayOneShot(woosh, audWooshVol);
-    
+
     }
 
     public void stopedAttack()
@@ -223,6 +226,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void hitBoxOff()
     {
         hitBoxCOL.enabled = false;
+        //if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
 
     void found()
@@ -308,9 +312,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     void FaceTarget()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        Quaternion newYRotation = Quaternion.Euler(0f, Rot.eulerAngles.y, 0f); // Create a new Quaternion with only Y rotation
-
-        // Use Quaternion.Lerp to smoothly rotate towards the new Y rotation
+        Quaternion newYRotation = Quaternion.Euler(0f, Rot.eulerAngles.y, 0f);
         transform.rotation = Quaternion.Lerp(transform.rotation, newYRotation, Time.deltaTime * TargetFaceSpeed);
     }
     public void Death()
