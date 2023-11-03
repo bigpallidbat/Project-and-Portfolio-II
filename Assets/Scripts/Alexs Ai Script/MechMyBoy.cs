@@ -159,23 +159,11 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator attack()
     {
-
         isAttacking = true;
         anim.SetTrigger("attack");
-        ammoAmount--;
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-        yield return new WaitForSeconds(fireRate);
-        if (ammoAmount <= 0)
-        {
-            reloading = true;
-            anim.SetTrigger("Reload");
-            agent.SetDestination(transform.position);
-            //anim.SetBool("reload", true);
-        }
-        else
-        {
-            isAttacking = false;
-        }
+
+        yield return null;
     }
     public void reload()
     {
@@ -187,8 +175,24 @@ public class MechMyBoy : MonoBehaviour, IDamage
     }
     void FireSTD()
     {
+        ammoAmount--;
         bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
         Instantiate(bullet, shootPos.position, transform.rotation);
+        StartCoroutine(CheckForReload());
+    }
+    IEnumerator CheckForReload()
+    {
+        yield return new WaitForSeconds(fireRate);
+        if (ammoAmount <= 0)
+        {
+            reloading = true;
+            anim.SetTrigger("Reload");
+            agent.SetDestination(transform.position);
+        }
+        else
+        {
+            isAttacking = false;
+        }
     }
 
     public void playSwosh()
