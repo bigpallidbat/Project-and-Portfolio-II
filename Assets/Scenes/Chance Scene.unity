@@ -9583,7 +9583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: nextSceneIndex
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: m_Name
@@ -17281,8 +17281,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+      propertyPath: doorSpawn
+      value: 
+      objectReference: {fileID: 469551572}
+    - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: nextSceneIndex
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: m_Name
@@ -19905,8 +19909,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
+      propertyPath: doorSpawn
+      value: 
+      objectReference: {fileID: 1055513716}
+    - target: {fileID: 4049909882888707744, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: nextSceneIndex
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4404424552759966782, guid: f609fdc79c3879147928e68e3707623f, type: 3}
       propertyPath: m_Name
@@ -22075,6 +22083,10 @@ PrefabInstance:
     - target: {fileID: 1783482672304925985, guid: 88b7332a8e80e6149a686f46e29bc6f0, type: 3}
       propertyPath: m_Name
       value: Elevator 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461844784269855370, guid: 88b7332a8e80e6149a686f46e29bc6f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 29.3
       objectReference: {fileID: 0}
     - target: {fileID: 2804278485790485928, guid: 88b7332a8e80e6149a686f46e29bc6f0, type: 3}
       propertyPath: m_Enabled
