@@ -30,6 +30,8 @@ public class gameManager : MonoBehaviour
     public Image BossHpFill;
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text GoalText;
+    [SerializeField] TMP_Text WaveMax;
+    [SerializeField] TMP_Text WaveCur;
     [SerializeField] TMP_Text AmmoCurrent;
     [SerializeField] TMP_Text AmmoMax;
     [SerializeField] TMP_Text GrenadeCount;
@@ -49,6 +51,8 @@ public class gameManager : MonoBehaviour
     static int currentLevel;
     GameObject Door;
     int goalAmount;
+    int waveMax;
+    public int waveCur;
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
@@ -179,7 +183,10 @@ public class gameManager : MonoBehaviour
         {
 
         }
+        else if(currentlevel == Levels.Wave)
+        {
 
+        }
 
         
     }
@@ -255,6 +262,10 @@ public class gameManager : MonoBehaviour
         setGameGoal(objs.Count);
     }
 
+    public void setWaveCount(int num)
+    {
+
+    }
 
     public IEnumerator youWin()
     {
