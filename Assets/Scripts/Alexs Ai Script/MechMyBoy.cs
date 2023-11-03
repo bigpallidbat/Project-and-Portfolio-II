@@ -129,8 +129,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
                 if (angleToPlayer <= shootAngle && !isAttacking)
                 {
-                    if (!meleeOnly || !reloading) StartCoroutine(attack());
-                    else if (playerDist <= meleeRange || !reloading) StartCoroutine(attack());
+                    if (!meleeOnly && !reloading) StartCoroutine(attack());
+                    else if (playerDist <= meleeRange) StartCoroutine(attack());
                 }
                 return true;
             }
@@ -161,9 +161,20 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         isAttacking = true;
         anim.SetTrigger("attack");
+        if (!meleeOnly) ammoAmount--;
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-
-        yield return null;
+        if (!meleeOnly) yield return new WaitForSeconds(fireRate);
+        else yield return null;
+        if (ammoAmount <= 0)
+        {
+            reloading = true;
+            anim.SetTrigger("Reload");
+            agent.SetDestination(transform.position);
+        }
+        else if (!meleeOnly)
+        {
+            isAttacking = false;
+        }
     }
     public void reload()
     {
@@ -175,10 +186,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
     }
     void FireSTD()
     {
-        ammoAmount--;
         bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
         Instantiate(bullet, shootPos.position, transform.rotation);
-        StartCoroutine(CheckForReload());
     }
     IEnumerator CheckForReload()
     {
@@ -198,11 +207,13 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void playSwosh()
     {
         soundSFX.PlayOneShot(woosh, audWooshVol);
+    
     }
 
     public void stopedAttack()
     {
         isAttacking = false;
+        //if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
     public void hitBoxOn()
     {
@@ -225,8 +236,6 @@ public class MechMyBoy : MonoBehaviour, IDamage
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(painSound, audPainVol);
-        // Rest of your code...
-
         if (Hp <= 0)
         {
             StopAllCoroutines();
