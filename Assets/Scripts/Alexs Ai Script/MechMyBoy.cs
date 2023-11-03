@@ -220,7 +220,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     {
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
-
+        soundSFX.PlayOneShot(painSound, audPainVol);
         // Rest of your code...
 
         if (Hp <= 0)
