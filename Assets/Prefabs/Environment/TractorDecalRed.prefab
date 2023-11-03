@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyTime: 8.25
-  damage: 10
+  damage: 20
   pingPongDis: 0
   timeBeforeSink: 0
   damageIT: 1
@@ -56,6 +56,8 @@ MonoBehaviour:
   pingPong: 0
   pingPongRotated: 0
   rockSink: 0
+  destroyOnContact: 0
+  woodLog: 0
 --- !u!33 &2187340312651545814
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -56,7 +56,6 @@ public class basicObjectMovement : MonoBehaviour
 
     IEnumerator Destroy()
     {
-        gameManager.Instance.playerScript.gameObject.transform.SetParent(null);
         yield return new WaitForSeconds(destroyTime);
         Destroy(gameObject);
     }
