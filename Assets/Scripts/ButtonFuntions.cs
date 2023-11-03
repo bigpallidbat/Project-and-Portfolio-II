@@ -29,7 +29,7 @@ public class ButtonFuntions : MonoBehaviour
 
     public void mainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
         gameManager.Instance.stateUnpauseWithCursor();
 
     }
