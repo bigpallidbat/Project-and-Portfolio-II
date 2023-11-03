@@ -41,7 +41,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
 
-   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss , Devwork = 10 };
+   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -93,7 +93,7 @@ public class gameManager : MonoBehaviour
         {
             currentlevel = Levels.Devwork;
         }
-        else if((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 ) && currentlevel == Levels.MainMenu)
+        else if((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 ))
         {
             currentlevel = Levels.SpecialEnemy;
         }
@@ -215,6 +215,11 @@ public class gameManager : MonoBehaviour
 
             checkGoal();
 
+        }
+        else if(currentlevel == Levels.Wave)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = amount.ToString();
         }
     }
 

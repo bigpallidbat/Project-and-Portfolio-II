@@ -30,6 +30,7 @@ public class ButtonFuntions : MonoBehaviour
     public void mainMenu()
     {
         SceneManager.LoadScene(0);
+        gameManager.currentlevel = gameManager.Levels.MainMenu;
         gameManager.Instance.stateUnpauseWithCursor();
 
     }
