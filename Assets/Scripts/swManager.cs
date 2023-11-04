@@ -31,6 +31,7 @@ public class swManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
         //enemiesRemainingText.text = entList.Count.ToString();
@@ -77,7 +78,7 @@ public class swManager : MonoBehaviour
             entList.Add(objectClone);
             objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
             objectClone.GetComponent<EnemyAI>().huntDownPlayer();
-            enemiesRemaining++;
+            gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
         }
     }
 

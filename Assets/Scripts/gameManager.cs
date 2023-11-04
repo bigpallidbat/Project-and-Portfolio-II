@@ -230,7 +230,7 @@ public class gameManager : MonoBehaviour
         else if(currentlevel == Levels.Wave)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
         }
     }
 
@@ -346,5 +346,13 @@ public class gameManager : MonoBehaviour
         currentlevel = (Levels)level;
     }
 
-
+    public int getEnemiesRemaining()
+    {
+        return enemiesRemaining;
+    }
+    public void setEnemiesRemaining(int amount)
+    {
+        enemiesRemaining = amount;
+        enemiesRemainingText.text = enemiesRemaining.ToString();
+    }
 }
