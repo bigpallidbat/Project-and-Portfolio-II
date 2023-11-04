@@ -43,7 +43,14 @@ public class gameManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
 
-   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
+    [Header("-----  Music/sounds  -----")]
+    [SerializeField] AudioSource themes;
+    [SerializeField] AudioClip pauseMenu;
+    [SerializeField] AudioClip defeat;
+    [SerializeField] AudioClip YouWin;
+
+
+    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -87,8 +94,6 @@ public class gameManager : MonoBehaviour
         {
             stateUnpause();
         }
-
-        
     }
 
     void emergencyCheck()

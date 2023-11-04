@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,11 @@ public class screenManager : MonoBehaviour
     [SerializeField] Image[] screenList;
     [SerializeField] Image background;
     [SerializeField] Animator anim;
+    [SerializeField] AudioSource themes;
+    [SerializeField] AudioClip MainTheme;
+    [SerializeField] AudioClip pauseMenu;
+    [SerializeField] AudioClip defeat;
+    [SerializeField] AudioClip YouWin;
 
     private bool check;
     // Start is called before the first frame update
@@ -47,6 +53,8 @@ public class screenManager : MonoBehaviour
         background.gameObject.SetActive(true);
         screenImg = screenList[1];
         screenImg.gameObject.SetActive(true);
+        themes.loop = true;
+        themes.PlayOneShot(MainTheme);
     }
 
     IEnumerator Logo()
@@ -65,6 +73,8 @@ public class screenManager : MonoBehaviour
     {
         screenImg.gameObject.SetActive(false);
         background.gameObject.SetActive(false);
+        themes.loop = false;
+        themes.Stop();
     }
 
     public void setScreen(int screen)
