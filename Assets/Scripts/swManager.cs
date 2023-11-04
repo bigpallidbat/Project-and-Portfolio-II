@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class swManager : MonoBehaviour
 {
@@ -10,13 +11,11 @@ public class swManager : MonoBehaviour
     public static swManager instance;
 
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
-    [SerializeField] GameObject spawner1;
-    [SerializeField] GameObject spawner2;
-    [SerializeField] GameObject spawner3;
-    [SerializeField] GameObject spawner4;
+    [SerializeField] List<GameObject> spawnerList = new List<GameObject>();
 
+    [Header("---------- UI ----------")]
+    [SerializeField] TMP_Text enemiesRemainingText;
     List<GameObject> entList = new List<GameObject>();
-
     private int waveCurrent = 0;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
@@ -30,7 +29,8 @@ public class swManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(entList.Count);
+        //enemiesRemainingText.text = entList.Count.ToString();
     }
 
     void startWave()
@@ -54,10 +54,27 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave1()
     {
-        GameObject objectClone = Instantiate(enemies[0], spawner1.transform.position, transform.rotation);
-        entList.Add(objectClone);
-        objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
+        spawn(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
+    }
+
+    IEnumerator wave2()
+    {
+        spawn(0);
+        yield return new WaitForSeconds(timeBetweenSpawns);
+        spawn(0);
+    }
+
+    void spawn(int enemyID)
+    {
+        GameObject objectClone;
+        for (int i = 0; i < 4; i++)
+        {
+            objectClone = Instantiate(enemies[enemyID], spawnerList[i].transform.position, transform.rotation);
+            entList.Add(objectClone);
+            objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
+            enemiesRemaining++;
+        }
     }
 
 }
