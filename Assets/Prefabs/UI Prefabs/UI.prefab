@@ -2095,6 +2095,11 @@ MonoBehaviour:
   - {fileID: 9086657721031898273}
   background: {fileID: 8670740485643862941}
   anim: {fileID: 7259698867673134491}
+  themes: {fileID: 0}
+  MainTheme: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  defeat: {fileID: 0}
+  YouWin: {fileID: 0}
 --- !u!114 &895026903806356525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6568,7 +6573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4428584122277994152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6769,6 +6774,10 @@ MonoBehaviour:
   playerDamageFlash: {fileID: 6784685578755612217}
   spawnerList: []
   EndDoor: {fileID: 0}
+  themes: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  defeat: {fileID: 0}
+  YouWin: {fileID: 0}
   isPaused: 0
   waveCur: 0
 --- !u!114 &4109792196447073680
