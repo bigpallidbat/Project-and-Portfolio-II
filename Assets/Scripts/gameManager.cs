@@ -43,7 +43,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
 
-   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
+   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy =3, Boss, horror ,Wave , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -70,10 +70,16 @@ public class gameManager : MonoBehaviour
             
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
+            EndDoor = GameObject.FindWithTag("EndDoor");
+            EndDoor.SetActive(false);
             if (!sceneManager.scenechange || DoorController.doorNumber == -1)
             {
                 miniGoalAcquired = false; 
                 playerSpawnPoint = GameObject.FindWithTag("Player Spawn Point");
+                if(currentlevel == Levels.SpecialEnemy)
+                {
+                    playerScript.setStats();
+                }
             }
             else if (sceneManager.scenechange)
             {
@@ -177,19 +183,23 @@ public class gameManager : MonoBehaviour
 
         if(currentlevel == Levels.SpecialEnemy)
         {
-
+            EndDoor.SetActive(true);
         }
         else if(currentlevel == Levels.SpawnerDestroy)
         {
-
+            //replace updateSpawners with this.
         }
         else if(currentlevel == Levels.Boss)
         {
-
+            EndDoor.SetActive(true);
+        }
+        else if(currentlevel == Levels.horror)
+        {
+            EndDoor.SetActive(true);
         }
         else if(currentlevel == Levels.Wave)
         {
-
+            EndDoor.SetActive(true);
         }
 
         
@@ -208,23 +218,27 @@ public class gameManager : MonoBehaviour
         if (currentlevel == Levels.SpecialEnemy)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
         }
         else if (currentlevel == Levels.SpawnerDestroy)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
         }
         else if (currentlevel == Levels.Boss)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
+
+        }
+        else if(currentlevel == Levels.horror)
+        {
 
         }
         else if(currentlevel == Levels.Wave)
@@ -251,6 +265,14 @@ public class gameManager : MonoBehaviour
             GoalText.text = "Defeat Tomas the Destroyer";
             enemiesRemainingText.text = amount.ToString();
         }
+        else if(currentlevel == Levels.horror)
+        {
+
+        }
+        else if(currentlevel == Levels.Wave)
+        {
+
+        }
     }
 
     void catchGoal()
@@ -264,11 +286,6 @@ public class gameManager : MonoBehaviour
         }
         enemiesRemaining = objs.Count;
         setGameGoal(objs.Count);
-    }
-
-    public void setWaveCount(int num)
-    {
-
     }
 
     public IEnumerator youWin()
