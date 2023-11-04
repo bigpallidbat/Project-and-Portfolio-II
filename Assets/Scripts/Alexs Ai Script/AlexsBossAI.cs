@@ -70,7 +70,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     bool isSpawning;
     bool startSpawning;
 
-    int DiceRoll = 20;
+    int diceroll = 20;
     bool isAttacking;
     bool inPain;
     bool isInvincible;
@@ -86,10 +86,11 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     bool att2part2;
     bool att2part3;
     bool att2part4;
+    int attfail;
     bool doingAttack;
     bool slamDown;
     //bool jumping;
-   // bool jumpLanding;
+    // bool jumpLanding;
     //bool flyingUp;
     //bool gournded;
 
@@ -114,8 +115,10 @@ public class AlexsBossAI : MonoBehaviour, IDamage
             if (doingAttack)
             {
                 playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
-                if (att2part1)
+                //if 
+                if (att2part1 && !att2part2 && !att2part3 && !att2part4)
                 {
+                    isInvincible = true;
                     if (agent.baseOffset < 1.8f)
                     {
                         agent.baseOffset = Mathf.Lerp(agent.baseOffset, 2, Time.deltaTime * 8);
@@ -127,8 +130,10 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                         att2part2 = true;
                     }
                 }
-                if (att2part2)
+                //else attfail--;
+                if (att2part2 && !att2part1 && !att2part3 && !att2part4)
                 {
+                    isInvincible = true;
                     if (agent.baseOffset > 1.2f)
                     {
                         agent.baseOffset = Mathf.Lerp(agent.baseOffset, 1, Time.deltaTime * 8);
@@ -143,8 +148,9 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                         StartCoroutine(startSlamDown());
                     }
                 }
-                if (att2part3)
+                if (att2part3 && !att2part2 && !att2part1 && !att2part4)
                 {
+                    isInvincible = true;
                     agent.SetDestination(gameManager.Instance.player.transform.position);
                     if (agent.baseOffset < 22.8f)
                     {
@@ -159,8 +165,9 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                         att2part4 = true;
                     }
                 }
-                if (att2part4)
+                if (att2part4 && !att2part2 && !att2part3 && !att2part1)
                 {
+                    isInvincible = true;
                     if (slamDown && agent.baseOffset > 1.2f)
                     {
                         agent.baseOffset = Mathf.Lerp(agent.baseOffset, 1, Time.deltaTime * 32);
@@ -170,7 +177,6 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                     {
                         doingAttack = false;
                         slamDown = false;
-                        StartCoroutine(endAttack());
                         att2part4 = false;
                         agent.baseOffset = 1;
                         for (int i = 0; i < 32; i++)
@@ -179,8 +185,10 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                             Quaternion rotation = Quaternion.Euler(0, angle, 0);
                             Instantiate(shockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
                         }
+                        StartCoroutine(endAttack());
                     }
                 }
+                if (!att2part4 && !att2part2 && !att2part3 && !att2part1) StartCoroutine(endAttack());
             }
             else
             {
@@ -260,8 +268,8 @@ public class AlexsBossAI : MonoBehaviour, IDamage
         if (!isSpawning)
         {
             isSpawning = true;
-            DiceRoll = Random.Range(0, 20);
-            switch (DiceRoll)
+            diceroll = Random.Range(0, 20);
+            switch (diceroll)
             {
                 case 0:
                     Instantiate(enemy2, spawnPos.position, transform.rotation);
@@ -375,46 +383,43 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     IEnumerator attack()
     {
         isAttacking = true;
-        StartCoroutine(attack1());
-        //DiceRoll = Random.Range(0, 9);
-        //switch (DiceRoll)
-        //{
-        //    case 0:
-        //        Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        break;
-        //    case 1:
-        //        if (Hp < 90) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 2:
-        //        if (Hp < 80) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 3:
-        //        if (Hp < 70) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 4:
-        //        if (Hp < 60) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 5:
-        //        if (Hp < 50) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    case 6:
-        //        if (Hp < 20) Instantiate(enemy2, spawnPos.position, transform.rotation);
-        //        else Instantiate(enemy1, spawnPos.position, transform.rotation);
-        //        curObjectsSpawned++;
-        //        break;
-        //    default:
-        //        break;
-        //}
+        //StartCoroutine(attack2());
+        diceroll = Random.Range(0, 9);
+        switch (diceroll)
+        {
+            case 0:
+                StartCoroutine(attack2());
+                break;
+            case 1:
+                if (Hp < 70) StartCoroutine(attack2());
+                else StartCoroutine(attack1());
+                break;
+            case 2:
+                if (Hp < 40) StartCoroutine(attack2());
+                else StartCoroutine(attack1());
+                break;
+            case 3:
+                if (Hp < 10) StartCoroutine(attack2());
+                else StartCoroutine(attack1());
+                break;
+            case 4:
+                if (Hp < 70) StartCoroutine(attack1());
+                break;
+            case 5:
+                if (Hp < 50) StartCoroutine(attack1());
+                break;
+            case 6:
+                if (Hp < 30) StartCoroutine(attack1());
+                break;
+            case 7:
+                if (Hp < 20) StartCoroutine(attack1());
+                break;
+            case 8:
+                if (Hp < 10) StartCoroutine(attack1());
+                break;
+            default:
+                break;
+        }
         yield return null;
         //isAttacking = false;
     }
@@ -438,6 +443,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     IEnumerator attack2()
     {
         ///jumping = true;
+        attfail = 100;
         att2part1 = true;
         doingAttack = true;
         isInvincible = true;
@@ -499,6 +505,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     {
         if (!isInvincible)
         {
+            agent.baseOffset = 1;
             Hp -= amount;
             updateHpUI();
             soundSFX.PlayOneShot(VpainSound, audVpainVol);
@@ -576,7 +583,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
         //Enemies start spawning
         if (other.CompareTag("Player"))
         {
-            //startSpawning = true;
+            startSpawning = true;
         }
     }
 
