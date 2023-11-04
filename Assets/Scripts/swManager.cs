@@ -15,7 +15,6 @@ public class swManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList = new List<GameObject>();
 
     [Header("---------- UI ----------")]
-    [SerializeField] TMP_Text enemiesRemainingText;
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
     private int enemiesRemaining;
