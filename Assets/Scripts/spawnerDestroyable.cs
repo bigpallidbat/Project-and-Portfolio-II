@@ -91,7 +91,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
 
     IEnumerator waitToDestroy()
     {
-        gameManager.Instance.updateSpawners();
+        gameManager.Instance.minorUpdateGoal(-1);
         Instantiate(pUP, pUpSpawn.transform.position, Quaternion.identity);
         portal.SetActive(true);
         yield return new WaitForSeconds(.3f);

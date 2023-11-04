@@ -91,14 +91,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (gunList.Count > 0)
+        if (!gameManager.Instance.isPaused)
         {
-            selectGun();
+            if (gunList.Count > 0)
+            {
+                selectGun();
 
-            if (Input.GetButton("Shoot") && !isShooting)
-                StartCoroutine(shoot());
+                if (Input.GetButton("Shoot") && !isShooting)
+                    StartCoroutine(shoot());
+            }
+            Movement();
         }
-        Movement();
     }
 
     void Sprint()

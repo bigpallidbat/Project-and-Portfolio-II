@@ -186,7 +186,7 @@ public class gameManager : MonoBehaviour
         }
         else if(currentlevel == Levels.SpawnerDestroy)
         {
-
+            miniGoalAcquired = true;
         }
         else if(currentlevel == Levels.Boss)
         {
@@ -266,8 +266,9 @@ public class gameManager : MonoBehaviour
         for(int i = 0; i < js.Length; i++)
         {
             objs.Add(js[i]);
+            enemiesRemaining++;
         }
-        enemiesRemaining = objs.Count;
+        
         setGameGoal(objs.Count);
     }
 
