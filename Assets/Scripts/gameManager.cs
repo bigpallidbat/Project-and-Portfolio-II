@@ -50,7 +50,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] AudioClip YouWin;
 
 
-    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
+    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -77,6 +77,8 @@ public class gameManager : MonoBehaviour
             
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
+            EndDoor = GameObject.FindWithTag("EndDoor");
+            if(EndDoor != null) EndDoor.SetActive(false);
             if (!sceneManager.scenechange || DoorController.doorNumber == -1)
             {
                 miniGoalAcquired = false; 
@@ -87,7 +89,10 @@ public class gameManager : MonoBehaviour
                 sendDoor(DoorController.doorNumber);
 
             }
-            catchGoal();
+            if (SceneManager.GetActiveScene().buildIndex != 2)
+            {
+                catchGoal();
+            }
         }
         
         if (isPaused)
@@ -182,15 +187,16 @@ public class gameManager : MonoBehaviour
 
         if(currentlevel == Levels.SpecialEnemy)
         {
-
+            EndDoor.SetActive(true);
         }
         else if(currentlevel == Levels.SpawnerDestroy)
         {
             miniGoalAcquired = true;
+            EndDoor.SetActive(true);
         }
         else if(currentlevel == Levels.Boss)
         {
-
+            StartCoroutine(youWin());
         }
         else if(currentlevel == Levels.Wave)
         {
@@ -213,21 +219,21 @@ public class gameManager : MonoBehaviour
         if (currentlevel == Levels.SpecialEnemy)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
         }
         else if (currentlevel == Levels.SpawnerDestroy)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
         }
         else if (currentlevel == Levels.Boss)
         {
             enemiesRemaining += amount;
-            enemiesRemainingText.text = amount.ToString();
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
             checkGoal();
 
@@ -270,11 +276,6 @@ public class gameManager : MonoBehaviour
         }
         
         setGameGoal(objs.Count);
-    }
-
-    public void setWaveCount(int num)
-    {
-
     }
 
     public IEnumerator youWin()

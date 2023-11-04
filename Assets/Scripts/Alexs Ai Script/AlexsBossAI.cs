@@ -122,7 +122,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                     if (agent.baseOffset < 1.8f)
                     {
                         agent.baseOffset = Mathf.Lerp(agent.baseOffset, 2, Time.deltaTime * 8);
-                        Debug.Log(agent.baseOffset.ConvertTo<float>());
+                        //Debug.Log(agent.baseOffset.ConvertTo<float>());
                     }
                     else
                     {

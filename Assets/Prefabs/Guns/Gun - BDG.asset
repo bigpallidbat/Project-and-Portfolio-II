@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Gun - BDG
   m_EditorClassIdentifier: 
   shootRate: 0.4
-  shootDamage: 2
+  shootDamage: 4
   shootdist: 100
-  ammoCur: 28
+  ammoCur: 0
   ammoMax: 60
-  ammoReserve: 36
+  ammoReserve: 39
   ammoReserveStart: 40
   ammoReserveMax: 80
   ShootPos: {x: 0, y: 0, z: 0}
@@ -29,3 +29,4 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 54e8bcf58a05fd04b998f7c951645bbc, type: 3}
   shootSoundVol: 0.45
   ID: 3
+  IsRaycast: 0

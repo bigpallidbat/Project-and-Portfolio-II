@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c83d7666da9ae478c92483394eba31, type: 3}
   m_Name: Gun-miniAK
   m_EditorClassIdentifier: 
-  shootRate: 0.5
+  shootRate: 0.35
   shootDamage: 2
   shootdist: 40
-  ammoCur: 3
+  ammoCur: 0
   ammoMax: 32
   ammoReserve: 12
   ammoReserveStart: 12
@@ -27,6 +27,6 @@ MonoBehaviour:
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
   hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}
   shootSound: {fileID: 8300000, guid: 54e8bcf58a05fd04b998f7c951645bbc, type: 3}
-  shootSoundVol: 0.48
+  shootSoundVol: 0.35
   ID: 2
   IsRaycast: 0

@@ -21,7 +21,7 @@ public class DoorAnim : MonoBehaviour , IInteract
     [SerializeField] Quaternion leftOrig;
 
     private bool isOpen;
-    private bool recieved;
+    //private bool recieved;
 
     private void Start()
     {
@@ -66,8 +66,8 @@ public class DoorAnim : MonoBehaviour , IInteract
         }
         else
         {
-            recieved = true;
-            Debug.Log(recieved);
+            //recieved = true;
+            //Debug.Log(recieved);
             //Quaternion rotRight = Quaternion.Euler(0, rightAngle, 0);
             //Quaternion rotLeft = Quaternion.Euler(0, leftAngle, 0);
 
