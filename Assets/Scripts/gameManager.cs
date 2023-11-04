@@ -64,7 +64,7 @@ public class gameManager : MonoBehaviour
 
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
         if (currentlevel != Levels.MainMenu)
         {
             
@@ -108,6 +108,10 @@ public class gameManager : MonoBehaviour
         else if(SceneManager.GetActiveScene().buildIndex == 4)
         {
             currentlevel= Levels.Boss;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            currentlevel = Levels.Wave;
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class swManager : MonoBehaviour
 {
@@ -24,12 +25,14 @@ public class swManager : MonoBehaviour
     {
         instance = this;
         startWave();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(entList.Count);
+        //Debug.Log(entList.Count);
+        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
         //enemiesRemainingText.text = entList.Count.ToString();
     }
 
