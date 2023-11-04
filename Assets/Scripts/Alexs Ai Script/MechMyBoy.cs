@@ -70,6 +70,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     Vector3 StartingPos;
     bool foundPlayer = false;
     bool reloading;
+    bool isDead;
     void Start()
     {
         Hp = MaxHp;
@@ -85,12 +86,12 @@ public class MechMyBoy : MonoBehaviour, IDamage
     }
     void Update()
     {
-        if (agent.isActiveAndEnabled)
+        if (!isDead)
         {
             anim.SetFloat("speed", agent.velocity.normalized.magnitude);
             if (!friendly)
             {
-                if (reloading) agent.SetDestination(transform.position);
+                if (isAttacking && meleeOnly || reloading) agent.SetDestination(transform.position);
                 else
                 {
                     if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
@@ -129,8 +130,8 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
                 if (angleToPlayer <= shootAngle && !isAttacking)
                 {
-                    if (!meleeOnly || !reloading) StartCoroutine(attack());
-                    else if (playerDist <= meleeRange || !reloading) StartCoroutine(attack());
+                    if (!meleeOnly && !reloading) StartCoroutine(attack());
+                    else if (playerDist <= meleeRange) StartCoroutine(attack());
                 }
                 return true;
             }
@@ -140,7 +141,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator Roam()
     {
-        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        if (agent.remainingDistance < 0.05f && !destinationChosen && !isAttacking)
         {
             destinationChosen = true;
             agent.stoppingDistance = 0;
@@ -159,22 +160,25 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator attack()
     {
-
         isAttacking = true;
+
         anim.SetTrigger("attack");
-        ammoAmount--;
         soundSFX.PlayOneShot(attckSound, audAttackVol);
-        yield return new WaitForSeconds(fireRate);
-        if (ammoAmount <= 0)
+        //else yield return null;
+        if (!meleeOnly)
         {
-            reloading = true;
-            anim.SetTrigger("Reload");
-            agent.SetDestination(transform.position);
-            //anim.SetBool("reload", true);
-        }
-        else
-        {
-            isAttacking = false;
+            ammoAmount--;
+            yield return new WaitForSeconds(fireRate);
+            if (ammoAmount <= 0)
+            {
+                reloading = true;
+                anim.SetTrigger("Reload");
+                agent.SetDestination(transform.position);
+            }
+            else
+            {
+                isAttacking = false;
+            }
         }
     }
     public void reload()
@@ -187,18 +191,37 @@ public class MechMyBoy : MonoBehaviour, IDamage
     }
     void FireSTD()
     {
+        FaceTarget();
         bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
         Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+    IEnumerator CheckForReload()
+    {
+        yield return new WaitForSeconds(fireRate);
+        if (ammoAmount <= 0)
+        {
+            reloading = true;
+            anim.SetTrigger("Reload");
+            agent.SetDestination(transform.position);
+        }
+        else
+        {
+            isAttacking = false;
+        }
     }
 
     public void playSwosh()
     {
         soundSFX.PlayOneShot(woosh, audWooshVol);
     }
-
+    public void deathCry()
+    {
+        soundSFX.PlayOneShot(deathSound, audDeathVol);
+    }
     public void stopedAttack()
     {
         isAttacking = false;
+        //if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
     public void hitBoxOn()
     {
@@ -208,6 +231,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void hitBoxOff()
     {
         hitBoxCOL.enabled = false;
+        //if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
 
     void found()
@@ -221,15 +245,15 @@ public class MechMyBoy : MonoBehaviour, IDamage
         Hp -= amount;
         if (hitBoxCOL != null) hitBoxCOL.enabled = false;
         soundSFX.PlayOneShot(painSound, audPainVol);
-        // Rest of your code...
-
+        if (infected) soundSFX.PlayOneShot(VpainSound, audVpainVol);
         if (Hp <= 0)
         {
+            isDead = true;
             StopAllCoroutines();
             FaceTarget();
-            soundSFX.PlayOneShot(deathSound, audDeathVol);
             if (infected)
             {
+                soundSFX.PlayOneShot(deathSound, audDeathVol);
                 soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
                 mainBodyV.gameObject.SetActive(false);
                 VoxelDamage.gameObject.SetActive(false);
@@ -292,12 +316,10 @@ public class MechMyBoy : MonoBehaviour, IDamage
         inPain = false;
         if (agent.isActiveAndEnabled) agent.SetDestination(gameManager.Instance.player.transform.position);
     }
-    void FaceTarget()
+    public void FaceTarget()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDir);
-        Quaternion newYRotation = Quaternion.Euler(0f, Rot.eulerAngles.y, 0f); // Create a new Quaternion with only Y rotation
-
-        // Use Quaternion.Lerp to smoothly rotate towards the new Y rotation
+        Quaternion newYRotation = Quaternion.Euler(0f, Rot.eulerAngles.y, 0f);
         transform.rotation = Quaternion.Lerp(transform.rotation, newYRotation, Time.deltaTime * TargetFaceSpeed);
     }
     public void Death()
@@ -313,7 +335,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
     public void OnTriggerExit(Collider other)
     {
         //foundPlayer = false;
-        if (other.CompareTag("Player")) playerInRange = false;
+        if (other.CompareTag("Player") && !isAttacking) playerInRange = false;
         agent.stoppingDistance = 0;
     }
 

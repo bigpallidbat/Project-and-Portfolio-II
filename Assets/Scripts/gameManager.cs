@@ -30,6 +30,8 @@ public class gameManager : MonoBehaviour
     public Image BossHpFill;
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text GoalText;
+    [SerializeField] TMP_Text WaveMax;
+    [SerializeField] TMP_Text WaveCur;
     [SerializeField] TMP_Text AmmoCurrent;
     [SerializeField] TMP_Text AmmoMax;
     [SerializeField] TMP_Text GrenadeCount;
@@ -41,7 +43,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
 
-   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss , Devwork = 10 };
+   public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy, Boss, Wave , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -49,6 +51,8 @@ public class gameManager : MonoBehaviour
     static int currentLevel;
     GameObject Door;
     int goalAmount;
+    int waveMax;
+    public int waveCur;
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
@@ -93,7 +97,7 @@ public class gameManager : MonoBehaviour
         {
             currentlevel = Levels.Devwork;
         }
-        else if((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 ) && currentlevel == Levels.MainMenu)
+        else if((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 ))
         {
             currentlevel = Levels.SpecialEnemy;
         }
@@ -179,7 +183,10 @@ public class gameManager : MonoBehaviour
         {
 
         }
+        else if(currentlevel == Levels.Wave)
+        {
 
+        }
 
         
     }
@@ -216,6 +223,11 @@ public class gameManager : MonoBehaviour
             checkGoal();
 
         }
+        else if(currentlevel == Levels.Wave)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = amount.ToString();
+        }
     }
 
     private void setGameGoal(int amount)
@@ -250,6 +262,10 @@ public class gameManager : MonoBehaviour
         setGameGoal(objs.Count);
     }
 
+    public void setWaveCount(int num)
+    {
+
+    }
 
     public IEnumerator youWin()
     {
