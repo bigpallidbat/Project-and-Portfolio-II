@@ -17,14 +17,15 @@ public class swManager : MonoBehaviour
     [Header("---------- UI ----------")]
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
+    private int waveMax = 10;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
 
     void Awake()
     {
         instance = this;
+        gameManager.Instance.setWaveMax(waveMax);
         startWave();
-        
     }
 
     // Update is called once per frame
@@ -39,6 +40,7 @@ public class swManager : MonoBehaviour
     void startWave()
     {
         waveCurrent++;
+        gameManager.Instance.setWaveCur(waveCurrent);
         switch (waveCurrent)
         {
             case 1:

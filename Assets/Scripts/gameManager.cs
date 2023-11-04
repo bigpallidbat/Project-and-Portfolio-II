@@ -355,4 +355,14 @@ public class gameManager : MonoBehaviour
         enemiesRemaining = amount;
         enemiesRemainingText.text = enemiesRemaining.ToString();
     }
+
+    public void setWaveCur(int num)
+    {
+        WaveCur.text = num.ToString();
+    }
+    public void setWaveMax(int num)
+    {
+        WaveMax.text = num.ToString();
+    }
+
 }
