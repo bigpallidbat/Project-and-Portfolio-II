@@ -13,6 +13,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] GameObject Gun;
     [SerializeField] Transform LeftHand;
     [SerializeField] Transform RightHand;
+    [SerializeField] ParticleSystem deathSystem;
 
     [Header("----- Stats -----")]
     [SerializeField] int HP;
@@ -72,8 +73,16 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         {
             anim.SetTrigger("Death");
             gameManager.Instance.updateGameGoal();
-            Destroy(gameObject);
+            StopAllCoroutines();
+            Instantiate(deathSystem, transform.position, transform.rotation);
+            StartCoroutine(death());
         }
+    }
+    
+    IEnumerator death()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
     IEnumerator flashDamage()

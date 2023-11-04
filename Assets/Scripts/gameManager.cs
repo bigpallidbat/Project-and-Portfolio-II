@@ -30,6 +30,7 @@ public class gameManager : MonoBehaviour
     public Image BossHpFill;
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text GoalText;
+    [SerializeField] GameObject WaveParent;
     [SerializeField] TMP_Text WaveMax;
     [SerializeField] TMP_Text WaveCur;
     [SerializeField] TMP_Text AmmoCurrent;

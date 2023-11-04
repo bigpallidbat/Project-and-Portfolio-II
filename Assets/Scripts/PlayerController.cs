@@ -77,7 +77,10 @@ public class PlayerController : MonoBehaviour, IDamage
         HPMax = HP;
         maxStam = Stamina;
         origPlayerSpeed = playerSpeed;
-        spawnPlayer();
+        if (!sceneManager.scenechange)
+        {
+            spawnPlayer();
+        }
 
 
     }
@@ -256,6 +259,7 @@ public class PlayerController : MonoBehaviour, IDamage
         transform.rotation = rot;
         controller.enabled = true;
         getSpawnStats(true);
+        sceneManager.scenechange = false;
     }
 
     void UpdatePlayerUI()
