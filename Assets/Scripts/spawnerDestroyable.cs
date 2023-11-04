@@ -13,6 +13,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
     [SerializeField] int timeBetweenSpawns;
     [SerializeField] Transform[] spawnPos;
     [SerializeField] int HP;
+    [SerializeField] GameObject portal;
 
     int curObjectsSpawned;
     bool isSpawning;
@@ -92,6 +93,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
     {
         gameManager.Instance.updateSpawners();
         Instantiate(pUP, pUpSpawn.transform.position, Quaternion.identity);
+        portal.SetActive(true);
         yield return new WaitForSeconds(.3f);
         Destroy(gameObject);
     }
