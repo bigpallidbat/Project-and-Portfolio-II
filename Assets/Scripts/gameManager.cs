@@ -69,6 +69,8 @@ public class gameManager : MonoBehaviour
     {
         Instance = this;
 
+
+
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
@@ -89,10 +91,8 @@ public class gameManager : MonoBehaviour
                 sendDoor(DoorController.doorNumber);
 
             }
-            if (SceneManager.GetActiveScene().buildIndex != 2)
-            {
-                catchGoal();
-            }
+             catchGoal();
+            
         }
         
         if (isPaused)

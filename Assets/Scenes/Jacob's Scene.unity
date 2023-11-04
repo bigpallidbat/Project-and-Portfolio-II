@@ -111,7 +111,7 @@ NavMeshSettings:
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 10
-    maxJumpAcrossDistance: 1
+    maxJumpAcrossDistance: 8
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666667
@@ -280,6 +280,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -341,6 +345,10 @@ PrefabInstance:
     - target: {fileID: 5130036254529332827, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -404,6 +412,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -466,6 +478,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -514,7 +530,6 @@ Transform:
   - {fileID: 499396934}
   - {fileID: 1602796466}
   - {fileID: 1761277014}
-  - {fileID: 1413247787}
   - {fileID: 1962331931}
   m_Father: {fileID: 1836133587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -850,6 +865,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -876,8 +895,8 @@ GameObject:
   m_Name: Column4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!65 &304650483
 BoxCollider:
@@ -1530,6 +1549,10 @@ PrefabInstance:
       propertyPath: PlayerSounds
       value: 
       objectReference: {fileID: 947372803}
+    - target: {fileID: 8276902492435786015, guid: 9d9ab280164f33d429f759f1103555c8, type: 3}
+      propertyPath: gravityValue
+      value: -9.81
+      objectReference: {fileID: 0}
     - target: {fileID: 9159849997777138825, guid: 9d9ab280164f33d429f759f1103555c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.75
@@ -1630,6 +1653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1726,8 +1753,8 @@ GameObject:
   m_Name: Column2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!65 &502683193
 BoxCollider:
@@ -1971,6 +1998,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2238,6 +2269,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2405,6 +2440,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2542,6 +2581,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2673,6 +2716,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2966,7 +3013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3034,8 +3081,8 @@ GameObject:
   m_Name: Column
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!65 &896948931
 BoxCollider:
@@ -3174,6 +3221,10 @@ PrefabInstance:
     - target: {fileID: 5130036254529332827, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3816,6 +3867,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3878,6 +3933,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3939,6 +3998,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4057,8 +4120,8 @@ GameObject:
   m_Name: Column3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!65 &1284711109
 BoxCollider:
@@ -4302,6 +4365,10 @@ PrefabInstance:
     - target: {fileID: 5130036254529332827, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4602,6 +4669,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4611,80 +4682,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 766715936597279179, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
   m_PrefabInstance: {fileID: 1372879577}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1413247786
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 171046424}
-    m_Modifications:
-    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: Hp
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5469265872573636588, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: MaxHp
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_Name
-      value: Pickabo (9)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7185401572130973068, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 66.396904
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.274755
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -29.321926
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6651582
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7467025
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -96.611
-      objectReference: {fileID: 0}
-    - target: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
---- !u!4 &1413247787 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8592173647693407598, guid: 53b5e4cb0f2d7ab40994e98b2b217143, type: 3}
-  m_PrefabInstance: {fileID: 1413247786}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1423177774
 PrefabInstance:
@@ -4984,6 +4981,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5045,6 +5046,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5212,6 +5217,10 @@ PrefabInstance:
     - target: {fileID: 5130036254529332827, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5427,6 +5436,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5699,6 +5712,10 @@ PrefabInstance:
     - target: {fileID: 5130036254529332827, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6053,6 +6070,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6079,8 +6100,8 @@ GameObject:
   m_Name: Column1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!65 &1674555714
 BoxCollider:
@@ -6392,6 +6413,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044571393314397797, guid: 2530975a459979a48a62a9ff6c5de0c5, type: 3}
+      propertyPath: MaxHp
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6454,6 +6479,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechaRanged (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6515,6 +6544,10 @@ PrefabInstance:
     - target: {fileID: 7363781867183397647, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
       propertyPath: m_Name
       value: MechaRanged (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409701123466875031, guid: f9c7a297102548e4a8468e5afa690fc3, type: 3}
+      propertyPath: MaxHp
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

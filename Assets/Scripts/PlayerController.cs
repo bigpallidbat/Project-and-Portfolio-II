@@ -196,6 +196,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
             RaycastHit hit;
+            if (!gunList[selectedGun].IsRaycast)
+            {
+                shootdist *= 5;
+            }
+
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
                 IDamage damgable = hit.collider.GetComponent<IDamage>();
@@ -308,7 +313,7 @@ public class PlayerController : MonoBehaviour, IDamage
        
         shootdist = gun.shootdist;
         shootRate = gun.shootRate;
-        if(!gun.IsRaycast) gun.projectile.GetComponent<Bullet>().speed = gun.projectileSpeed;
+        if (!gun.IsRaycast) { gun.projectile.GetComponent<Bullet>().speed = gun.projectileSpeed; gun.projectile.GetComponent<Bullet>().DestroyTime = (gun.shootdist) / (gun.projectileSpeed); }
 
 
 
@@ -387,7 +392,11 @@ public class PlayerController : MonoBehaviour, IDamage
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
 
-        if(!gunList[selectedGun].IsRaycast) gunList[selectedGun].projectile.GetComponent<Bullet>().speed = gunList[selectedGun].projectileSpeed;
+        if (!gunList[selectedGun].IsRaycast)
+        {
+            gunList[selectedGun].projectile.GetComponent<Bullet>().speed = gunList[selectedGun].projectileSpeed;
+            gunList[selectedGun].projectile.GetComponent<Bullet>().DestroyTime = (gunList[selectedGun].shootdist) / (gunList[selectedGun].projectileSpeed);
+        }
 
         if (gunList[selectedGun].ID == 1)
         {
