@@ -81,6 +81,10 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             spawnPlayer();
         }
+        else
+        {
+            spawnPlayer(Quaternion.identity);
+        }
 
 
     }
