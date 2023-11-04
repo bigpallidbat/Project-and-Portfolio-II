@@ -17,9 +17,7 @@ public class screenManager : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] AudioSource themes;
     [SerializeField] AudioClip MainTheme;
-    [SerializeField] AudioClip pauseMenu;
-    [SerializeField] AudioClip defeat;
-    [SerializeField] AudioClip YouWin;
+    [Range(0, 1)][SerializeField] float audMainVol;
 
     private bool check;
     // Start is called before the first frame update
@@ -54,7 +52,7 @@ public class screenManager : MonoBehaviour
         screenImg = screenList[1];
         screenImg.gameObject.SetActive(true);
         themes.loop = true;
-        themes.PlayOneShot(MainTheme);
+        themes.PlayOneShot(MainTheme, audMainVol);
     }
 
     IEnumerator Logo()
