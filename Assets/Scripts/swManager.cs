@@ -73,6 +73,7 @@ public class swManager : MonoBehaviour
             objectClone = Instantiate(enemies[enemyID], spawnerList[i].transform.position, transform.rotation);
             entList.Add(objectClone);
             objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
+            objectClone.GetComponent<EnemyAI>().huntDownPlayer();
             enemiesRemaining++;
         }
     }

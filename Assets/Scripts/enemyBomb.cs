@@ -43,6 +43,7 @@ public class enemyBomb : MonoBehaviour, IDamage
             if (canSeePlayer()) // && playerInRange
             {
             }
+            if (playerInRange) { }
         }
     }
 
