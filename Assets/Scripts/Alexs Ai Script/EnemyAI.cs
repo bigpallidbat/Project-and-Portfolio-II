@@ -375,7 +375,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             transform.rotation = Rot;
             //StartCoroutine(Death());
             Invoke("Death", 0.8f);
-
+            gameManager.Instance.minorUpdateGoal(-1);
 
             if (WhereISpawned != null)
             {
