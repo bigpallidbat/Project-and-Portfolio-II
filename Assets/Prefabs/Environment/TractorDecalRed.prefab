@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4393689351532243911}
   - component: {fileID: 2187340312651545814}
   - component: {fileID: 1323087745382382612}
+  - component: {fileID: -2024849777444735740}
   m_Layer: 0
   m_Name: TractorDecalRed
   m_TagString: Untagged
@@ -57,7 +58,6 @@ MonoBehaviour:
   pingPongRotated: 0
   rockSink: 0
   destroyOnContact: 0
-  woodLog: 0
 --- !u!33 &2187340312651545814
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -108,3 +108,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-2024849777444735740
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333406535194286366}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7716160857924749126, guid: 7c5744a814bef41448c62ca335e69b7b, type: 3}
