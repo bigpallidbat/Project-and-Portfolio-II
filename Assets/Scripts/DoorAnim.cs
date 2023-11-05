@@ -21,7 +21,7 @@ public class DoorAnim : MonoBehaviour , IInteract
     [SerializeField] Quaternion leftOrig;
 
     private bool isOpen;
-    //private bool recieved;
+
 
     private void Start()
     {
@@ -46,8 +46,11 @@ public class DoorAnim : MonoBehaviour , IInteract
             Vector3 pivotOffSetRight = worldPivPointRight - rightDoor.transform.position;
             Vector3 pivotOffSetLeft = worldPivPointLeft - leftDoor.transform.position;
 
-            leftDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetLeft.y ,0);
-            rightDoor.transform.localRotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetRight.y ,0);
+            //leftDoor.transform.rotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetLeft.y ,0);
+            //rightDoor.transform.rotation = Quaternion.Inverse(newRotation) * Quaternion.Euler(0, pivotOffSetRight.y ,0);
+
+            rotatorRight.transform.rotation = newRotation;
+            rotatorLeft.transform.rotation = Quaternion.Inverse(newRotation); 
             yield return null;
         }
     }
@@ -71,8 +74,8 @@ public class DoorAnim : MonoBehaviour , IInteract
             //Quaternion rotRight = Quaternion.Euler(0, rightAngle, 0);
             //Quaternion rotLeft = Quaternion.Euler(0, leftAngle, 0);
 
-            //rightDoor.transform.rotation = Quaternion.Lerp(rightOrig, Quaternion.Euler(0 , rightAngle, 0)  , openSpeed * Time.deltaTime);
-            // leftDoor.transform.rotation = Quaternion.Lerp(leftOrig, Quaternion.Euler(0 , leftAngle, 0), openSpeed * Time.deltaTime);
+             //rightDoor.transform.rotation = Quaternion.Lerp(rightOrig, Quaternion.Euler(0 , rightAngle, 0)  , openSpeed * Time.deltaTime);
+             //leftDoor.transform.rotation = Quaternion.Lerp(leftOrig, Quaternion.Euler(0 , leftAngle, 0), openSpeed * Time.deltaTime);
 
             rightOrig = Quaternion.Euler(0, 90, 0);
             StartCoroutine (doorRotation(rightOrig));

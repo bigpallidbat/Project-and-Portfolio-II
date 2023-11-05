@@ -294,11 +294,11 @@ public class gameManager : MonoBehaviour
 
     public void sendDoor(int doornum)
     {
-            sceneManager.scenechange = false;
+           // sceneManager.scenechange = false;
         if (findDoor(doornum))
         {
 
-            playerScript.spawnPlayer(Quaternion.Euler(0, 0, 0));
+            //playerScript.spawnPlayer(Quaternion.Euler(0, 0, 0));
         }
 
     }

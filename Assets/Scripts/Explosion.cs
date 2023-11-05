@@ -10,8 +10,15 @@ public class Explosion : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(destroy());
+    }
+
+    IEnumerator destroy()
+    {   
         Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation);
-        Destroy(gameObject, 0.07f);
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +30,7 @@ public class Explosion : MonoBehaviour
         IDamage damage = other.GetComponent<IDamage>();
         if (damage != null)
         {
-            damage.takeDamage(0);
+            damage.takeDamage(explosionDamage);
         }
 
         IPhysics physicsenable = other.GetComponent<IPhysics>();

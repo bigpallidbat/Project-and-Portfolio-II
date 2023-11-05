@@ -29,11 +29,11 @@ public class grenade : MonoBehaviour
 
         // Error use Grenade not g - Chance
         // Also The player throws the grenade
-        if (Input.GetButtonDown("Grenade"))
-        {
+        //if (Input.GetButtonDown("Grenade"))
+        //{
 
-            ThrowGrenade();
-        }
+        //    ThrowGrenade();
+        //}
     }
     IEnumerator explode()
     {

@@ -501,6 +501,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void getSpawnStats()
     {
+        gunList.Clear();
         for (int i = 0; i < stats.startingGunList.Count; ++i)
         {
             gunList.Add(stats.startingGunList[i]);
