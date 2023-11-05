@@ -8,16 +8,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] int nextSceneIndex;
      public static int doorNumber;
      public int DN;
-     public GameObject doorSpawn;
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-    
+     public GameObject doorSpawn;    
 
     private void OnTriggerEnter(Collider other)
     {

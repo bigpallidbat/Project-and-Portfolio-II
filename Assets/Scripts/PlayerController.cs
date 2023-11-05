@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour, IDamage
             RaycastHit hit;
             if (!gunList[selectedGun].IsRaycast)
             {
-                shootdist *= 5;
+                shootdist = 100;
             }
 
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
@@ -332,7 +332,7 @@ public class PlayerController : MonoBehaviour, IDamage
             gunModel3.SetActive(false);
             gunModel.SetActive(false);
             gunModel2.SetActive(true);
-            shootPos.position = gun.ShootPos;
+            shootPos.localPosition = gun.ShootPos;
             gunModel2.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
             gunModel2.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
             gunModel2.transform.localScale = gun.model.transform.localScale;
