@@ -1420,8 +1420,8 @@ Transform:
   m_GameObject: {fileID: 4670734804595834803}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -176.9416, z: -6.1230974}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8051095180864308290}
@@ -2280,7 +2280,7 @@ MonoBehaviour:
   shootPos: {fileID: 8373807738100732125}
   headPos: {fileID: 8239655363101126908}
   damageCOL: {fileID: 5134727600914509216}
-  MaxHp: 6
+  MaxHp: 3
   Hp: 6
   infected: 0
   friendly: 0
@@ -2347,7 +2347,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8368447002670734143
 Rigidbody:

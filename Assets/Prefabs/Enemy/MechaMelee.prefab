@@ -699,7 +699,7 @@ MonoBehaviour:
   shootPos: {fileID: 0}
   headPos: {fileID: 4464843731672921075}
   damageCOL: {fileID: 223371345854742385}
-  MaxHp: 8
+  MaxHp: 5
   Hp: 6
   infected: 0
   friendly: 0
@@ -809,7 +809,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &414558272294235891
 Rigidbody:
@@ -1391,7 +1391,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6a6944f4904547e4fb039789da5fcd85, type: 2}
+  - {fileID: 2100000, guid: 909c5d7e18619d843a9f9d4ab4873005, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
