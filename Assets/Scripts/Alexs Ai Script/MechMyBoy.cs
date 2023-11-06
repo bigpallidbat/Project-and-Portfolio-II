@@ -141,7 +141,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
 
     IEnumerator Roam()
     {
-        if (agent.remainingDistance < 0.05f && !destinationChosen && !isAttacking)
+        if (agent.remainingDistance < 0.1f && !destinationChosen && !isAttacking)
         {
             destinationChosen = true;
             agent.stoppingDistance = 0;
