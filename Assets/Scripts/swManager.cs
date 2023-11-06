@@ -24,6 +24,10 @@ public class swManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
         gameManager.Instance.setWaveMax(waveMax);
         startWave();
     }
