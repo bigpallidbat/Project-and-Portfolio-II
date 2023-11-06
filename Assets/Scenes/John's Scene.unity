@@ -4176,6 +4176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newLocation: {fileID: 484336272}
+  parent: {fileID: 1545078560910370399}
 --- !u!4 &737290570
 Transform:
   m_ObjectHideFlags: 0
@@ -10663,6 +10664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newLocation: {fileID: 383090126}
+  parent: {fileID: 350221036297768084}
 --- !u!4 &1558291648
 Transform:
   m_ObjectHideFlags: 0
@@ -23699,6 +23701,11 @@ PrefabInstance:
       addedObject: {fileID: 1501055575}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 192255344c7354a45a28ed05e378f6a6, type: 3}
+--- !u!1 &350221036297768084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5466730163085902528, guid: 192255344c7354a45a28ed05e378f6a6, type: 3}
+  m_PrefabInstance: {fileID: 350221036297768083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &366473655214447142
 Transform:
   m_ObjectHideFlags: 0
@@ -24123,6 +24130,11 @@ PrefabInstance:
       addedObject: {fileID: 1763007170}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad282075ff302e4eaadd84d15ca3f0f, type: 3}
+--- !u!1 &1545078560910370399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3769597782118540959, guid: 4ad282075ff302e4eaadd84d15ca3f0f, type: 3}
+  m_PrefabInstance: {fileID: 1545078560910370398}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1558132846449679101
 GameObject:
   m_ObjectHideFlags: 0
@@ -29305,6 +29317,11 @@ PrefabInstance:
       addedObject: {fileID: 2140333830}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
+--- !u!1 &2760626524901400108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5445503985423380714, guid: fc1b447b47e5c4a42958e1bb9052cbb1, type: 3}
+  m_PrefabInstance: {fileID: 2760626524901400107}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2923554606365191264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30812,6 +30829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newLocation: {fileID: 1574587769}
+  parent: {fileID: 2760626524901400108}
 --- !u!23 &8748872381117186882
 MeshRenderer:
   m_ObjectHideFlags: 0
