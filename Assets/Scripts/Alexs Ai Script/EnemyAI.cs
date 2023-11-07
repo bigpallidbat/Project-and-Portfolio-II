@@ -142,30 +142,28 @@ public class EnemyAI : MonoBehaviour, IDamage
             else StartCoroutine(Roam());
         }
     }
+
     bool CanSeePlayer()
     {
-        Vector3 playerPosition = gameManager.Instance.player.transform.position;
-        Vector3 directionToPlayer = playerPosition - headPos.position;
-        float angleToPlayer = Vector3.Angle(directionToPlayer, transform.forward);
-        float playerDist = Vector3.Distance(playerPosition, transform.position);
+        PlayerDir = gameManager.Instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(PlayerDir, transform.forward);
+        playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
 
-        // Offset the raycast origin slightly above the ground to avoid hitting walls or obstacles.
-        Vector3 raycastOrigin = headPos.position + Vector3.up * 0.5f;
-
-        if (Physics.Raycast(raycastOrigin, directionToPlayer, out hit))
+        if (Physics.Raycast(headPos.position, PlayerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle || hit.collider.CompareTag("Player") && foundPlayer)
             {
+
                 if (!foundPlayer) found();
                 agent.stoppingDistance = stoppingDistOrig;
                 if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
-                else agent.SetDestination(playerPosition);
+                else agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
                     FaceTarget();
 
-                if (angleToPlayer <= shootAngle && !isAttacking)
+                if (angleToPlayer <= shootAngle && !isAttacking)// && playerDist <= meleeRange)
                 {
                     if (!meleeOnly) StartCoroutine(attack());
                     else if (playerDist <= meleeRange) StartCoroutine(attack());
@@ -175,37 +173,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         return false;
     }
-
-    //bool CanSeePlayer()
-    //{
-    //    PlayerDir = gameManager.Instance.player.transform.position - headPos.position;
-    //    angleToPlayer = Vector3.Angle(PlayerDir, transform.forward);
-    //    playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
-
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(headPos.position, PlayerDir, out hit))
-    //    {
-    //        if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle || hit.collider.CompareTag("Player") && foundPlayer)
-    //        {
-
-    //            if (!foundPlayer) found();
-    //            agent.stoppingDistance = stoppingDistOrig;
-    //            if (inStafingRange && !meleeOnly) StartCoroutine(strafe());
-    //            else agent.SetDestination(gameManager.Instance.player.transform.position);
-    //            if (agent.remainingDistance < agent.stoppingDistance)
-    //                FaceTarget();
-
-    //            if (angleToPlayer <= shootAngle && !isAttacking)// && playerDist <= meleeRange)
-    //            {
-    //                if (!meleeOnly) StartCoroutine(attack());
-    //                else if (playerDist <= meleeRange) StartCoroutine(attack());
-    //            }
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
 
     IEnumerator Roam()
     {

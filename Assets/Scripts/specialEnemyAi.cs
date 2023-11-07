@@ -36,6 +36,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] GameObject VoxelDamage;
     [SerializeField] GameObject DeathOBJ;
+    float playerDist;
 
     [Header("----- Stats -----")]
     [SerializeField] int HP;
@@ -46,9 +47,10 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [Header("----- Attack Stats -----")]
     [SerializeField] GameObject bullet;
     [SerializeField] float fireRate;
-    [SerializeField] int gunDamage;
+    [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
-    [SerializeField] float bulletLifeSpan;
+    [SerializeField] int bulletLifeSpan;
+    [Range(0, 3)][SerializeField] float shotoffSet;
     [SerializeField] Collider hitBoxCOL;
     [Range(30, 180)][SerializeField] int shootAngle;
 
@@ -78,10 +80,10 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     void Update()
     {
 
-        if (playerInRange && AiRoutine())
-        {
+        //if (playerInRange && AiRoutine())
+        //{
 
-        }
+        //}
         //moving();
 
         if (agent.isActiveAndEnabled)
@@ -94,33 +96,31 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     }
     bool CanSeePlayer()
     {
-        Vector3 playerPosition = gameManager.Instance.player.transform.position;
-        Vector3 directionToPlayer = playerPosition - headPos.position;
-        float angleToPlayer = Vector3.Angle(directionToPlayer, transform.forward);
-        float playerDist = Vector3.Distance(playerPosition, transform.position);
+        playerDir = gameManager.Instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
 
-        Vector3 raycastOrigin = headPos.position + Vector3.up * 0.5f;
-
-        if (Physics.Raycast(raycastOrigin, directionToPlayer, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
-                agent.SetDestination(playerPosition);
+                agent.SetDestination(gameManager.Instance.player.transform.position);
                 if (agent.remainingDistance < agent.stoppingDistance)
                     faceTarget();
 
                 if (angleToPlayer <= shootAngle && !isAttacking)
                 {
                     if (playerDist <= meleeRange) StartCoroutine(meleeAttack());
-                    else  StartCoroutine(shoot());
+                    else StartCoroutine(shoot());
                 }
                 return true;
             }
         }
         return false;
     }
+
     void setModel()
     {
         Gun = Instantiate(Gun);
@@ -189,48 +189,80 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         VoxelDamage.gameObject.SetActive(false);
         mainBody.enabled = true;
         diceroll = Random.Range(0, 12);
-        if (diceroll < HP) anim.SetTrigger("pain");
+        if (diceroll < HP)
+        {
+            int id = Random.Range(0, numDamAnims);
+            if (numDamAnims > 1)
+                while (id == lastAnim)
+                    id = Random.Range(0, numDamAnims);
+            lastAnim = id;
+            anim.SetInteger("DamageID", id);
+            anim.SetTrigger("Damage");
+
+
+        }
+
         else inPain = false;
-
     }
 
-    IEnumerator death()
-    {
-        yield return new WaitForSeconds(5);
-        Destroy(gameObject);
-    }
+    //IEnumerator death()
+    //{
+    //    yield return new WaitForSeconds(5);
+    //    Destroy(gameObject);
+    //}
 
-    IEnumerator flashDamage()
-    {
-        int id = Random.Range(0, numDamAnims);
-        if (numDamAnims > 1)
-            while (id == lastAnim)
-                id = Random.Range(0, numDamAnims);
-        lastAnim = id;
-        anim.SetInteger("DamageID", id);
-        anim.SetTrigger("Damage");
+    //IEnumerator flashDamage()
+    //{
+    //    int id = Random.Range(0, numDamAnims);
+    //    if (numDamAnims > 1)
+    //        while (id == lastAnim)
+    //            id = Random.Range(0, numDamAnims);
+    //    lastAnim = id;
+    //    anim.SetInteger("DamageID", id);
+    //    anim.SetTrigger("Damage");
 
-        yield return new WaitForSeconds(0.1f);
+    //    yield return new WaitForSeconds(0.1f);
 
-    }
+    //}
 
     IEnumerator shoot()
     {
         isAttacking = true;
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = gunDamage;
+        anim.SetTrigger("shoot");
         //bScript.damage = shootDamage;
         //bScript.speed = bulletSpeed;
         //shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
-       // Instantiate(bullet, shootPos.position, transform.rotation);
+        // Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(fireRate);
-        isAttacking = false;
+        
     }
-
+    public void shotGun()
+    {
+        bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
     IEnumerator meleeAttack()
     {
         yield return null;
     }
+
+    void straightPelletPellets()
+    {
+        bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, 0);
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    void otherPellets()
+    {
+        bullet.GetComponent<Bullet>().setBulletStats(shootDamage, bulletSpeed, bulletLifeSpan, shotoffSet);
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    public void endAttck()
+    {
+        isAttacking = false;
+    }
+
 
     void faceTarget()
     {
@@ -254,49 +286,49 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         }
     }
 
-    void moving()
-    {
-        if (agent.velocity != Vector3.zero)
-        {
-            isMoving = true;
-            anim.SetBool("Aiming", !isMoving);
-            anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
-        }
+    //void moving()
+    //{
+    //    if (agent.velocity != Vector3.zero)
+    //    {
+    //        isMoving = true;
+    //        anim.SetBool("Aiming", !isMoving);
+    //        anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
+    //    }
 
-    }
+    //}
 
-    bool AiRoutine()
-    {
-        //find direction to player if in range
-        playerDir = gameManager.Instance.player.transform.position - headPos.position;
-        //find angle to player within distance
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+    //bool AiRoutine()
+    //{
+    //    //find direction to player if in range
+    //    playerDir = gameManager.Instance.player.transform.position - headPos.position;
+    //    //find angle to player within distance
+    //    angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        RaycastHit hit;
+    //    RaycastHit hit;
 
-        if (Physics.Raycast(headPos.position, playerDir, out hit) && angleToPlayer <= viewAngle)
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                agent.SetDestination(gameManager.Instance.player.transform.position);
+    //    if (Physics.Raycast(headPos.position, playerDir, out hit) && angleToPlayer <= viewAngle)
+    //    {
+    //        if (hit.collider.CompareTag("Player"))
+    //        {
+    //            agent.SetDestination(gameManager.Instance.player.transform.position);
 
-                if (agent.remainingDistance < agent.stoppingDistance)
-                {
-                    faceTarget();
-                    anim.SetFloat("Speed", 0);
-                    anim.SetBool("Aiming", true);
-                    if (angleToPlayer <= shootAngle && !isAttacking)
-                        StartCoroutine(shoot());
-                }
+    //            if (agent.remainingDistance < agent.stoppingDistance)
+    //            {
+    //                faceTarget();
+    //                anim.SetFloat("Speed", 0);
+    //                anim.SetBool("Aiming", true);
+    //                if (angleToPlayer <= shootAngle && !isAttacking)
+    //                    StartCoroutine(shoot());
+    //            }
 
 
 
-                return true;
-            }
+    //            return true;
+    //        }
 
-        }
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }
 
