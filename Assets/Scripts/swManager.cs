@@ -13,13 +13,20 @@ public class swManager : MonoBehaviour
 
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
     [SerializeField] List<GameObject> spawnerList = new List<GameObject>();
+    [SerializeField] List<GameObject> buffSpots = new List<GameObject>();
+    [SerializeField] List<ParticleSystem> buffParticles = new List<ParticleSystem>();
+
+    [SerializeField] TMP_Text WaveStartText;
+    [SerializeField] TMP_Text WaveDisplayText;
 
     [Header("---------- UI ----------")]
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
-    private int waveMax = 10;
+    private int waveMax = 5;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
+
+    bool spawning;
 
     void Awake()
     {
@@ -29,21 +36,29 @@ public class swManager : MonoBehaviour
     private void Start()
     {
         gameManager.Instance.setWaveMax(waveMax);
-        startWave();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!spawning && gameManager.Instance.getEnemiesRemaining() == 0)
+        {
+            StartCoroutine(startWave());
+        }
         //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
         //enemiesRemainingText.text = entList.Count.ToString();
     }
 
-    void startWave()
+    IEnumerator startWave()
     {
+        spawning = true;
+        // display: ~WAVE #~
         waveCurrent++;
+        WaveDisplayText.text = waveCurrent.ToString();
+        WaveStartText.enabled = true;
+        WaveDisplayText.enabled = true;
         gameManager.Instance.setWaveCur(waveCurrent);
         switch (waveCurrent)
         {
@@ -51,14 +66,22 @@ public class swManager : MonoBehaviour
                 StartCoroutine(wave1());
                 break;
             case 2:
+                StartCoroutine(wave2());
                 break;
             case 3:
+                StartCoroutine(wave3());
                 break;
             case 4:
+                StartCoroutine(wave4());
                 break;
             case 5:
+                StartCoroutine(wave5());
                 break;
         }
+        yield return new WaitForSeconds(5);
+        spawning = false;
+        WaveStartText.enabled = false;
+        WaveDisplayText.enabled = false;
     }
 
     IEnumerator wave1()
@@ -68,6 +91,27 @@ public class swManager : MonoBehaviour
     }
 
     IEnumerator wave2()
+    {
+        spawn(0);
+        yield return new WaitForSeconds(timeBetweenSpawns);
+        spawn(0);
+    }
+
+    IEnumerator wave3()
+    {
+        spawn(0);
+        yield return new WaitForSeconds(timeBetweenSpawns);
+        spawn(0);
+    }
+
+    IEnumerator wave4()
+    {
+        spawn(0);
+        yield return new WaitForSeconds(timeBetweenSpawns);
+        spawn(0);
+    }
+
+    IEnumerator wave5()
     {
         spawn(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
@@ -87,4 +131,19 @@ public class swManager : MonoBehaviour
         }
     }
 
+    void spawn(int enemyID, int spawner)
+    {
+        GameObject objectClone;
+        objectClone = Instantiate(enemies[enemyID], spawnerList[spawner].transform.position, transform.rotation);
+        entList.Add(objectClone);
+        objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
+        objectClone.GetComponent<EnemyAI>().huntDownPlayer();
+        gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
+    }
+
+    void spawnPickup(int ID, int spawner)
+    {
+        GameObject objectClone;
+
+    }
 }

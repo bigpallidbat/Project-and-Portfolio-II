@@ -49,7 +49,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] AudioClip defeat;
     [SerializeField] AudioClip YouWin;
 
-
     public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave , Devwork = 10 };
     
     public bool isPaused;
@@ -68,8 +67,6 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
-
 
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
@@ -92,7 +89,6 @@ public class gameManager : MonoBehaviour
 
             }
              catchGoal();
-            
         }
         
         if (isPaused)
@@ -134,7 +130,6 @@ public class gameManager : MonoBehaviour
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
         }
- 
     }
 
    
@@ -202,8 +197,6 @@ public class gameManager : MonoBehaviour
         {
 
         }
-
-        
     }
 
     private void checkGoal()
