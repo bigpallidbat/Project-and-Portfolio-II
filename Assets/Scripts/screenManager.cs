@@ -52,7 +52,7 @@ public class screenManager : MonoBehaviour
         screenImg = screenList[1];
         screenImg.gameObject.SetActive(true);
         themes.loop = true;
-        themes.PlayOneShot(MainTheme, audMainVol);
+        themes.PlayOneShot(MainTheme);
     }
 
     IEnumerator Logo()

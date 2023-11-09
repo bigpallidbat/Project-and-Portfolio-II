@@ -84,6 +84,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: a79bdc3fd98174a4a94336fdf37dfccd
     name: Master
+  - guid: 74c3ea2ce8d8387459223a3a23d4ec2a
+    name: Menu
   - guid: 236dc60076f0b034e931bf072a1efa00
     name: Music
   - guid: 2edf83f58e68a8c44808978f855568a8
@@ -143,7 +145,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: ce11a661b41b5df4b82991119efed1c0
   m_FloatValues:
-    a79bdc3fd98174a4a94336fdf37dfccd: -11.944499
+    a79bdc3fd98174a4a94336fdf37dfccd: 0
   m_TransitionOverrides: {}
 --- !u!243 &601243300322324097
 AudioMixerGroupController:
