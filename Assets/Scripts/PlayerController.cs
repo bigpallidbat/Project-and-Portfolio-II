@@ -307,9 +307,9 @@ public class PlayerController : MonoBehaviour, IDamage
     public void setGunStats(gunStats gun)
     {
         gunList.Add(gun);
-        if(gun.IsRaycast) shootDamage = gun.shootDamage;
+        if(gun.IsRaycast) shootDamage = gun.shootDamage ;
         
-        else gun.projectile.GetComponent<Bullet>().damage = gun.shootDamage;
+        else gun.projectile.GetComponent<Bullet>().damage = gun.shootDamage + stats.damageBuff;
        
         shootdist = gun.shootdist;
         shootRate = gun.shootRate;
@@ -388,7 +388,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
         if(gunList[selectedGun].IsRaycast) shootDamage = gunList[selectedGun].shootDamage;
-        else gunList[selectedGun].projectile.GetComponent<Bullet>().damage = gunList[selectedGun].shootDamage;
+        else gunList[selectedGun].projectile.GetComponent<Bullet>().damage = gunList[selectedGun].shootDamage+ stats.damageBuff;
         shootdist = gunList[selectedGun].shootdist;
         shootRate = gunList[selectedGun].shootRate;
 
