@@ -50,7 +50,7 @@ public class ButtonFuntions : MonoBehaviour
     {
         sceneManager.Instance.nextScene(level);
         
-        if(level < 2)
+        if(level < 0)
             screenManager.Instance.turnOffScreens();
 
         if (Time.timeScale == 0) 
@@ -59,8 +59,23 @@ public class ButtonFuntions : MonoBehaviour
         }
     }
 
-    public void BackFromLevelSelect()
+    public void Back()
     {
         screenManager.Instance.setScreen(1);
+    }
+
+    public void settingsButton()
+    {
+        screenManager.Instance.setScreen(3);
+    }
+
+    public void Controlsbutton()
+    {
+        screenManager.Instance.setScreen(4);
+    }
+
+    public void BackControls()
+    {
+        screenManager.Instance.setScreen(3);
     }
 }
