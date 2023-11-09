@@ -259,6 +259,7 @@ public class gameManager : MonoBehaviour
 
     void catchGoal()
     {
+        enemiesRemaining = 0;
         List<GameObject> objs = new List<GameObject>();
         GameObject[] js = GameObject.FindGameObjectsWithTag("Goal Point");
 
