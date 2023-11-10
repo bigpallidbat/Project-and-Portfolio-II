@@ -28,6 +28,8 @@ public class swManager : MonoBehaviour
     float timeBetweenSpawns = 0.3f;
 
     bool spawning;
+
+    bool spawnBuff = true;
     bool buff1;
     bool buff2;
     bool buff3;
@@ -49,6 +51,11 @@ public class swManager : MonoBehaviour
         if (!spawning && gameManager.Instance.getEnemiesRemaining() == 0)
         {
             StartCoroutine(startWave());
+        }
+
+        if (spawnBuff)
+        {
+
         }
         //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
@@ -151,9 +158,42 @@ public class swManager : MonoBehaviour
         gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
     }
 
-    void spawnPickup(int ID, int spawner)
+    IEnumerator spawnPickup(int ID, int spawner)
     {
+        spawnBuff = false;
         GameObject objectClone;
-
+        bool spawned = false;
+        while (!spawned)
+        {
+            if (!buff1 && !buff2 && buff3 && buff4)
+                break;
+            int buffSpot = Random.Range(1, 4);
+            if (buffSpot == 1 && !buff1)
+            {
+                buff1 = true;
+                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
+                spawned = true;
+            }
+            else if (buffSpot == 2 && !buff2)
+            {
+                buff2 = true;
+                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[1].transform.position, transform.rotation);
+                spawned = true;
+            }
+            else if (buffSpot == 3 && !buff3)
+            {
+                buff3 = true;
+                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[2].transform.position, transform.rotation);
+                spawned = true;
+            }
+            else if (buffSpot == 4 && !buff4)
+            {
+                buff4 = true;
+                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[3].transform.position, transform.rotation);
+                spawned = true;
+            }
+        }
+        yield return new WaitForSeconds(120);
+        spawnBuff = true;
     }
 }
