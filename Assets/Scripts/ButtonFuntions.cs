@@ -24,7 +24,7 @@ public class ButtonFuntions : MonoBehaviour
     public void respawnPlayer()
     {
         gameManager.Instance.stateUnpause();
-        gameManager.Instance.playerScript.spawnPlayer();
+        gameManager.Instance.playerScript.spawnPlayer(Quaternion.identity);
     }
 
     public void mainMenu()
