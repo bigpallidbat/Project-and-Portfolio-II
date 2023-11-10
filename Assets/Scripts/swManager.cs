@@ -188,7 +188,6 @@ public class swManager : MonoBehaviour
             if (pickup1 != null && pickup2 != null && pickup3 != null && pickup4 != null)
                 break;
             int buffSpot = Random.Range(1, 5);
-            //Debug.Log(buffSpot);
             if (buffSpot == 1 && pickup1 == null)
             {
                 pickup1 = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
