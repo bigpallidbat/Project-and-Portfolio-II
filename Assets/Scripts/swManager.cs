@@ -55,7 +55,7 @@ public class swManager : MonoBehaviour
 
         if (spawnBuff)
         {
-
+            StartCoroutine(spawnPickup());
         }
         //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
@@ -98,7 +98,6 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave1()
     {
-        GameObject temp = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
         spawn(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
     }
@@ -106,7 +105,6 @@ public class swManager : MonoBehaviour
     IEnumerator wave2()
     {
         spawn(0);
-        GameObject temp = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[1].transform.position, transform.rotation);
         yield return new WaitForSeconds(timeBetweenSpawns);
         spawn(0);
     }
@@ -114,7 +112,6 @@ public class swManager : MonoBehaviour
     IEnumerator wave3()
     {
         spawn(0);
-        GameObject temp = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[2].transform.position, transform.rotation);
         yield return new WaitForSeconds(timeBetweenSpawns);
         spawn(0);
     }
@@ -122,7 +119,6 @@ public class swManager : MonoBehaviour
     IEnumerator wave4()
     {
         spawn(0);
-        GameObject temp = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[3].transform.position, transform.rotation);
         yield return new WaitForSeconds(timeBetweenSpawns);
         spawn(0);
     }
@@ -130,7 +126,6 @@ public class swManager : MonoBehaviour
     IEnumerator wave5()
     {
         spawn(0);
-        GameObject temp = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
         yield return new WaitForSeconds(timeBetweenSpawns);
         spawn(0);
     }
@@ -158,7 +153,7 @@ public class swManager : MonoBehaviour
         gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
     }
 
-    IEnumerator spawnPickup(int ID, int spawner)
+    IEnumerator spawnPickup()
     {
         spawnBuff = false;
         GameObject objectClone;
