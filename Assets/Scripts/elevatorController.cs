@@ -9,7 +9,6 @@ public class elevatorController : MonoBehaviour, IInteract
     [SerializeField] BoxCollider barrier;
     [SerializeField] Transform elevatorDestination;
     [SerializeField] Rigidbody rb;
-    [SerializeField] Animator anim;
 
     [SerializeField] Transform originalPos;
     private bool isRising;
@@ -35,11 +34,15 @@ public class elevatorController : MonoBehaviour, IInteract
         {
             other.GetComponent<PlayerController>().SetActionable(this);
 
-            //other.gameObject.transform.SetParent(gameObject.transform);
+            other.gameObject.transform.SetParent(gameObject.transform);
             //trigger.enabled = false;
             barrier.enabled = true;
+            if (!isRising)
+            {
+               StartCoroutine(RISE());
+            }
+           
             
-            //StartCoroutine(elevatorAnimate());
 
         }
     }
@@ -61,7 +64,7 @@ public class elevatorController : MonoBehaviour, IInteract
           while (!isTop)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, elevatorDestination.localPosition, speed * Time.deltaTime);
-                
+
                 if (transform.localPosition == elevatorDestination.localPosition)
                 {
                     isTop = true;
@@ -93,6 +96,6 @@ public class elevatorController : MonoBehaviour, IInteract
             gameManager.Instance.playerScript.gameObject.transform.SetParent(gameObject.transform, true);
             StartCoroutine(RISE());
         }
-        //StartCoroutine(elevatorAnimate());
+        
     }
 }

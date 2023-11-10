@@ -32,13 +32,35 @@ public class screenManager : MonoBehaviour
     {
         if (gameManager.currentlevel == gameManager.Levels.MainMenu)
         {
+            //StartCoroutine(settingsrun());            
             Logorun();
             Debug.Log(gameManager.currentlevel);
         }
     }
 
+    public void skipLogo()
+    {
+        anim.StopPlayback();
+        StopCoroutine(Logo());
+        screenImg.gameObject.SetActive(false);
+        mainMenu();
+
+    }
+
+    //run settings for milisecond to set audio prefs
+    IEnumerator settingsrun()
+    {
+        screenImg = screenList[3];
+        screenImg.gameObject.SetActive(true);
+        new WaitForSeconds(0.3f);
+        screenImg.gameObject.SetActive(false);
+        screenImg = null;
+        yield return new WaitForSeconds(0.01f);
+    }
+
     void Logorun()
     {
+ 
         background.gameObject.SetActive(true);
         screenImg = screenList[0];
         screenImg.gameObject.SetActive(true);
