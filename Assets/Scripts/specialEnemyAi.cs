@@ -5,6 +5,21 @@ using UnityEngine.AI;
 public class specialEnemyAi : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] AudioSource soundSFX;
+    [SerializeField] AudioClip painSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip attckSound;
+    [SerializeField] AudioClip VpainSound;
+    [SerializeField] AudioClip VdeathSound;
+    [SerializeField] AudioClip seeSound;
+    //[Range(0, 1)][SerializeField] float audPainVol;
+    //[Range(0, 1)][SerializeField] float audDeathVol;
+    //[Range(0, 1)][SerializeField] float audAttackVol;
+    //[Range(0, 1)][SerializeField] float audVpainVol;
+    //[Range(0, 1)][SerializeField] float audVdeathVol;
+    //[Range(0, 1)][SerializeField] float audSeeVol;
+    //[Range(0, 1)][SerializeField] float audWooshVol;
+    [SerializeField] AudioClip woosh;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
@@ -14,6 +29,11 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] Transform LeftHand;
     [SerializeField] Transform RightHand;
     [SerializeField] ParticleSystem deathSystem;
+    [SerializeField] Collider damageCOL;
+    [SerializeField] SkinnedMeshRenderer mainBody;
+    [SerializeField] GameObject VoxelDamage;
+    [SerializeField] GameObject DeathOBJ;
+    float playerDist;
 
     [Header("----- Stats -----")]
     [SerializeField] int HP;
@@ -25,6 +45,9 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] float fireRate;
     [SerializeField] int gunDamage;
     [SerializeField] int bulletSpeed;
+    [SerializeField] int bulletLifeSpan;
+    [Range(0, 3)][SerializeField] float shotoffSet;
+    [SerializeField] Collider hitBoxCOL;
     [Range(30, 180)][SerializeField] int shootAngle;
 
     float angleToPlayer;
@@ -34,11 +57,12 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     bool isShooting;
     bool playerInRange;
     bool isMoving;
+    bool inPain;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        bullet.GetComponent<Bullet>().DestroyTime = bulletLifeSpan;
         setModel();
 
     }
@@ -46,12 +70,16 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        if (agent.isActiveAndEnabled)
+        {     
+            moving();
+            if (playerInRange && AiRoutine() && !inPain)
+            {
 
-        if (playerInRange && AiRoutine())
-        {
-
+            }
+            else if(inPain) agent.SetDestination(transform.position);
         }
-        moving();
+  
         
     }
 
@@ -103,12 +131,11 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-        bullet.GetComponent<Bullet>().speed = bulletSpeed;
-        bullet.GetComponent<Bullet>().damage = gunDamage;
-        //bScript.damage = shootDamage;
-        //bScript.speed = bulletSpeed;
-        shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        anim.SetTrigger("shoot");
+
+
+        //shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
+        //Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(fireRate);
         isShooting = false;
     }
@@ -140,7 +167,6 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         if(agent.velocity != Vector3.zero)
         {
             isMoving = true;
-            anim.SetBool("Aiming", !isMoving);
             anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
         }
 
@@ -152,6 +178,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         playerDir = gameManager.Instance.player.transform.position - headPos.position;
         //find angle to player within distance
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
 
