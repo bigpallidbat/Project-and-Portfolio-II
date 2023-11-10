@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class swManager : MonoBehaviour
 {
@@ -30,14 +31,18 @@ public class swManager : MonoBehaviour
     bool spawning;
 
     bool spawnBuff = true;
-    bool buff1;
-    bool buff2;
-    bool buff3;
-    bool buff4;
+    GameObject pickup1;
+    GameObject pickup2;
+    GameObject pickup3;
+    GameObject pickup4;
 
     void Awake()
     {
         instance = this;
+        buffParticles[0].Pause();
+        buffParticles[1].Pause();
+        buffParticles[2].Pause();
+        buffParticles[3].Pause();
     }
 
     private void Start()
@@ -56,6 +61,27 @@ public class swManager : MonoBehaviour
         if (spawnBuff)
         {
             StartCoroutine(spawnPickup());
+        }
+
+        if (buffParticles[0].isPlaying && pickup1 == null)
+        {
+            //buffParticles[0].Pause();
+            buffParticles[0].Stop();
+        }
+        if (buffParticles[1].isPlaying && pickup2 == null)
+        {
+            //buffParticles[1].Pause();
+            buffParticles[1].Stop();
+        }
+        if (buffParticles[2].isPlaying && pickup3 == null)
+        {
+            //buffParticles[2].Pause();
+            buffParticles[2].Stop();
+        }
+        if (buffParticles[3].isPlaying && pickup4 == null)
+        {
+            //buffParticles[3].Pause();
+            buffParticles[3].Stop();
         }
         //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
@@ -156,35 +182,35 @@ public class swManager : MonoBehaviour
     IEnumerator spawnPickup()
     {
         spawnBuff = false;
-        GameObject objectClone;
         bool spawned = false;
         while (!spawned)
         {
-            if (!buff1 && !buff2 && buff3 && buff4)
+            if (pickup1 != null && pickup2 != null && pickup3 != null && pickup4 != null)
                 break;
-            int buffSpot = Random.Range(1, 4);
-            if (buffSpot == 1 && !buff1)
+            int buffSpot = Random.Range(1, 5);
+            //Debug.Log(buffSpot);
+            if (buffSpot == 1 && pickup1 == null)
             {
-                buff1 = true;
-                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
+                pickup1 = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[0].transform.position, transform.rotation);
+                buffParticles[0].Play();
                 spawned = true;
             }
-            else if (buffSpot == 2 && !buff2)
+            else if (buffSpot == 2 && pickup2 == null)
             {
-                buff2 = true;
-                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[1].transform.position, transform.rotation);
+                pickup2 = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[1].transform.position, transform.rotation);
+                buffParticles[1].Play();
                 spawned = true;
             }
-            else if (buffSpot == 3 && !buff3)
+            else if (buffSpot == 3 && pickup3 == null)
             {
-                buff3 = true;
-                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[2].transform.position, transform.rotation);
+                pickup3 = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[2].transform.position, transform.rotation);
+                buffParticles[2].Play();
                 spawned = true;
             }
-            else if (buffSpot == 4 && !buff4)
+            else if (buffSpot == 4 && pickup4 == null)
             {
-                buff4 = true;
-                objectClone = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[3].transform.position, transform.rotation);
+                pickup4 = Instantiate(pickups[Random.Range(0, pickups.Count)], buffSpots[3].transform.position, transform.rotation);
+                buffParticles[3].Play();
                 spawned = true;
             }
         }
