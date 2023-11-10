@@ -75,6 +75,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
             gameManager.Instance.updateGameGoal();
             StopAllCoroutines();
             Instantiate(deathSystem, transform.position, transform.rotation);
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
             StartCoroutine(death());
         }
     }
