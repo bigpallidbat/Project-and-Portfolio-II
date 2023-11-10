@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class VolumeControl : MonoBehaviour
 {
-    [SerializeField] string volumeParameter = "Master";
+    [SerializeField] string volumeParameter;
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider volumeSlider;
     [SerializeField] Toggle volumeToggle;
@@ -22,6 +22,7 @@ public class VolumeControl : MonoBehaviour
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(volumeParameter, volumeSlider.value);
+        PlayerPrefs.Save();
     }
 
     private void HandleTogglechanges(bool enable)

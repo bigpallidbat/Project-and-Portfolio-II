@@ -6281,6 +6281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door Pair
       objectReference: {fileID: 0}
+    - target: {fileID: 4297531082891613524, guid: 6371602203da23e4895fd1f98d1be52e, type: 3}
+      propertyPath: Door
+      value: 
+      objectReference: {fileID: 2037387787}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21913,6 +21917,11 @@ PrefabInstance:
 --- !u!4 &2037387786 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 959543974341839980, guid: 6371602203da23e4895fd1f98d1be52e, type: 3}
+  m_PrefabInstance: {fileID: 657335649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2037387787 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3228891918253313422, guid: 6371602203da23e4895fd1f98d1be52e, type: 3}
   m_PrefabInstance: {fileID: 657335649}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2039554045
