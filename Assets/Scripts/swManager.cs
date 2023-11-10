@@ -63,26 +63,7 @@ public class swManager : MonoBehaviour
             StartCoroutine(spawnPickup());
         }
 
-        if (buffParticles[0].isPlaying && pickup1 == null)
-        {
-            //buffParticles[0].Pause();
-            buffParticles[0].Stop();
-        }
-        if (buffParticles[1].isPlaying && pickup2 == null)
-        {
-            //buffParticles[1].Pause();
-            buffParticles[1].Stop();
-        }
-        if (buffParticles[2].isPlaying && pickup3 == null)
-        {
-            //buffParticles[2].Pause();
-            buffParticles[2].Stop();
-        }
-        if (buffParticles[3].isPlaying && pickup4 == null)
-        {
-            //buffParticles[3].Pause();
-            buffParticles[3].Stop();
-        }
+        checkParticles();
         //Debug.Log(gameManager.Instance.getEnemiesRemaining());
         //Debug.Log(entList.Count);
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
@@ -177,6 +158,30 @@ public class swManager : MonoBehaviour
         objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
         objectClone.GetComponent<EnemyAI>().huntDownPlayer();
         gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
+    }
+
+    void checkParticles()
+    {
+        if (buffParticles[0].isPlaying && pickup1 == null)
+        {
+            //buffParticles[0].Pause();
+            buffParticles[0].Stop();
+        }
+        if (buffParticles[1].isPlaying && pickup2 == null)
+        {
+            //buffParticles[1].Pause();
+            buffParticles[1].Stop();
+        }
+        if (buffParticles[2].isPlaying && pickup3 == null)
+        {
+            //buffParticles[2].Pause();
+            buffParticles[2].Stop();
+        }
+        if (buffParticles[3].isPlaying && pickup4 == null)
+        {
+            //buffParticles[3].Pause();
+            buffParticles[3].Stop();
+        }
     }
 
     IEnumerator spawnPickup()
