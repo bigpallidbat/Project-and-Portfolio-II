@@ -93,7 +93,10 @@ public class screenManager : MonoBehaviour
 
     public void setScreen(int screen)
     {
-        screenImg.gameObject.SetActive(false);
+        if (screenImg != null)
+        {
+            screenImg.gameObject.SetActive(false);
+        }
         screenImg = screenList[screen];
         screenImg.gameObject.SetActive(true);
     }

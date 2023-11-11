@@ -173,10 +173,8 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     {
         isShooting = true;
         anim.SetTrigger("Attack");
-        for (int i = 0; i < 2; i++)
-        {
-            shotgun();
-        }
+        shotgun();
+        
         
 
         //shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
