@@ -49,6 +49,7 @@ public class screenManager : MonoBehaviour
         screenImg.gameObject.SetActive(false);
         screenImg = null;
         yield return new WaitForSeconds(0.01f);
+        Logorun();
     }
 
     void Logorun()
@@ -76,7 +77,7 @@ public class screenManager : MonoBehaviour
 
         yield return new WaitForSeconds(4.25f);
 
-        screenImg.enabled = false;
+        screenImg.gameObject.SetActive(false);
         yield return new WaitForSeconds(.5f);
 
         mainMenu();
