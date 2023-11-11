@@ -42,6 +42,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
+    [SerializeField] GameObject boss;
 
     [Header("-----  Music/sounds  -----")]
     [SerializeField] AudioSource themes;
@@ -179,6 +180,11 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void horrorEnd()
+    {
+        EndDoor.SetActive(true);
+    }
+
     public void updateGameGoal()
     {
         //statePause();
@@ -196,7 +202,14 @@ public class gameManager : MonoBehaviour
         }
         else if(currentlevel == Levels.Boss)
         {
-            StartCoroutine(youWin());
+            EndDoor.SetActive(true);
+            //StartCoroutine(youWin());
+        }
+        else if(currentlevel == Levels.horror)
+        {
+            HorrorBoss bossScript = boss.GetComponent<HorrorBoss>();
+            bossScript.Hunt();
+            
         }
         else if(currentlevel == Levels.Wave)
         {
@@ -236,6 +249,13 @@ public class gameManager : MonoBehaviour
             checkGoal();
 
         }
+        else if(currentlevel == Levels.horror)
+        {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = enemiesRemaining.ToString();
+
+            checkGoal();
+        }
         else if(currentlevel == Levels.Wave)
         {
             enemiesRemaining += amount;
@@ -258,6 +278,13 @@ public class gameManager : MonoBehaviour
         else if (currentlevel == Levels.Boss)
         {
             GoalText.text = "Defeat Tomas the Destroyer";
+            enemiesRemainingText.text = amount.ToString();
+        }
+        else if(currentlevel == Levels.horror)
+        {
+            boss = GameObject.FindWithTag("Boss");
+
+            GoalText.text = "Find the 3 dolls and kill the Entity";
             enemiesRemainingText.text = amount.ToString();
         }
     }

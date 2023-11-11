@@ -11,7 +11,6 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] AudioClip attckSound;
     [SerializeField] AudioClip VpainSound;
     [SerializeField] AudioClip VdeathSound;
-    [SerializeField] AudioClip seeSound;
     //[Range(0, 1)][SerializeField] float audPainVol;
     //[Range(0, 1)][SerializeField] float audDeathVol;
     //[Range(0, 1)][SerializeField] float audAttackVol;
@@ -19,7 +18,6 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     //[Range(0, 1)][SerializeField] float audVdeathVol;
     //[Range(0, 1)][SerializeField] float audSeeVol;
     //[Range(0, 1)][SerializeField] float audWooshVol;
-    [SerializeField] AudioClip woosh;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
@@ -32,7 +30,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] Collider damageCOL;
     [SerializeField] SkinnedMeshRenderer mainBody;
     [SerializeField] GameObject VoxelDamage;
-    [SerializeField] GameObject DeathOBJ;
+    [SerializeField] Transform[] positions;
     float playerDist;
 
     [Header("----- Stats -----")]
@@ -46,9 +44,9 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     [SerializeField] int gunDamage;
     [SerializeField] int bulletSpeed;
     [SerializeField] int bulletLifeSpan;
-    [Range(0, 3)][SerializeField] float shotoffSet;
+    [Range(0, 3)][SerializeField] float offset;
     [SerializeField] Collider hitBoxCOL;
-    [Range(30, 180)][SerializeField] int shootAngle;
+    [Range(30, 180)][SerializeField] int shootAngle;  
 
     float angleToPlayer;
     Vector3 playerDir;
@@ -56,7 +54,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     int lastAnim = -1;
     bool isShooting;
     bool playerInRange;
-    bool isMoving;
+    //bool isMoving;
     bool inPain;
 
     // Start is called before the first frame update
@@ -95,27 +93,69 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     public void takeDamage(int damage)
     {
         HP -= damage;
-        StartCoroutine(flashDamage());
-        agent.SetDestination(gameManager.Instance.player.transform.position);
+        hitBoxCOL.enabled = false;
+        soundSFX.PlayOneShot(VpainSound);
+        soundSFX.PlayOneShot(painSound);
+        damageCOL.enabled = true;
+ 
         if (HP <= 0)
         {
+            if (gameObject.CompareTag("Goal Point"))
+            {
+                gameManager.Instance.updateGameGoal();
+            }
             anim.SetTrigger("Death");
-            gameManager.Instance.updateGameGoal();
+            soundSFX.PlayOneShot(VdeathSound);
+            soundSFX.PlayOneShot(deathSound);
             StopAllCoroutines();
-            Instantiate(deathSystem, transform.position, transform.rotation);
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            faceTarget();
+            agent.enabled = false;
+            damageCOL.enabled = false;
             StartCoroutine(death());
+        }
+        else
+        {
+            StartCoroutine(flashDamage());
+            agent.SetDestination(gameManager.Instance.player.transform.position);
         }
     }
     
     IEnumerator death()
     {
+        StartCoroutine(AllPop());
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
 
+    void pop(Transform posit)
+    {
+        Instantiate(deathSystem, posit.position, transform.rotation);
+    }
+
+    IEnumerator AllPop()
+    {
+        if(positions.Length > 0)
+        {
+            for(int i = 0; i < positions.Length; i++)
+            {
+                pop(positions[i]);
+            }
+        }
+
+        yield return new WaitForSeconds(1);
+    }
+
     IEnumerator flashDamage()
     {
+        inPain = true;
+        mainBody.enabled = false;
+        VoxelDamage.gameObject.SetActive(true);
+        agent.SetDestination(transform.position);
+        yield return new WaitForSeconds(0.085f);
+        VoxelDamage.gameObject.SetActive(false);
+        mainBody.enabled = true;
+        
+
         int id = Random.Range(0, numDamAnims);
         if (numDamAnims > 1)
             while (id == lastAnim)
@@ -123,6 +163,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         lastAnim = id;
         anim.SetInteger("DamageID", id);
         anim.SetTrigger("Damage");
+        inPain = false;
 
         yield return new WaitForSeconds(0.1f);
 
@@ -132,12 +173,40 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     {
         isShooting = true;
         anim.SetTrigger("shoot");
-
+        shotgun();
+        
 
         //shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
         //Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(fireRate);
         isShooting = false;
+    }
+
+    void shotgun()
+    {
+        createProjectile();
+        for(int i = 0; i < 6; i++)
+        {
+            offsetPellets();
+        }
+    }
+
+    void createProjectile()
+    {
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = gunDamage;
+        bullet.GetComponent<Bullet>().offsetX = 0;
+        bullet.GetComponent<Bullet>().offsetY = 0;
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    void offsetPellets()
+    {
+        bullet.GetComponent<Bullet>().speed = bulletSpeed;
+        bullet.GetComponent<Bullet>().damage = gunDamage;
+        bullet.GetComponent<Bullet>().offsetX = Random.Range(-offset, offset);
+        bullet.GetComponent<Bullet>().offsetY = Random.Range(-offset, offset);
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
     void faceTarget()
@@ -166,7 +235,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     {
         if(agent.velocity != Vector3.zero)
         {
-            isMoving = true;
+            //isMoving = true;
             anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
         }
 
@@ -191,7 +260,6 @@ public class specialEnemyAi : MonoBehaviour, IDamage
                 if (agent.remainingDistance < agent.stoppingDistance)
                 {
                     faceTarget();
-                    anim.SetFloat("Speed", 0);
                     anim.SetBool("Aiming", true);
                     if (angleToPlayer <= shootAngle && !isShooting)
                         StartCoroutine(shoot());
