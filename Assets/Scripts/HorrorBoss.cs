@@ -29,7 +29,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
     float maxDistance = 30f;
     bool knowsPlayerLocation = true;
     bool isAttacking;
-    bool huntPlayer;
+    public bool huntPlayer;
     bool resist;
 
     // Start is called before the first frame update
@@ -41,6 +41,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+
         //checks if it can see the player or knows where the player is. This is for if the boss has points where it does not know where the player is
         if (AiRoutine() || knowsPlayerLocal())
         {
@@ -50,6 +51,10 @@ public class HorrorBoss : MonoBehaviour, IDamage
 
     bool AiRoutine()
     {
+
+        float agentVel = agent.velocity.normalized.magnitude;
+        anim.SetFloat("speed", Mathf.Lerp(anim.GetFloat("speed"), agentVel, Time.deltaTime * Speed));
+
         //find direction to player if in range
         playerDir = gameManager.Instance.player.transform.position - headPos.position;
         //find angle to player within distance
@@ -98,26 +103,39 @@ public class HorrorBoss : MonoBehaviour, IDamage
     IEnumerator Attack()
     {
         //start animation and set isattacking to true. then end with isattacking to false
-
+        anim.SetTrigger("Attack");
+        isAttacking = true;
         yield return new WaitForSeconds(attackTime);
+
+        isAttacking = false;
     }
 
     void checkDistance()
     {
         //checks the distance and changes speed accordingly
+        if (agent.isActiveAndEnabled)
+        {
         if (agent.remainingDistance < maxDistance)
              agent.speed = Speed;
         else agent.speed = Speed*3;
+        }
+
     }
 
     bool knowsPlayerLocal()
     {
         //if boss has knowsplayerlocation as true -which is default for this enemy- it chases the player. allows points where the boss doesn't know where the player is
+        if (agent.isActiveAndEnabled)
+        {
         if (knowsPlayerLocation)
         {
+
             agent.SetDestination(gameManager.Instance.player.transform.position);
+
             return true;
         }
+        }
+
         return false;
     }
 
@@ -136,15 +154,17 @@ public class HorrorBoss : MonoBehaviour, IDamage
 
     public void takeDamage(int dam)
     {
+        anim.SetBool("Hurt", true);
         //checks if resisting, if false, takes damage and sets resisting.
         if (!resist)
         {
+
             Hp--;
             StartCoroutine(Resist());
         }
         else return;
 
-        if(Hp < 0)
+        if(Hp <= 0)
         {
             StartCoroutine(death());
             //calls to the function in gamemanager to turn on the level's end door
@@ -155,9 +175,9 @@ public class HorrorBoss : MonoBehaviour, IDamage
     IEnumerator death()
     {
         //allows animations before destroying the object
-        
+        agent.enabled = false;
         yield return new WaitForSeconds(0.8f);
-        Destroy(gameObject);
+        anim.SetBool("Dead", true);
     }
     
     IEnumerator flashDamage()
@@ -172,7 +192,8 @@ public class HorrorBoss : MonoBehaviour, IDamage
     {
         //After goal is set, 
         huntPlayer = true;
-        agent.stoppingDistance = 1;
+        viewAngle = 100;
+        agent.stoppingDistance = 7;
         defCol.enabled = true;
     }
 
