@@ -74,7 +74,8 @@ public class gameManager : MonoBehaviour
         
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
-        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
             
@@ -119,7 +120,7 @@ public class gameManager : MonoBehaviour
 
         void emergencyCheck()
     {
-        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
+        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings -1)
         {
             currentlevel = Levels.Devwork;
         }

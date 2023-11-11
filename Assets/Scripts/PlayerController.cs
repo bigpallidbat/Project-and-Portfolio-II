@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootdist;
     [SerializeField] Transform shootPos;
+    [SerializeField] snipertrail SniperTrail;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip[] audDamage;
@@ -213,14 +214,18 @@ public class PlayerController : MonoBehaviour, IDamage
                     Instantiate(gunList[selectedGun].projectile, shootPos.position, shootPos.transform.rotation);
                 else
                 {
+                    SniperTrail.dir = toTarget;
+                    SniperTrail.speed = 1000;
+                    Instantiate(SniperTrail, shootPos.position, shootPos.transform.rotation);
                     if (hit.collider.transform.position != transform.position && damgable != null)
                     {
-
+                        
 
 
                         damgable.takeDamage(shootDamage + stats.damageBuff);
                         if (!hit.collider.GetComponent<spawnerDestroyable>())
                         {
+                            
                             Instantiate(gunList[selectedGun].hitEffectEnemy, hit.point, Quaternion.identity);
                         }
                     }
