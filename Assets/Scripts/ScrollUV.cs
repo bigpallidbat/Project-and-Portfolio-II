@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class ScrollUV : MonoBehaviour , IDamage
 {
+    [SerializeField] AudioSource GameSounds;
+
     [SerializeField] GameObject myPlayer;
     [SerializeField] ParticleSystem onHit;
+    [SerializeField] AudioClip audUV;
+    [Range(0, 2)][SerializeField] float audUVVol;
     [SerializeField] float scrollSpeed = 0.5f;
     [SerializeField] int damage;
     [SerializeField] float timeBetweenDamage;
-    [SerializeField] bool damageOverTime;
     [SerializeField] int HP;
+    [SerializeField] bool damageOverTime;
     [SerializeField] bool isDamagable;
     Renderer rend;
 
@@ -18,6 +22,10 @@ public class ScrollUV : MonoBehaviour , IDamage
     private void Start()
     {
         rend = GetComponent<Renderer>();
+        if (GameSounds != null)
+        {
+            GameSounds.PlayOneShot(audUV, audUVVol);
+        }
     }
 
     void Update()
