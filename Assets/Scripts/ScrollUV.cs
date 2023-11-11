@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrollUV : MonoBehaviour
+public class ScrollUV : MonoBehaviour , IDamage
 {
     [SerializeField] GameObject myPlayer;
+    [SerializeField] ParticleSystem onHit;
     [SerializeField] float scrollSpeed = 0.5f;
     [SerializeField] int damage;
     [SerializeField] float timeBetweenDamage;
     [SerializeField] bool damageOverTime;
+    [SerializeField] int HP;
+    [SerializeField] bool isDamagable;
     Renderer rend;
 
 
@@ -65,5 +68,19 @@ public class ScrollUV : MonoBehaviour
         }
         yield return new WaitForSeconds(timeBetweenDamage);
         StartCoroutine(damageIncrement());
+    }
+
+    public void takeDamage(int amount)
+    {
+        if (isDamagable == true)
+        {
+            HP -= amount;
+            Instantiate(onHit, transform.position, Quaternion.identity);
+
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

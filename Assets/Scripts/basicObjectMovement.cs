@@ -12,7 +12,7 @@ public class basicObjectMovement : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] float pingPongDis;
     [SerializeField] float timeBeforeSink;
-    [SerializeField] AudioClip[] audRockSink;
+    [SerializeField] AudioClip audRockSink;
     [Range(0, 1)][SerializeField] float audRockSinkVol;
     [SerializeField] bool damageIT;
     [SerializeField] bool basicMove;
@@ -101,7 +101,7 @@ public class basicObjectMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeSink);
         transform.position += -transform.right * speed * Time.deltaTime;
-        PlayerSounds.PlayOneShot(audRockSink[UnityEngine.Random.Range(0, audRockSink.Length)], audRockSinkVol);
+        PlayerSounds.PlayOneShot(audRockSink , audRockSinkVol);
         StartCoroutine(Destroy());
     }
 }
