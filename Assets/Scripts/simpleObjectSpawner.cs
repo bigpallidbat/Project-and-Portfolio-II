@@ -14,7 +14,7 @@ public class simpleObjectSpawner : MonoBehaviour
     void Start()
     {
         // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
-            InvokeRepeating("Spawn", startSpawnTime, startNewSpawnTime);
+        InvokeRepeating("Spawn", startSpawnTime, startNewSpawnTime);
     }
 
     void Update()
