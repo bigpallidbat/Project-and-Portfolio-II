@@ -71,10 +71,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if(currentlevel == Levels.MainMenu)
-        {
-            setVolumes();
-        }
+        
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
@@ -99,6 +96,14 @@ public class gameManager : MonoBehaviour
         }
         
         
+    }
+
+    private void Start()
+    {
+        if (currentlevel == Levels.MainMenu)
+        {
+            setVolumes();
+        }
     }
 
     void setVolumes()
@@ -132,7 +137,7 @@ public class gameManager : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().buildIndex == 5)
         {
-            currentlevel = Levels.Wave;
+            currentlevel = Levels.horror;
         }
     }
 
