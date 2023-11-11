@@ -68,7 +68,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
         {
             if (hit.collider.CompareTag("Player"))
             {
-                //agent.SetDestination(gameManager.Instance.player.transform.position);
+                agent.SetDestination(gameManager.Instance.player.transform.position);
 
                 if (agent.remainingDistance < agent.stoppingDistance)
                 {
@@ -154,7 +154,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
 
     public void takeDamage(int dam)
     {
-        anim.SetBool("Hurt", true);
+        anim.SetTrigger("Hurt");
         //checks if resisting, if false, takes damage and sets resisting.
         if (!resist)
         {
