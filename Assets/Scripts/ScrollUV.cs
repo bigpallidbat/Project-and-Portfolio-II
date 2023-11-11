@@ -2,19 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrollUV : MonoBehaviour
+public class ScrollUV : MonoBehaviour , IDamage
 {
+    [SerializeField] AudioSource GameSounds;
+
     [SerializeField] GameObject myPlayer;
+    [SerializeField] ParticleSystem onHit;
+    [SerializeField] AudioClip audUV;
+    [Range(0, 2)][SerializeField] float audUVVol;
     [SerializeField] float scrollSpeed = 0.5f;
     [SerializeField] int damage;
     [SerializeField] float timeBetweenDamage;
+    [SerializeField] int HP;
     [SerializeField] bool damageOverTime;
+    [SerializeField] bool isDamagable;
     Renderer rend;
 
 
     private void Start()
     {
         rend = GetComponent<Renderer>();
+        if (GameSounds != null)
+        {
+            GameSounds.PlayOneShot(audUV, audUVVol);
+        }
     }
 
     void Update()
@@ -65,5 +76,19 @@ public class ScrollUV : MonoBehaviour
         }
         yield return new WaitForSeconds(timeBetweenDamage);
         StartCoroutine(damageIncrement());
+    }
+
+    public void takeDamage(int amount)
+    {
+        if (isDamagable == true)
+        {
+            HP -= amount;
+            Instantiate(onHit, transform.position, Quaternion.identity);
+
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

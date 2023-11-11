@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -24,7 +25,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuInv;
+    [SerializeField] GameObject menuHint;
     public Image playerHpBar;
     public Image playerStamBar;
     public Image BossHPBar;
@@ -38,12 +39,17 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text GrenadeCount;
     [SerializeField] TMP_Text MedkitCount;
     [SerializeField] GameObject playerDamageFlash;
+    [SerializeField] GameObject CyanKey;
+    [SerializeField] GameObject MagentaKey;
+    [SerializeField] GameObject GreenKey;
+    [SerializeField] TMP_Text KeyCount;
 
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
     [SerializeField] GameObject boss;
+    public GameObject keyMaster;
 
     [Header("-----  Music/sounds  -----")]
     [SerializeField] AudioSource themes;
@@ -53,8 +59,14 @@ public class gameManager : MonoBehaviour
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
-    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel , Devwork = 10 };
-    
+    [Header("-----Dev Work-----")]
+    [SerializeField] GameObject Devcontroller;
+    [SerializeField] DevController devController;
+    [SerializeField] GameObject[] quickDev;
+
+    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
+
+    int keyCount;
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
@@ -66,6 +78,9 @@ public class gameManager : MonoBehaviour
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
+    //ToRemove
+    bool isDevMode;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -74,10 +89,14 @@ public class gameManager : MonoBehaviour
         
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
-        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
-            
+            //To Remove
+            Devcontroller = GameObject.FindWithTag("DevPlayerTemp");
+            devController = Devcontroller.GetComponent<DevController>();
+
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
             EndDoor = GameObject.FindWithTag("EndDoor");
@@ -96,6 +115,7 @@ public class gameManager : MonoBehaviour
         }
         
         
+        
     }
 
     private void Start()
@@ -103,6 +123,12 @@ public class gameManager : MonoBehaviour
         if (currentlevel == Levels.MainMenu)
         {
             setVolumes();
+        }
+        else if(currentlevel != Levels.MainMenu && currentlevel != Levels.Credits)
+        {
+            statePause();
+            menuActive = menuHint;
+            menuHint.SetActive(true);
         }
     }
 
@@ -119,7 +145,7 @@ public class gameManager : MonoBehaviour
 
         void emergencyCheck()
     {
-        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
+        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings -1)
         {
             currentlevel = Levels.Devwork;
         }
@@ -139,6 +165,19 @@ public class gameManager : MonoBehaviour
         {
             currentlevel = Levels.horror;
         }
+        else if(SceneManager.GetActiveScene().buildIndex == 6)
+        {
+            currentlevel = Levels.Wave;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 7)
+        {
+            currentlevel = Levels.Voxel;
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 8)
+        {
+            currentlevel = Levels.Credits;
+        }
+
     }
 
     // Update is called once per frame
@@ -149,6 +188,41 @@ public class gameManager : MonoBehaviour
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
+        }
+
+        //toRemove
+        if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && !isDevMode)
+        {
+            Devcontroller.SetActive(true);
+            Devcontroller.GetComponentInChildren<Camera>().enabled = true;
+
+            player.GetComponentInChildren<Camera>().enabled = false;
+            player.SetActive(false);
+
+            if (quickDev.Length > 0) {
+                for (int i = 0; i < quickDev.Length; i++)
+                {
+                    quickDev[i].SetActive(false);
+                }
+            }
+            isDevMode = true;
+        }
+        else if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && isDevMode)
+        {
+            Devcontroller.GetComponentInChildren<Camera>().enabled = false;
+            Devcontroller.SetActive(false);
+
+            player.SetActive(true);
+            player.GetComponentInChildren<Camera>().enabled = true;
+
+            if (quickDev.Length > 0)
+            {
+                for (int i = 0; i < quickDev.Length; i++)
+                {
+                    quickDev[i].SetActive(true);
+                }
+            }
+            isDevMode = false;
         }
         
     }
@@ -429,4 +503,24 @@ public class gameManager : MonoBehaviour
         WaveMax.text = num.ToString();
     }
 
+    public void SetGKeyActive()
+    {
+        GreenKey.SetActive(true);
+    }
+
+    public void SetCKeyActive()
+    {
+        CyanKey.SetActive(true);
+    }
+
+    public void SetMKeyActive()
+    {
+        MagentaKey.SetActive(true);
+    }
+
+    public void updateKeyCount(int amount)
+    {
+        keyCount += amount;
+        KeyCount.text = keyCount.ToString();
+    }
 }

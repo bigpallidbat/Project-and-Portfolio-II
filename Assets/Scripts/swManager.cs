@@ -20,11 +20,13 @@ public class swManager : MonoBehaviour
 
     [SerializeField] TMP_Text WaveStartText;
     [SerializeField] TMP_Text WaveDisplayText;
+    [SerializeField] GameObject bossSpawnLoc;
+    [SerializeField] GameObject bossEnemy;
 
     [Header("---------- UI ----------")]
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
-    private int waveMax = 5;
+    private int waveMax = 10;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
 
@@ -75,69 +77,80 @@ public class swManager : MonoBehaviour
         spawning = true;
         // display: ~WAVE #~
         waveCurrent++;
-        WaveDisplayText.text = waveCurrent.ToString();
-        WaveStartText.enabled = true;
-        WaveDisplayText.enabled = true;
-        gameManager.Instance.setWaveCur(waveCurrent);
-        switch (waveCurrent)
+        if (waveCurrent <= waveMax)
         {
-            case 1:
-                StartCoroutine(wave1());
-                break;
-            case 2:
-                StartCoroutine(wave2());
-                break;
-            case 3:
-                StartCoroutine(wave3());
-                break;
-            case 4:
-                StartCoroutine(wave4());
-                break;
-            case 5:
-                StartCoroutine(wave5());
-                break;
+            WaveDisplayText.text = waveCurrent.ToString();
+            WaveStartText.enabled = true;
+            WaveDisplayText.enabled = true;
+            gameManager.Instance.setWaveCur(waveCurrent);
+            switch (waveCurrent)
+            {
+                case 1:
+                    StartCoroutine(wave1());
+                    break;
+                case 2:
+                    StartCoroutine(wave2());
+                    break;
+                case 3:
+                    StartCoroutine(wave3());
+                    break;
+                case 4:
+                    StartCoroutine(wave4());
+                    break;
+                case 5:
+                    StartCoroutine(wave5());
+                    break;
+                case 10:
+                    GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
+                    break;
+            }
+            yield return new WaitForSeconds(5);
+            spawning = false;
+            WaveStartText.enabled = false;
+            WaveDisplayText.enabled = false;
         }
-        yield return new WaitForSeconds(5);
-        spawning = false;
-        WaveStartText.enabled = false;
-        WaveDisplayText.enabled = false;
+        else
+        {
+            // spawn portal
+            yield return new WaitForSeconds(1);
+        }
     }
 
     IEnumerator wave1()
     {
-        spawn(0);
+        spawnNormal(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
     }
 
     IEnumerator wave2()
     {
-        spawn(0);
+        spawnNormal(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawn(0);
+        spawnNormal(0);
     }
 
     IEnumerator wave3()
     {
-        spawn(0);
+        spawnNormal(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawn(0);
+        spawnNormal(0);
     }
 
     IEnumerator wave4()
     {
-        spawn(0);
+        spawnNormal(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawn(0);
+        spawnNormal(0);
     }
 
     IEnumerator wave5()
     {
-        spawn(0);
+        spawnNormal(0);
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawn(0);
+        spawnNormal(0);
     }
 
-    void spawn(int enemyID)
+    void spawnNormal(int enemyID)
     {
         GameObject objectClone;
         for (int i = 0; i < 4; i++)

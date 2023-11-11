@@ -175,6 +175,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         anim.SetTrigger("Attack");
         shotgun();
         
+        
 
         //shootPos.transform.rotation = Quaternion.LookRotation(playerDir);
         //Instantiate(bullet, shootPos.position, transform.rotation);

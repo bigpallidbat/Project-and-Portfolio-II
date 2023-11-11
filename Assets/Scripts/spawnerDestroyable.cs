@@ -18,6 +18,7 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
     int curObjectsSpawned;
     bool isSpawning;
     bool startSpawning;
+    bool isDying;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,14 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
             curObjectsSpawned++;
             GameObject objectClone = Instantiate(objectToSpawn, spawnPos[Random.Range(0, spawnPos.Length)].position, transform.rotation);
             objectList.Add(objectClone);
-            objectClone.GetComponent<EnemyAI>().origin = this;
+            if (objectClone.GetComponent<EnemyAI>() != null)
+            {
+                objectClone.GetComponent<EnemyAI>().origin = this;
+            }
+            if(objectClone.GetComponent<MechMyBoy>() != null)
+            {
+                objectClone.GetComponent<MechMyBoy>().origin = this;
+            }
             yield return new WaitForSeconds(timeBetweenSpawns);
             isSpawning = false;
         }
@@ -85,15 +93,25 @@ public class spawnerDestroyable : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            StartCoroutine(waitToDestroy());
+            if (!isDying)
+            {
+                StartCoroutine(waitToDestroy());
+            }
         }
     }
 
     IEnumerator waitToDestroy()
     {
+        isDying = true;
         gameManager.Instance.minorUpdateGoal(-1);
-        Instantiate(pUP, pUpSpawn.transform.position, Quaternion.identity);
-        portal.SetActive(true);
+        if (pUP != null)
+        {
+            Instantiate(pUP, pUpSpawn.transform.position, Quaternion.identity);
+        }
+        if (portal != null)
+        {
+            portal.SetActive(true);
+        }
         yield return new WaitForSeconds(.3f);
         Destroy(gameObject);
     }

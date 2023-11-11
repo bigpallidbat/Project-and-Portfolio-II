@@ -28,7 +28,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void Awake()
     {
-        music.Stop();
+      
 
     }
 

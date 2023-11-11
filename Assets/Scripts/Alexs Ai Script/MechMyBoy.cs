@@ -272,6 +272,11 @@ public class MechMyBoy : MonoBehaviour, IDamage
             }
 
             StartCoroutine(DisableComponentsAfterDelay(1.0f));
+
+            if (origin != null)
+            {
+                origin.updateObjectNum();
+            }
         }
         else
         {

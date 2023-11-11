@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class basicObjectMovement : MonoBehaviour
 {
-    [SerializeField] AudioSource PlayerSounds;
+    [SerializeField] AudioSource GameSounds;
 
     [SerializeField] float speed;
     [SerializeField] float destroyTime;
     [SerializeField] int damage;
     [SerializeField] float pingPongDis;
     [SerializeField] float timeBeforeSink;
-    [SerializeField] AudioClip[] audRockSink;
-    [Range(0, 1)][SerializeField] float audRockSinkVol;
+    [SerializeField] AudioClip audObjMove;
+    [Range(0, 1)][SerializeField] float audObjMoveVol;
     [SerializeField] bool damageIT;
     [SerializeField] bool basicMove;
     [SerializeField] bool pingPong;
@@ -50,6 +50,10 @@ public class basicObjectMovement : MonoBehaviour
         else if (basicMove == true)
         {
             BasicMove();
+            if (GameSounds != null)
+            {
+                GameSounds.PlayOneShot(audObjMove, audObjMoveVol);
+            }
         }
         else if (rockSink == true && player == true)
         {
@@ -101,7 +105,7 @@ public class basicObjectMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeSink);
         transform.position += -transform.right * speed * Time.deltaTime;
-        PlayerSounds.PlayOneShot(audRockSink[UnityEngine.Random.Range(0, audRockSink.Length)], audRockSinkVol);
+        GameSounds.PlayOneShot(audObjMove , audObjMoveVol);
         StartCoroutine(Destroy());
     }
 }
