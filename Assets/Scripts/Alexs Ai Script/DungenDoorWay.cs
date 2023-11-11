@@ -21,11 +21,14 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int bulletSpeed;
     [SerializeField] int bulletAimSpeed;
-    float shotoffSetY;
+    [SerializeField] float shotoffSetY;
     [SerializeField] GameObject ShockWave;
     [SerializeField] GameObject cameraX;
     [SerializeField] GameObject[] Brothers;
     [SerializeField] GameObject[] MonsterDoors;
+    [SerializeField] float Startfire;
+    [SerializeField] float Stopfire;
+    [SerializeField] float StartfireSpeed;
     bool isActive;
     bool isAttacking;
     bool isInincible;
@@ -87,33 +90,35 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         Mimic4Attack.gameObject.SetActive(true);
         isAttacking = true;
         AimedShot();
-        DiceRoll = Random.Range(0, 8);
-        switch (DiceRoll)
-        {
-            case 0:
-                for (float j = -84.375f; j < 90; j += 5.625f) tomAttack(j, 15);
-                StartCoroutine(endAttack());
-                break;
-            case 1:
-                for (float j = -87.1875f; j < 90; j += 5.625f) tomAttack(j, 15);
-                StartCoroutine(endAttack());
-                break;
-            case 2:
-                for (float j = -90f; j < 0; j += 2.8125f) tomAttack(j, 5);
-                StartCoroutine(endAttack());
-                break;
-            case 3:
-                for (float j = 0f; j < 90; j += 2.8125f) tomAttack(j, 5);
-                StartCoroutine(endAttack());
-                break;
-            case 4:
-                for (float j = -45f; j < 45; j += 2.8125f) tomAttack(j, 5);
-                StartCoroutine(endAttack());
-                break;
-            default:
-                StartCoroutine(shockWave());
-                break;
-        }
+        for (float j = Startfire; j < Stopfire; j += StartfireSpeed) tomAttack(j, 15);
+        isAttacking = false;
+        //DiceRoll = Random.Range(0, 8);
+        //switch (DiceRoll)
+        //{
+        //    case 0:
+        //        for (float j = -42.1875f; j < 45; j += 2.8125f) tomAttack(j, 15);
+        //        StartCoroutine(endAttack());
+        //        break;
+        //    case 1:
+        //        for (float j = -87.1875f; j < 90; j += 5.625f) tomAttack(j, 15);
+        //        StartCoroutine(endAttack());
+        //        break;
+        //    case 2:
+        //        for (float j = -90f; j < 0; j += 2.8125f) tomAttack(j, 5);
+        //        StartCoroutine(endAttack());
+        //        break;
+        //    case 3:
+        //        for (float j = 0f; j < 90; j += 2.8125f) tomAttack(j, 5);
+        //        StartCoroutine(endAttack());
+        //        break;
+        //    case 4:
+        //        for (float j = -45f; j < 45; j += 2.8125f) tomAttack(j, 5);
+        //        StartCoroutine(endAttack());
+        //        break;
+        //    default:
+        //        StartCoroutine(shockWave());
+        //        break;
+        //}
     }
     IEnumerator shockWave()
     {
@@ -185,7 +190,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         bullet.GetComponent<Bullet>().speed = speed;
         bullet.GetComponent<Bullet>().damage = shootDamage;
         bullet.GetComponent<Bullet>().offsetX = offX;
-        bullet.GetComponent<Bullet>().offsetY = Random.Range(0, shotoffSetY);
+        bullet.GetComponent<Bullet>().offsetY = Random.Range(-shotoffSetY + 0.25f, shotoffSetY);
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
@@ -291,7 +296,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     }
     IEnumerator wakingUp()
     {
-        isActive = true;
+        isAwake = true;
         doorWay.gameObject.SetActive(false);
         Mimic1Wake1.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.085714f);
