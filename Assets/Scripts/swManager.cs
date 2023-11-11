@@ -77,35 +77,43 @@ public class swManager : MonoBehaviour
         spawning = true;
         // display: ~WAVE #~
         waveCurrent++;
-        WaveDisplayText.text = waveCurrent.ToString();
-        WaveStartText.enabled = true;
-        WaveDisplayText.enabled = true;
-        gameManager.Instance.setWaveCur(waveCurrent);
-        switch (waveCurrent)
+        if (waveCurrent <= waveMax)
         {
-            case 1:
-                StartCoroutine(wave1());
-                break;
-            case 2:
-                StartCoroutine(wave2());
-                break;
-            case 3:
-                StartCoroutine(wave3());
-                break;
-            case 4:
-                StartCoroutine(wave4());
-                break;
-            case 5:
-                StartCoroutine(wave5());
-                break;
-            case 10:
-                GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
-                break;
+            WaveDisplayText.text = waveCurrent.ToString();
+            WaveStartText.enabled = true;
+            WaveDisplayText.enabled = true;
+            gameManager.Instance.setWaveCur(waveCurrent);
+            switch (waveCurrent)
+            {
+                case 1:
+                    StartCoroutine(wave1());
+                    break;
+                case 2:
+                    StartCoroutine(wave2());
+                    break;
+                case 3:
+                    StartCoroutine(wave3());
+                    break;
+                case 4:
+                    StartCoroutine(wave4());
+                    break;
+                case 5:
+                    StartCoroutine(wave5());
+                    break;
+                case 10:
+                    GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
+                    break;
+            }
+            yield return new WaitForSeconds(5);
+            spawning = false;
+            WaveStartText.enabled = false;
+            WaveDisplayText.enabled = false;
         }
-        yield return new WaitForSeconds(5);
-        spawning = false;
-        WaveStartText.enabled = false;
-        WaveDisplayText.enabled = false;
+        else
+        {
+            // spawn portal
+            yield return new WaitForSeconds(1);
+        }
     }
 
     IEnumerator wave1()
