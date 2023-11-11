@@ -449,4 +449,24 @@ public class gameManager : MonoBehaviour
         WaveMax.text = num.ToString();
     }
 
+    public void SetGKeyActive()
+    {
+        GreenKey.SetActive(true);
+    }
+
+    public void SetCKeyActive()
+    {
+        CyanKey.SetActive(true);
+    }
+
+    public void SetMKeyActive()
+    {
+        MagentaKey.SetActive(true);
+    }
+
+    public void updateKeyCount(int amount)
+    {
+        keyCount += amount;
+        KeyCount.text = keyCount.ToString();
+    }
 }
