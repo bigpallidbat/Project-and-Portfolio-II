@@ -25,7 +25,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuInv;
+    [SerializeField] GameObject menuHint;
     public Image playerHpBar;
     public Image playerStamBar;
     public Image BossHPBar;
@@ -49,6 +49,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] List<GameObject> spawnerList;
     [SerializeField] GameObject EndDoor;
     [SerializeField] GameObject boss;
+    public GameObject keyMaster;
 
     [Header("-----  Music/sounds  -----")]
     [SerializeField] AudioSource themes;
@@ -122,6 +123,12 @@ public class gameManager : MonoBehaviour
         if (currentlevel == Levels.MainMenu)
         {
             setVolumes();
+        }
+        else if(currentlevel != Levels.MainMenu && currentlevel != Levels.Credits)
+        {
+            statePause();
+            menuActive = menuHint;
+            menuHint.SetActive(true);
         }
     }
 
