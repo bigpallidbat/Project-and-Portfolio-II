@@ -58,6 +58,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
+    [Header("-----Dev Work-----")]
+    [SerializeField] GameObject Devcontroller;
+    [SerializeField] DevController devController;
+    [SerializeField] GameObject[] quickDev;
+
     public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
 
     int keyCount;
@@ -72,6 +77,9 @@ public class gameManager : MonoBehaviour
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
+    //ToRemove
+    bool isDevMode;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -84,7 +92,10 @@ public class gameManager : MonoBehaviour
         Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
-            
+            //To Remove
+            Devcontroller = GameObject.FindWithTag("DevPlayerTemp");
+            devController = Devcontroller.GetComponent<DevController>();
+
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
             EndDoor = GameObject.FindWithTag("EndDoor");
@@ -101,6 +112,7 @@ public class gameManager : MonoBehaviour
             }
              catchGoal();
         }
+        
         
         
     }
@@ -169,6 +181,41 @@ public class gameManager : MonoBehaviour
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
+        }
+
+        //toRemove
+        if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && !isDevMode)
+        {
+            Devcontroller.SetActive(true);
+            Devcontroller.GetComponentInChildren<Camera>().enabled = true;
+
+            player.GetComponentInChildren<Camera>().enabled = false;
+            player.SetActive(false);
+
+            if (quickDev.Length > 0) {
+                for (int i = 0; i < quickDev.Length; i++)
+                {
+                    quickDev[i].SetActive(false);
+                }
+            }
+            isDevMode = true;
+        }
+        else if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && isDevMode)
+        {
+            Devcontroller.GetComponentInChildren<Camera>().enabled = false;
+            Devcontroller.SetActive(false);
+
+            player.SetActive(true);
+            player.GetComponentInChildren<Camera>().enabled = true;
+
+            if (quickDev.Length > 0)
+            {
+                for (int i = 0; i < quickDev.Length; i++)
+                {
+                    quickDev[i].SetActive(true);
+                }
+            }
+            isDevMode = false;
         }
         
     }

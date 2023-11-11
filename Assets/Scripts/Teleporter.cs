@@ -15,6 +15,7 @@ public class Teleporter : MonoBehaviour
         {
             other.GetComponent<CharacterController>().enabled = false;
             other.gameObject.transform.position = new Vector3(newLocation.position.x, newLocation.position.y, newLocation.position.z);
+            other.gameObject.transform.rotation = Quaternion.identity;
             other.GetComponent<CharacterController>().enabled = true;
 
             if (parent != null)
