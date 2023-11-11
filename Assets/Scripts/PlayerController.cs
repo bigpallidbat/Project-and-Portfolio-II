@@ -248,6 +248,14 @@ public class PlayerController : MonoBehaviour, IDamage
             gameManager.Instance.YouLose();
     }
 
+    public void spawnPlayerminor()
+    {
+        HP = HPMax + stats.hpBuff;
+        UpdatePlayerUI();
+        controller.enabled = false;
+        transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
+        controller.enabled = true;
+    }
 
     public void spawnPlayer()
     {
