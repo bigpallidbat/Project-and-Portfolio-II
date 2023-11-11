@@ -165,7 +165,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
         isAttacking = true;
 
         anim.SetTrigger("attack");
-        soundSFX.PlayOneShot(attckSound, audAttackVol);
+        //soundSFX.PlayOneShot(attckSound, audAttackVol);
         //else yield return null;
         if (!meleeOnly)
         {

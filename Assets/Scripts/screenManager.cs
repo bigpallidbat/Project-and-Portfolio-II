@@ -38,14 +38,7 @@ public class screenManager : MonoBehaviour
         }
     }
 
-    public void skipLogo()
-    {
-        anim.StopPlayback();
-        StopCoroutine(Logo());
-        screenImg.gameObject.SetActive(false);
-        mainMenu();
-
-    }
+    
 
     //run settings for milisecond to set audio prefs
     IEnumerator settingsrun()
