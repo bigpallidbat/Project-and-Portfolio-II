@@ -12,6 +12,7 @@ public class KeyMaster : MonoBehaviour
     public void addKey()
     {
         SmallKeys++;
+        gameManager.Instance.updateKeyCount(1);
     }
 
     public bool useSmallKey()
@@ -19,6 +20,7 @@ public class KeyMaster : MonoBehaviour
         if (SmallKeys > 0)
         {
             SmallKeys--;
+            gameManager.Instance.updateKeyCount(-1);
             return true;
         }
         else return false;
@@ -27,16 +29,19 @@ public class KeyMaster : MonoBehaviour
     public void gotGreenGeeKey()
     {
         GreenGeeKey = true;
+        gameManager.Instance.SetGKeyActive();
     }
 
     public void gotCyanGeeKey()
     {
         CyanGeeKey = true;
+        gameManager.Instance.SetCKeyActive();
     }
 
     public void gotMagentaGeeKey()
     {
         MagentaGeeKey = true;
+        gameManager.Instance.SetMKeyActive();
     }
 
     public bool useCyanGeeKey()
