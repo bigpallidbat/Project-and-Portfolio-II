@@ -1198,11 +1198,11 @@ GameObject:
   - component: {fileID: 4687951783656075790}
   m_Layer: 0
   m_Name: Mimic
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4687951783656075790
 Transform:
   m_ObjectHideFlags: 0
@@ -1212,7 +1212,7 @@ Transform:
   m_GameObject: {fileID: 3219611356390963669}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1229,6 +1229,8 @@ Transform:
   - {fileID: 8284405494822282708}
   - {fileID: 1336070131792243955}
   - {fileID: 5182542826934072790}
+  - {fileID: 6498043347911530025}
+  - {fileID: 1834902761161430351}
   m_Father: {fileID: 7898796426821893111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3423853595525027804
@@ -1683,6 +1685,37 @@ Transform:
   - {fileID: 7031943822199134355}
   m_Father: {fileID: 4687951783656075790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5212234127819401763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6498043347911530025}
+  m_Layer: 0
+  m_Name: ShootPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6498043347911530025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212234127819401763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 17.82, z: 10.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4687951783656075790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5241639193018653567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1799,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5436020206874128940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834902761161430351}
+  m_Layer: 0
+  m_Name: StompPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1834902761161430351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5436020206874128940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.21, z: 12.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4687951783656075790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5547351314107373582
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,6 +3238,7 @@ GameObject:
   - component: {fileID: 753908568281907741}
   - component: {fileID: 6081335854608923240}
   - component: {fileID: 5637068065651665773}
+  - component: {fileID: 6727168528980177394}
   m_Layer: 0
   m_Name: 5x5 dungeonDoorwayM
   m_TagString: Untagged
@@ -3263,6 +3328,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 16, y: 48, z: 8}
   m_Center: {x: 0, y: 56, z: -6}
+--- !u!114 &6727168528980177394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179424007262197626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931458fba62ff034084a4a741cf79a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBombDoor: 0
+  isMimic: 1
+  hitBox: {fileID: 0}
+  shootPos: {fileID: 6498043347911530025}
+  stompPos: {fileID: 1834902761161430351}
+  Health: 40
+  AttackRate: 0
+  bullet: {fileID: 4821185415007250156, guid: 106b517c4ca7ac74196e7050a76ec6b2, type: 3}
+  bulletAim: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
+  shootDamage: 1
+  bulletSpeed: 0
+  bulletAimSpeed: 30
+  ShockWave: {fileID: 4821185415007250156, guid: 73ed92b9c08f46842bb05ff26f6859f1, type: 3}
+  cameraX: {fileID: 0}
+  Brothers: []
+  MonsterDoors: []
+  doorWay: {fileID: 2369564058339907006}
+  Mimic1Wake1: {fileID: 7697032688119936876}
+  Mimic2Wake2: {fileID: 6630217522728218919}
+  Mimic3Idel: {fileID: 8390088241982787676}
+  Mimic4Attack: {fileID: 4738218075728219571}
+  Mimic5Damage1: {fileID: 4499522438016381795}
+  Mimic6Damage2: {fileID: 1826838421620214738}
+  Mimic7Damage3: {fileID: 2161180146710288198}
+  Mimic8Damage4: {fileID: 6531716351688594601}
+  Mimic9Dying1: {fileID: 2683401910340485993}
+  Mimic10Dying2: {fileID: 8805858806852707180}
+  Mimic11Dying3: {fileID: 7109075125424407727}
+  Mimic12Dying4: {fileID: 5153748099867059155}
+  Mimic13Open: {fileID: 6770943284135527572}
+  attckSound: {fileID: 0}
+  audAttackVol: 0
+  VpainSound: {fileID: 0}
+  audVpainVol: 0
+  VBlowingUp: {fileID: 0}
+  BlowUpVol: 0
+  seeSound: {fileID: 0}
+  audSeeVol: 0
+  ShockSound: {fileID: 0}
+  ShockVol: 0
+  soundSFX: {fileID: 0}
 --- !u!1001 &3207996125101747824
 PrefabInstance:
   m_ObjectHideFlags: 0

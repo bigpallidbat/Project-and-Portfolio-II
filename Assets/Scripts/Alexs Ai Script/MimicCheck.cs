@@ -8,6 +8,10 @@ public class MimicCheck : MonoBehaviour
     [SerializeField] GameObject closeMimcDoor;
     private void OnTriggerEnter(Collider other)
     {
-        if (isMimic) if (other.CompareTag("Player")) closeMimcDoor.GetComponent<DungeonDoor>().closeMimic();
+        if (isMimic) if (other.CompareTag("Player"))
+            {
+                closeMimcDoor.GetComponent<DungeonDoor>().closeMimic();
+                gameObject.SetActive(false);
+            }
     }
 }

@@ -30,6 +30,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     bool isAttacking;
     bool isInincible;
     bool dying;
+    bool isAwake;
 
     [Header("----- Mimic Parts -----")]
     [SerializeField] GameObject doorWay;
@@ -283,13 +284,14 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     }
     public void wakeUp()
     {
-        if (isMimic)
+        if (isMimic && !isAwake)
         {
             StartCoroutine(wakingUp());
         }
     }
     IEnumerator wakingUp()
     {
+        isActive = true;
         doorWay.gameObject.SetActive(false);
         Mimic1Wake1.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.085714f);

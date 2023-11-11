@@ -33,7 +33,7 @@ public class DungeonDoor : MonoBehaviour, IInteract
     {
         if (opening && curPos.y <= endingPos)
         {
-            curPos.y += 50 * Time.deltaTime;
+            curPos.y += 20 * Time.deltaTime;
             if (curPos.y >= endingPos)
             {
                 curPos.y = endingPos;
@@ -51,7 +51,6 @@ public class DungeonDoor : MonoBehaviour, IInteract
                 if (isMimic) mimic.GetComponent<DungenDoorWay>().wakeUp();
             }
             transform.position = curPos;
-            
         }
         else settrap.enabled = true;
         //curPos = Mathf.Lerp(transform.position.y, endingPos, Time.deltaTime * 4);
