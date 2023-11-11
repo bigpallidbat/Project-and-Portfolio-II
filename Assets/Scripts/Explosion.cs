@@ -39,5 +39,12 @@ public class Explosion : MonoBehaviour
         {
             physicsenable.physics((other.transform.position - transform.position).normalized * explosionForce);
         }
+
+        IDestroy Destroyable = other.GetComponent<IDestroy>();
+
+        if(Destroyable != null)
+        {
+            Destroyable.Destroy();
+        }
     }
 }
