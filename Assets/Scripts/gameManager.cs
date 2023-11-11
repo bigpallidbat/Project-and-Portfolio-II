@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -49,8 +50,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] AudioClip pauseMenu;
     [SerializeField] AudioClip defeat;
     [SerializeField] AudioClip YouWin;
+    [SerializeField] string[] mixerList;
+    [SerializeField] AudioMixer mixer;
 
-    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave , Devwork = 10 };
+    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel , Devwork = 10 };
     
     public bool isPaused;
     float timeScaleOrig;
@@ -68,7 +71,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
+        
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
         //Debug.Log(SceneManager.GetActiveScene().buildIndex);
@@ -92,13 +95,29 @@ public class gameManager : MonoBehaviour
              catchGoal();
         }
         
-        if (isPaused)
+        
+    }
+
+    private void Start()
+    {
+        if (currentlevel == Levels.MainMenu)
         {
-            stateUnpause();
+            setVolumes();
         }
     }
 
-    void emergencyCheck()
+    void setVolumes()
+    {
+        if (mixerList.Length > 0)
+        {
+            for (int i = 0; i < mixerList.Length; i++)
+            {
+                mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i]));
+            }
+        }
+    }
+
+        void emergencyCheck()
     {
         if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
         {
@@ -118,17 +137,13 @@ public class gameManager : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().buildIndex == 5)
         {
-            currentlevel = Levels.Wave;
+            currentlevel = Levels.horror;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown && currentlevel == Levels.MainMenu)
-        {
-            screenManager.Instance.skipLogo();
-        }
         if (Input.GetButtonDown("Cancel") && menuActive == null && currentlevel != Levels.MainMenu)
         {
             statePause();
@@ -215,6 +230,10 @@ public class gameManager : MonoBehaviour
         {
 
         }
+        else if (currentlevel == Levels.Voxel)
+        {
+
+        }
     }
 
     private void checkGoal()
@@ -261,6 +280,10 @@ public class gameManager : MonoBehaviour
             enemiesRemaining += amount;
             enemiesRemainingText.text = enemiesRemaining.ToString();
         }
+        else if (currentlevel == Levels.Voxel)
+        {
+
+        }
     }
 
     private void setGameGoal(int amount)
@@ -284,8 +307,16 @@ public class gameManager : MonoBehaviour
         {
             boss = GameObject.FindWithTag("Boss");
 
-            GoalText.text = "Find the 3 dolls and kill the Entity";
+            GoalText.text = "Collect all cursed dolls to kill the stalker";
             enemiesRemainingText.text = amount.ToString();
+        }
+        else if(currentlevel == Levels.Wave)
+        {
+
+        }
+        else if(currentlevel == Levels.Voxel)
+        {
+
         }
     }
 

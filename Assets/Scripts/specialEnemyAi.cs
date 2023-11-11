@@ -172,7 +172,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-        anim.SetTrigger("shoot");
+        anim.SetTrigger("Attack");
         shotgun();
         
 
@@ -264,6 +264,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
                     if (angleToPlayer <= shootAngle && !isShooting)
                         StartCoroutine(shoot());
                 }
+                else anim.SetBool("Aiming", false);
                     
 
 

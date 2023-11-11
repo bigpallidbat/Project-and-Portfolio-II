@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class trapController2 : MonoBehaviour
 {
+    [SerializeField] AudioSource PlayerSounds;
+
     [SerializeField] Transform targetSpot;
     [SerializeField] Transform origTran;
     [SerializeField] float speed;
+    [SerializeField] AudioClip[] audTrap;
+    [Range(0, 1)][SerializeField] float audTrapVol;
 
     private bool isMoving;
     private bool isExtend;
@@ -21,6 +25,7 @@ public class trapController2 : MonoBehaviour
     {
         if(other.CompareTag("Player") && !isMoving)
         {
+            PlayerSounds.PlayOneShot(audTrap[UnityEngine.Random.Range(0, audTrap.Length)], audTrapVol);
             StartCoroutine(SpikeTrapExtend());
         }
     }
@@ -42,7 +47,7 @@ public class trapController2 : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetSpot.position, speed * Time.deltaTime);
 
-                if(transform.position == targetSpot.position)
+                if (transform.position == targetSpot.position)
                 {
                     isExtend = true;
                 }
