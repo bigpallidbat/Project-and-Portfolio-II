@@ -208,7 +208,6 @@ MonoBehaviour:
   MaxHp: 9
   Hp: 9
   friendly: 0
-  isBoss: 0
   knowsPlayerLocation: 0
   ambusher: 0
   meleeOnly: 0
@@ -222,12 +221,11 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   WhereISpawned: {fileID: 0}
   bullet: {fileID: 4821185415007250156, guid: 764f18407c591934da1bd924e9f7e8ec, type: 3}
-  enemy1: {fileID: 0}
-  enemy2: {fileID: 0}
   spawnPos: {fileID: 0}
   fireRate: 0.375
   shootDamage: 1
   bulletSpeed: 30
+  bulletLifeSpan: 0
   shotoffSet: 1.26
   hitBoxCOL: {fileID: 0}
   explosionRange: 0
@@ -288,7 +286,7 @@ AudioSource:
   m_GameObject: {fileID: 1701662490496739331}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2258788808968907320, guid: 51a1f4d425bf4b44da38b99fa040eca7, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
