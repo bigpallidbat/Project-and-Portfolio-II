@@ -33,15 +33,16 @@ public class DungeonDoor : MonoBehaviour, IInteract
     {
         if (opening && curPos.y <= endingPos)
         {
-            curPos.y += 2 * Time.deltaTime;
+            curPos.y += 50 * Time.deltaTime;
             if (curPos.y >= endingPos)
             {
                 curPos.y = endingPos;
                 wasActivated = true;
+        if (wasActivated && !isMimic) Destroy(gameObject);
             }
             transform.position = curPos;
         }
-        else if (!opening && curPos.y >= startingPos)
+        else if (!opening && curPos.y >= startingPos && wasActivated)
         {
             curPos.y -= 20 * Time.deltaTime;
             if (curPos.y <= startingPos)
@@ -52,7 +53,6 @@ public class DungeonDoor : MonoBehaviour, IInteract
             transform.position = curPos;
             
         }
-        if (wasActivated && !isMimic) Destroy(gameObject);
         else settrap.enabled = true;
         //curPos = Mathf.Lerp(transform.position.y, endingPos, Time.deltaTime * 4);
         //transform.position = curPos;
@@ -60,11 +60,23 @@ public class DungeonDoor : MonoBehaviour, IInteract
 
     public void Activate()
     {
-        if (isLocked) if (keyMaster.GetComponent<KeyMaster>().useSmallKey()) opening = true;
-            else if (greenLock) if (keyMaster.GetComponent<KeyMaster>().useGreenGeeKey()) opening = true;
-                else if (cyanlock) if (keyMaster.GetComponent<KeyMaster>().useCyanGeeKey()) opening = true;
-                    else if (magentalock) if (keyMaster.GetComponent<KeyMaster>().useMagentaGeeKey()) opening = true;
-                        else opening = true;
+        if (isLocked)
+        {
+            if (keyMaster.GetComponent<KeyMaster>().useSmallKey()) opening = true;
+        }
+        else if (greenLock)
+        {
+            if (keyMaster.GetComponent<KeyMaster>().useGreenGeeKey()) opening = true;
+        }
+        else if (cyanlock)
+        {
+            if (keyMaster.GetComponent<KeyMaster>().useCyanGeeKey()) opening = true;
+        }
+        else if (magentalock)
+        {
+            if (keyMaster.GetComponent<KeyMaster>().useMagentaGeeKey()) opening = true;
+        }
+        else opening = true;
         wasActivated = true;
     }
 
