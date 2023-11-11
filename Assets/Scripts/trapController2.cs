@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class trapController2 : MonoBehaviour
 {
-    [SerializeField] AudioSource PlayerSounds;
+    [SerializeField] AudioSource GameSounds;
 
     [SerializeField] Transform targetSpot;
     [SerializeField] Transform origTran;
@@ -25,7 +25,7 @@ public class trapController2 : MonoBehaviour
     {
         if(other.CompareTag("Player") && !isMoving)
         {
-            PlayerSounds.PlayOneShot(audTrap , audTrapVol);
+            GameSounds.PlayOneShot(audTrap , audTrapVol);
             StartCoroutine(SpikeTrapExtend());
         }
     }
