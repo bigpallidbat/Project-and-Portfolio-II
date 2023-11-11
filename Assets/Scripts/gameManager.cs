@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -38,6 +39,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text GrenadeCount;
     [SerializeField] TMP_Text MedkitCount;
     [SerializeField] GameObject playerDamageFlash;
+    [SerializeField] GameObject CyanKey;
+    [SerializeField] GameObject MagentaKey;
+    [SerializeField] GameObject GreenKey;
+    [SerializeField] TMP_Text KeyCount;
 
     [Header("----- GameMode/Level -----")]
     [SerializeField] static int gameModeChosen;
@@ -53,8 +58,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
-    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel , Devwork = 10 };
-    
+    public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
+
+    int keyCount;
     public bool isPaused;
     float timeScaleOrig;
     static int enemiesRemaining;
@@ -140,6 +146,19 @@ public class gameManager : MonoBehaviour
         {
             currentlevel = Levels.horror;
         }
+        else if(SceneManager.GetActiveScene().buildIndex == 6)
+        {
+            currentlevel = Levels.Wave;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 7)
+        {
+            currentlevel = Levels.Voxel;
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 8)
+        {
+            currentlevel = Levels.Credits;
+        }
+
     }
 
     // Update is called once per frame
