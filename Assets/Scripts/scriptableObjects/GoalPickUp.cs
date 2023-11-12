@@ -18,8 +18,10 @@ public class GoalPickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        gameManager.Instance.minorUpdateGoal(-1);
-
-        Destroy(gameObject);
+        if (other.CompareTag("Player"))
+        {
+            gameManager.Instance.minorUpdateGoal(-1);
+            Destroy(gameObject);
+        }
     }
 }

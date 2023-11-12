@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -116,32 +113,32 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        else if(checkLevel())
-        {
+        //else if(checkLevel() || !sceneManager.scenechange)
+        //{
             
-            menuActive = menuHint;
-            menuActive.SetActive(true);
-            statePause();
-        }
+        //    menuActive = menuHint;
+        //    menuActive.SetActive(true);
+        //    statePause();
+        //}
     }
     
     bool checkLevel()
     {
         if(currentlevel == Levels.MainMenu || currentlevel == Levels.Credits)
         {
-            return true;
+            return false;
         }
         else if(currentlevel == Levels.Boss || currentlevel == Levels.Wave)
         {
-            return true;
+            return false;
         }
         else if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
         
     }
@@ -285,11 +282,11 @@ public class gameManager : MonoBehaviour
         }
         else if(currentlevel == Levels.Wave)
         {
-
+           
         }
         else if (currentlevel == Levels.Voxel)
         {
-
+            SceneManager.LoadScene(8);
         }
     }
 
@@ -299,6 +296,11 @@ public class gameManager : MonoBehaviour
         {
             updateGameGoal();
         }
+    }
+
+    public void setDoorActive()
+    {
+        EndDoor.SetActive(true);
     }
 
     public void minorUpdateGoal(int amount)
@@ -336,6 +338,8 @@ public class gameManager : MonoBehaviour
         {
             enemiesRemaining += amount;
             enemiesRemainingText.text = enemiesRemaining.ToString();
+
+            
         }
         else if (currentlevel == Levels.Voxel)
         {
@@ -366,10 +370,6 @@ public class gameManager : MonoBehaviour
 
             GoalText.text = "Collect all cursed dolls to kill the stalker";
             enemiesRemainingText.text = amount.ToString();
-        }
-        else if(currentlevel == Levels.Wave)
-        {
-
         }
         else if(currentlevel == Levels.Voxel)
         {
@@ -479,10 +479,12 @@ public class gameManager : MonoBehaviour
 
     public void setWaveCur(int num)
     {
+        waveCur = num;
         WaveCur.text = num.ToString();
     }
     public void setWaveMax(int num)
     {
+        waveMax = num;
         WaveMax.text = num.ToString();
     }
 

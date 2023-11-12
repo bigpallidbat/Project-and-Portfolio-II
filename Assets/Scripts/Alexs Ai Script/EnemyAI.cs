@@ -412,7 +412,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             //StartCoroutine(Death());
             Invoke("Death", 0.8f);
 
-            if (swManager.instance != null) { 
+            if (swManager.instance != null && gameManager.Instance.waveCur != 6 ) { 
             gameManager.Instance.minorUpdateGoal(-1);
             }
 

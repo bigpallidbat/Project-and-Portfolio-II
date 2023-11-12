@@ -1099,13 +1099,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3148477443582537132}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4115914, y: -0.91136855, z: -0.00000010710207, w: 0.000000037252896}
-  m_LocalPosition: {x: 4.9, y: -6.6, z: -33.7}
-  m_LocalScale: {x: 10, y: 5, z: 150}
+  m_LocalRotation: {x: 0.26123238, y: -0.72759557, z: 0.5902834, w: -0.23222393}
+  m_LocalPosition: {x: 6.9, y: -13.1, z: -2.6}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3994076922421049155}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 47.531, y: -253.189, z: -75.711}
 --- !u!33 &1035477267780985148
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1113,7 +1113,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3148477443582537132}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: f32442828616b1b4c9e1027923ad9a73, type: 3}
 --- !u!23 &163244480764428445
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1134,7 +1134,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6a6944f4904547e4fb039789da5fcd85, type: 2}
+  - {fileID: 2100000, guid: a6d0b35236cef9941b5ca107acca6313, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1417,7 +1417,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: 69092813ae098be42abda2f5b9627423, type: 3}
+  - {fileID: 2100000, guid: 53c3536c5b3ac514c9fffd9073dd7b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2131,7 +2131,7 @@ MonoBehaviour:
   agent: {fileID: 8661095519298420725}
   painSound: {fileID: 8300000, guid: 085fa0364ee8256479ff5c0871e937c6, type: 3}
   audPainVol: 0.328
-  deathSound: {fileID: 8300000, guid: 0403fd5dbb9876248ad20cad3d0bf3ce, type: 3}
+  deathSound: {fileID: 8300000, guid: fb27d80ca789493468d61c00a33f1048, type: 3}
   audDeathVol: 0.328
   attckSound: {fileID: 0}
   audAttackVol: 1
