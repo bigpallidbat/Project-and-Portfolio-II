@@ -189,7 +189,7 @@ public class bossAI : MonoBehaviour
         //find angle to player within distance
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
 
-        Debug.DrawRay(headPos.position, playerDir, Color.red);
+       
         RaycastHit hit;
 
         if (Physics.Raycast(headPos.position, playerDir, out hit) && angleToPlayer <= viewAngle)

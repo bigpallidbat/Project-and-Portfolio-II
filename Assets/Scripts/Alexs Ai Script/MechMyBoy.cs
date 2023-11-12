@@ -118,7 +118,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
         playerDist = Vector3.Distance(gameManager.Instance.player.transform.position, transform.position);
 
         RaycastHit hit;
-        Debug.DrawRay(headPos.position, PlayerDir, Color.green);
+        
         if (Physics.Raycast(headPos.position, PlayerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle || hit.collider.CompareTag("Player") && foundPlayer)

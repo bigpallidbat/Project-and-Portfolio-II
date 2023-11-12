@@ -148,6 +148,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Vector3 directionToPlayer = playerPosition - headPos.position;
         float angleToPlayer = Vector3.Angle(directionToPlayer, transform.forward);
         float playerDist = Vector3.Distance(playerPosition, transform.position);
+        PlayerDir = directionToPlayer;
 
         RaycastHit hit;
 

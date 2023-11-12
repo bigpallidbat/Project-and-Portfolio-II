@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.ProBuilder.MeshOperations;
@@ -59,11 +60,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
-    [Header("-----Dev Work-----")]
-    [SerializeField] GameObject Devcontroller;
-    [SerializeField] DevController devController;
-    [SerializeField] GameObject[] quickDev;
-
     public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
 
     int keyCount;
@@ -78,8 +74,6 @@ public class gameManager : MonoBehaviour
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
-    //ToRemove
-    bool isDevMode;
 
 
     // Start is called before the first frame update
@@ -93,9 +87,7 @@ public class gameManager : MonoBehaviour
         Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
-            //To Remove
-            Devcontroller = GameObject.FindWithTag("DevPlayerTemp");
-            devController = Devcontroller.GetComponent<DevController>();
+
 
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
@@ -124,12 +116,34 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        else if(currentlevel != Levels.MainMenu && currentlevel != Levels.Credits)
+        else if(checkLevel())
         {
-            statePause();
+            
             menuActive = menuHint;
-            menuHint.SetActive(true);
+            menuActive.SetActive(true);
+            statePause();
         }
+    }
+    
+    bool checkLevel()
+    {
+        if(currentlevel == Levels.MainMenu || currentlevel == Levels.Credits)
+        {
+            return true;
+        }
+        else if(currentlevel == Levels.Boss || currentlevel == Levels.Wave)
+        {
+            return true;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
     }
 
     void setVolumes()
@@ -138,7 +152,12 @@ public class gameManager : MonoBehaviour
         {
             for (int i = 0; i < mixerList.Length; i++)
             {
-                mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i]));
+                if(mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i])))
+                {
+                    float value;
+                    mixer.GetFloat(mixerList[i], out value);
+                    Debug.Log(value);
+                }
             }
         }
     }
@@ -188,43 +207,7 @@ public class gameManager : MonoBehaviour
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
-        }
-
-        //toRemove
-        if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && !isDevMode)
-        {
-            Devcontroller.SetActive(true);
-            Devcontroller.GetComponentInChildren<Camera>().enabled = true;
-
-            player.GetComponentInChildren<Camera>().enabled = false;
-            player.SetActive(false);
-
-            if (quickDev.Length > 0) {
-                for (int i = 0; i < quickDev.Length; i++)
-                {
-                    quickDev[i].SetActive(false);
-                }
-            }
-            isDevMode = true;
-        }
-        else if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && isDevMode)
-        {
-            Devcontroller.GetComponentInChildren<Camera>().enabled = false;
-            Devcontroller.SetActive(false);
-
-            player.SetActive(true);
-            player.GetComponentInChildren<Camera>().enabled = true;
-
-            if (quickDev.Length > 0)
-            {
-                for (int i = 0; i < quickDev.Length; i++)
-                {
-                    quickDev[i].SetActive(true);
-                }
-            }
-            isDevMode = false;
-        }
-        
+        }        
     }
 
    

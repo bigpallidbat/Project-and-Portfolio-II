@@ -59,7 +59,7 @@ public class TurretSystem : MonoBehaviour, IDamage
             gunBarrel.transform.Rotate(0, 0, currentRotSpeed * Time.deltaTime);
 
             RaycastHit hit;
-            Debug.DrawRay(shootPos.position, targetPos, Color.blue);
+            
             
             if (Physics.Raycast(shootPos.position, targetPos, out hit))
             {

@@ -540,7 +540,8 @@ public class PlayerController : MonoBehaviour, IDamage
         HPMax = stats.hpmax;
         medkitCount = stats.medkitCount;
         grenadeCount = stats.grenadeCount;
-
+        gameManager.Instance.updateGrenade(grenadeCount);
+        gameManager.Instance.updateMedkit(medkitCount);
     }
 
     public void setStats(bool check)

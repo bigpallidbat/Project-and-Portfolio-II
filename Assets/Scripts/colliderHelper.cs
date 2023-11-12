@@ -24,7 +24,7 @@ public class colliderHelper : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("DETECTED");
+        
 
         if (other.CompareTag("Player"))
         {
