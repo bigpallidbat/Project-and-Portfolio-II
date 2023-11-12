@@ -32,9 +32,9 @@ public class screenManager : MonoBehaviour
     {
         if (gameManager.currentlevel == gameManager.Levels.MainMenu)
         {
-            //StartCoroutine(settingsrun());            
+                     
             Logorun();
-            Debug.Log(gameManager.currentlevel);
+           
         }
     }
 

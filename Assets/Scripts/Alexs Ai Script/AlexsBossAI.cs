@@ -99,6 +99,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     {
         //agent.enabled = false;
         //isInvincible = true;
+        stoppingDistOrig = agent.stoppingDistance;
         att1CurFireRate = att1Rate;
         soundSFX = GetComponent<AudioSource>();
         goRight = Random.Range(0, 2) == 0;

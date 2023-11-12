@@ -148,6 +148,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Vector3 directionToPlayer = playerPosition - headPos.position;
         float angleToPlayer = Vector3.Angle(directionToPlayer, transform.forward);
         float playerDist = Vector3.Distance(playerPosition, transform.position);
+        PlayerDir = directionToPlayer;
 
         RaycastHit hit;
 
@@ -411,7 +412,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             //StartCoroutine(Death());
             Invoke("Death", 0.8f);
 
-            if (swManager.instance != null) { 
+            if (swManager.instance != null && gameManager.Instance.waveCur != 6 ) { 
             gameManager.Instance.minorUpdateGoal(-1);
             }
 

@@ -26,7 +26,7 @@ public class swManager : MonoBehaviour
     [Header("---------- UI ----------")]
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
-    private int waveMax = 10;
+    private int waveMax = 6;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
 
@@ -100,7 +100,8 @@ public class swManager : MonoBehaviour
                 case 5:
                     StartCoroutine(wave5());
                     break;
-                case 10:
+                case 6:
+                    gameManager.Instance.BossHPBar.gameObject.SetActive(true);
                     GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
                     break;
             }
@@ -112,42 +113,93 @@ public class swManager : MonoBehaviour
         else
         {
             // spawn portal
+            gameManager.Instance.setDoorActive();
             yield return new WaitForSeconds(1);
         }
     }
 
     IEnumerator wave1()
     {
-        spawnNormal(0);
+        for(int i = 0; i < 4; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+        }
         yield return new WaitForSeconds(timeBetweenSpawns);
     }
 
     IEnumerator wave2()
     {
-        spawnNormal(0);
+        for(int i = 0; i < 3; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+        }
+
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawnNormal(0);
+        
+        for(int i = 3; i < 5; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+        }
     }
 
     IEnumerator wave3()
     {
-        spawnNormal(0);
+        for (int i = 0; i < 3; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+        }
+
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawnNormal(0);
+
+        for (int i = 3; i < enemies.Count; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+        }
     }
 
     IEnumerator wave4()
     {
-        spawnNormal(0);
+        for (int i = 0; i < 3; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i); spawnNormal(i);
+        }
+
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawnNormal(0);
+
+        for (int i = 3; i < enemies.Count; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+            spawnNormal(i);
+            spawnNormal(i);
+        }
     }
 
     IEnumerator wave5()
     {
-        spawnNormal(0);
+        for (int i = 0; i < 3; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i); spawnNormal(i);
+            spawnNormal(i);
+            spawnNormal(i); spawnNormal(i);
+        }
+
         yield return new WaitForSeconds(timeBetweenSpawns);
-        spawnNormal(0);
+
+        for (int i = 3; i < enemies.Count; i++)
+        {
+            spawnNormal(i);
+            spawnNormal(i);
+            spawnNormal(i);
+            spawnNormal(i);
+        }
     }
 
     void spawnNormal(int enemyID)

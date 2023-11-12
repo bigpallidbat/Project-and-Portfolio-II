@@ -203,7 +203,7 @@ MonoBehaviour:
   newMaterial: {fileID: 0}
   leftCheck: {fileID: 1569863205216604107}
   rightCheck: {fileID: 8905974230129373903}
-  damageCOL: {fileID: 3265294568784535181}
+  damageCOL: {fileID: 60377592084847408}
   RBody: {fileID: 0}
   MaxHp: 9
   Hp: 9
@@ -782,7 +782,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2

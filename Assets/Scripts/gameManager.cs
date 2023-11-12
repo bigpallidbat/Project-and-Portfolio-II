@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -59,11 +57,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
-    [Header("-----Dev Work-----")]
-    [SerializeField] GameObject Devcontroller;
-    [SerializeField] DevController devController;
-    [SerializeField] GameObject[] quickDev;
-
     public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
 
     int keyCount;
@@ -78,8 +71,6 @@ public class gameManager : MonoBehaviour
     public static bool miniGoalAcquired;
     public static Levels currentlevel;
 
-    //ToRemove
-    bool isDevMode;
 
 
     // Start is called before the first frame update
@@ -93,9 +84,7 @@ public class gameManager : MonoBehaviour
         Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
-            //To Remove
-            Devcontroller = GameObject.FindWithTag("DevPlayerTemp");
-            devController = Devcontroller.GetComponent<DevController>();
+
 
             player = GameObject.FindWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
@@ -124,12 +113,34 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        else if(currentlevel != Levels.MainMenu && currentlevel != Levels.Credits)
+        //else if(checkLevel() || !sceneManager.scenechange)
+        //{
+            
+        //    menuActive = menuHint;
+        //    menuActive.SetActive(true);
+        //    statePause();
+        //}
+    }
+    
+    bool checkLevel()
+    {
+        if(currentlevel == Levels.MainMenu || currentlevel == Levels.Credits)
         {
-            statePause();
-            menuActive = menuHint;
-            menuHint.SetActive(true);
+            return false;
         }
+        else if(currentlevel == Levels.Boss || currentlevel == Levels.Wave)
+        {
+            return false;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+        
     }
 
     void setVolumes()
@@ -138,7 +149,12 @@ public class gameManager : MonoBehaviour
         {
             for (int i = 0; i < mixerList.Length; i++)
             {
-                mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i]));
+                if(mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i])))
+                {
+                    float value;
+                    mixer.GetFloat(mixerList[i], out value);
+                    Debug.Log(value);
+                }
             }
         }
     }
@@ -188,43 +204,7 @@ public class gameManager : MonoBehaviour
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
-        }
-
-        //toRemove
-        if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && !isDevMode)
-        {
-            Devcontroller.SetActive(true);
-            Devcontroller.GetComponentInChildren<Camera>().enabled = true;
-
-            player.GetComponentInChildren<Camera>().enabled = false;
-            player.SetActive(false);
-
-            if (quickDev.Length > 0) {
-                for (int i = 0; i < quickDev.Length; i++)
-                {
-                    quickDev[i].SetActive(false);
-                }
-            }
-            isDevMode = true;
-        }
-        else if(Input.GetButtonDown("DevMode") && currentlevel != Levels.MainMenu && isDevMode)
-        {
-            Devcontroller.GetComponentInChildren<Camera>().enabled = false;
-            Devcontroller.SetActive(false);
-
-            player.SetActive(true);
-            player.GetComponentInChildren<Camera>().enabled = true;
-
-            if (quickDev.Length > 0)
-            {
-                for (int i = 0; i < quickDev.Length; i++)
-                {
-                    quickDev[i].SetActive(true);
-                }
-            }
-            isDevMode = false;
-        }
-        
+        }        
     }
 
    
@@ -302,11 +282,11 @@ public class gameManager : MonoBehaviour
         }
         else if(currentlevel == Levels.Wave)
         {
-
+           
         }
         else if (currentlevel == Levels.Voxel)
         {
-
+            SceneManager.LoadScene(8);
         }
     }
 
@@ -316,6 +296,11 @@ public class gameManager : MonoBehaviour
         {
             updateGameGoal();
         }
+    }
+
+    public void setDoorActive()
+    {
+        EndDoor.SetActive(true);
     }
 
     public void minorUpdateGoal(int amount)
@@ -353,6 +338,8 @@ public class gameManager : MonoBehaviour
         {
             enemiesRemaining += amount;
             enemiesRemainingText.text = enemiesRemaining.ToString();
+
+            
         }
         else if (currentlevel == Levels.Voxel)
         {
@@ -383,10 +370,6 @@ public class gameManager : MonoBehaviour
 
             GoalText.text = "Collect all cursed dolls to kill the stalker";
             enemiesRemainingText.text = amount.ToString();
-        }
-        else if(currentlevel == Levels.Wave)
-        {
-
         }
         else if(currentlevel == Levels.Voxel)
         {
@@ -496,10 +479,12 @@ public class gameManager : MonoBehaviour
 
     public void setWaveCur(int num)
     {
+        waveCur = num;
         WaveCur.text = num.ToString();
     }
     public void setWaveMax(int num)
     {
+        waveMax = num;
         WaveMax.text = num.ToString();
     }
 
