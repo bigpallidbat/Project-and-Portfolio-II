@@ -51,9 +51,9 @@ public class gameManager : MonoBehaviour
 
     [Header("-----  Music/sounds  -----")]
     [SerializeField] AudioSource themes;
-    [SerializeField] AudioClip pauseMenu;
-    [SerializeField] AudioClip defeat;
-    [SerializeField] AudioClip YouWin;
+    [SerializeField] AudioClip SFX;
+    [Range(0,1)[SerializeField] float SFXVOL;
+    
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
 
@@ -77,6 +77,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        
         
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
@@ -139,6 +140,11 @@ public class gameManager : MonoBehaviour
             return true;
         }
         
+    }
+
+    public void playSFX()
+    {
+        themes.PlayOneShot(SFX, SFXVOL);
     }
 
     void setVolumes()
