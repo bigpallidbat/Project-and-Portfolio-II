@@ -13,6 +13,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Collider attackCol;
     [SerializeField] Animator anim;
+    [SerializeField] Transform newPos;
     
 
     [Header("-----Stats-----")]
@@ -197,6 +198,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
         huntPlayer = true;
         viewAngle = 100;
         Speed = 15;
+        transform.position = new Vector3(newPos.position.x, newPos.position.y, newPos.position.z);
         //agent.SetDestination(gameManager.Instance.player.transform.position);
         agent.stoppingDistance = 7;
         defCol.enabled = true;
