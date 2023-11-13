@@ -120,7 +120,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave1()
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -130,7 +130,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave2()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -138,7 +138,7 @@ public class swManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeBetweenSpawns);
         
-        for(int i = 3; i < 5; i++)
+        for(int i = 3; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -147,7 +147,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave3()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -164,7 +164,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave4()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i); spawnNormal(i);
@@ -183,7 +183,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave5()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             spawnNormal(i);
             spawnNormal(i); spawnNormal(i);
@@ -210,7 +210,18 @@ public class swManager : MonoBehaviour
             objectClone = Instantiate(enemies[enemyID], spawnerList[i].transform.position, transform.rotation);
             entList.Add(objectClone);
             objectClone.GetComponent<NavMeshAgent>().SetDestination(gameManager.Instance.player.transform.position);
-            objectClone.GetComponent<EnemyAI>().huntDownPlayer();
+            if ((objectClone.GetComponent<EnemyAI>() != null))
+            {
+                objectClone.GetComponent<EnemyAI>().huntDownPlayer();
+            }
+            else if(objectClone.GetComponent<specialEnemyAi>() != null)
+            {
+                objectClone.GetComponent<specialEnemyAi>().huntDownPlayer();
+            }
+            else if(objectClone.GetComponent<MechMyBoy>() != null)
+            {
+                objectClone.GetComponent<MechMyBoy>().huntDownPlayer();
+            }
             gameManager.Instance.setEnemiesRemaining(gameManager.Instance.getEnemiesRemaining() + 1);
         }
     }

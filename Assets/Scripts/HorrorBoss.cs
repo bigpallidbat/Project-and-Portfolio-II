@@ -166,6 +166,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
 
         if(Hp <= 0)
         {
+            defCol.enabled = false;
             StartCoroutine(death());
             //calls to the function in gamemanager to turn on the level's end door
             gameManager.Instance.horrorEnd();

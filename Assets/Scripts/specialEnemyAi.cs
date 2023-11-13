@@ -56,6 +56,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     bool playerInRange;
     //bool isMoving;
     bool inPain;
+    private bool knowsPlayerLocation;
 
     // Start is called before the first frame update
     void Start()
@@ -69,16 +70,25 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     void Update()
     {
         if (agent.isActiveAndEnabled)
-        {     
+        {    
+            if (knowsPlayerLocation) agent.SetDestination(gameManager.Instance.player.transform.position);
+          
             moving();
             if (playerInRange && AiRoutine() && !inPain)
             {
 
             }
-            else if(inPain) agent.SetDestination(transform.position);
+            else if (inPain) agent.SetDestination(transform.position); 
+            
+
         }
   
         
+    }
+    public void huntDownPlayer()
+    {
+        knowsPlayerLocation = true;
+
     }
 
     void setModel()
