@@ -309,6 +309,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!82 &1216029137 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8029207874358339964, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1466515575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1466515575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1021,10 +1026,22 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: SFXVOL
+      value: 0.226
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: themes
+      value: 
+      objectReference: {fileID: 1216029137}
     - target: {fileID: 7785441130809396952, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 114
       objectReference: {fileID: 0}
+    - target: {fileID: 8029207874358339964, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 601243300322324097, guid: 51a1f4d425bf4b44da38b99fa040eca7, type: 2}
     - target: {fileID: 8062460695727304019, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.79998
