@@ -14,6 +14,7 @@ public class ButtonFuntions : MonoBehaviour
     }
     public void restart()
     {
+        if(gameManager.currentlevel == gameManager.Levels.SpawnerDestroy) sceneManager.scenechange = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameManager.Instance.stateUnpause();
         gameManager.Instance.playSFX();
