@@ -120,7 +120,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave1()
     {
-        for(int i = 0; i < enemies.Count; i++)
+        for(int i = 0; i < 3; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -130,7 +130,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave2()
     {
-        for(int i = 0; i < enemies.Count; i++)
+        for(int i = 0; i < 3; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -141,13 +141,12 @@ public class swManager : MonoBehaviour
         for(int i = 3; i < enemies.Count; i++)
         {
             spawnNormal(i);
-            spawnNormal(i);
         }
     }
 
     IEnumerator wave3()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
             spawnNormal(i);
             spawnNormal(i);
@@ -164,7 +163,7 @@ public class swManager : MonoBehaviour
 
     IEnumerator wave4()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
             spawnNormal(i);
             spawnNormal(i); spawnNormal(i);
@@ -176,26 +175,24 @@ public class swManager : MonoBehaviour
         {
             spawnNormal(i);
             spawnNormal(i);
-            spawnNormal(i);
-            spawnNormal(i);
+            
         }
     }
 
     IEnumerator wave5()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
             spawnNormal(i);
-            spawnNormal(i); spawnNormal(i);
+            spawnNormal(i); 
             spawnNormal(i);
-            spawnNormal(i); spawnNormal(i);
+            
         }
 
         yield return new WaitForSeconds(timeBetweenSpawns);
 
         for (int i = 3; i < enemies.Count; i++)
         {
-            spawnNormal(i);
             spawnNormal(i);
             spawnNormal(i);
             spawnNormal(i);

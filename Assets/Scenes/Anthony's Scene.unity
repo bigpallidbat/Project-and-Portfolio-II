@@ -39215,7 +39215,8 @@ PrefabInstance:
     - target: {fileID: 4430267064782840765, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_text
       value: 'Make your way through the woods to the destinations below and find
-        the dolls that are hidden. After Collecting them you will be able to escape.
+        the dolls that are hidden. After Collecting them you are required to kill
+        the creature that haunts the woods. Your escape is in the park.
 
 
         Ps:
@@ -39295,7 +39296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6858162620003686128, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465649609696592813, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_Sprite
