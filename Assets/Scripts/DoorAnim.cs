@@ -32,18 +32,19 @@ public class DoorAnim : MonoBehaviour , IInteract
     IEnumerator doorRotation(Quaternion targRot, GameObject obk)
     {
         float times = 0f;
-        Quaternion initRot = obk.transform.localRotation;
+        Quaternion newRotation;
 
-        while(times <= 1f )
+        while (times <= 1f )
         {
             times += Time.deltaTime * openSpeed;
+            if(obk == rotatorRight)  newRotation = Quaternion.Lerp(rightOrig, targRot, times);
 
-            Quaternion newRotation = Quaternion.Lerp(initRot, targRot, times);
+            else  newRotation = Quaternion.Lerp(leftOrig, targRot, times);
 
 
 
-         
-            if (obk = rightDoor)
+
+            if (obk == rotatorRight)
             {
                 rotatorRight.transform.rotation = newRotation;
             }
@@ -58,18 +59,17 @@ public class DoorAnim : MonoBehaviour , IInteract
 
         if (isOpen)
         {
-            rightOrig = Quaternion.Euler(0, 0, 0);
-            leftOrig = Quaternion.Euler(0, 0, 0);
-            StartCoroutine(doorRotation(rightOrig, leftDoor));
-            StartCoroutine(doorRotation(leftOrig, leftDoor));
+            
+            StartCoroutine(doorRotation(rightOrig, rotatorRight));
+            StartCoroutine(doorRotation(leftOrig, rotatorLeft));
             isOpen = false;
         }
         else
         {
-            rightOrig = Quaternion.Euler(0, rightAngle, 0);
-            leftOrig = Quaternion.Euler(0,leftAngle, 0);
-            StartCoroutine (doorRotation(rightOrig,rightDoor));
-            StartCoroutine (doorRotation(leftOrig,leftDoor));
+            Quaternion rightNew = Quaternion.Euler(0, rightAngle, 0);
+            Quaternion leftNew = Quaternion.Euler(0, leftAngle, 0);
+            StartCoroutine (doorRotation(rightNew,rotatorRight));
+            StartCoroutine (doorRotation(leftNew,rotatorLeft));
 
             isOpen = true;
             

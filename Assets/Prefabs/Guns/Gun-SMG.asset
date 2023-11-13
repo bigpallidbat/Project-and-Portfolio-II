@@ -22,10 +22,11 @@ MonoBehaviour:
   ammoReserveMax: 30
   ShootPos: {x: 0, y: 0, z: 0}
   projectile: {fileID: 4821185415007250156, guid: f4270ad0c4ebd3d4c9f918d4cc2c3fde, type: 3}
-  projectileSpeed: 250
+  projectileSpeed: 185
   model: {fileID: 7690090395703641352, guid: 3a1d2665bb95a40428342975c5ea4ee1, type: 3}
   hitEffect: {fileID: 7971476366733286314, guid: b4376423b4da5c548bf028f735cd27c9, type: 3}
   hitEffectEnemy: {fileID: 8333913875555547512, guid: c7693555f87f1014794ef1984cf70d72, type: 3}
   shootSound: {fileID: 8300000, guid: 3a9b5120b245b2247a8ac81046480fa6, type: 3}
   shootSoundVol: 0.25
   ID: 1
+  IsRaycast: 0
