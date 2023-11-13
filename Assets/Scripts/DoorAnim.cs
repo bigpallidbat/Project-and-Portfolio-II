@@ -92,5 +92,5 @@ public class DoorAnim : MonoBehaviour , IInteract
             other.GetComponent<PlayerController>().SetActionable(null);
         }
     }
-
+    
 }
