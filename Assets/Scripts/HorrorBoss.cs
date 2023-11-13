@@ -127,13 +127,13 @@ public class HorrorBoss : MonoBehaviour, IDamage
         //if boss has knowsplayerlocation as true -which is default for this enemy- it chases the player. allows points where the boss doesn't know where the player is
         if (agent.isActiveAndEnabled)
         {
-        if (knowsPlayerLocation)
-        {
+            if (knowsPlayerLocation)
+            {
 
-            agent.SetDestination(gameManager.Instance.player.transform.position);
+                agent.SetDestination(gameManager.Instance.player.transform.position);
 
-            return true;
-        }
+                return true;
+            }
         }
 
         return false;
@@ -176,7 +176,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
     IEnumerator death()
     {
         //allows animations before destroying the object
-        agent.enabled = false;
+        agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.8f);
         anim.SetBool("Dead", true);
     }
@@ -194,6 +194,8 @@ public class HorrorBoss : MonoBehaviour, IDamage
         //After goal is set, 
         huntPlayer = true;
         viewAngle = 100;
+        Speed = 15;
+        agent.SetDestination(gameManager.Instance.player.transform.position);
         agent.stoppingDistance = 7;
         defCol.enabled = true;
     }

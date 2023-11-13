@@ -524,6 +524,8 @@ public class PlayerController : MonoBehaviour, IDamage
         grenadeCount = stats.grenadeCount;
         medkitCount = stats.medkitCount;
         gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
+        gameManager.Instance.updateGrenade(grenadeCount);
+        gameManager.Instance.updateMedkit(medkitCount);
 
     }
 

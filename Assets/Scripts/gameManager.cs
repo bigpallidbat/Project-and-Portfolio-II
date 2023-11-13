@@ -113,13 +113,13 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        //else if(checkLevel() || !sceneManager.scenechange)
-        //{
-            
-        //    menuActive = menuHint;
-        //    menuActive.SetActive(true);
-        //    statePause();
-        //}
+        else if(checkLevel())
+        {
+          
+            menuActive = menuHint;
+            menuActive.SetActive(true);
+            statePause();
+        }
     }
     
     bool checkLevel()
@@ -286,7 +286,7 @@ public class gameManager : MonoBehaviour
         }
         else if (currentlevel == Levels.Voxel)
         {
-            SceneManager.LoadScene(8);
+            StartCoroutine(youWin());
         }
     }
 

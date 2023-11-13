@@ -16,7 +16,7 @@ public class Explosion : MonoBehaviour
     IEnumerator destroy()
     {   
         Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
 
     }
