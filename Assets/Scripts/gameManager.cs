@@ -112,13 +112,13 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        else if (checkLevel())
-        {
+        //else if (checkLevel())
+        //{
 
-            menuActive = menuHint;
-            menuActive.SetActive(true);
-            statePause();
-        }
+        //    menuActive = menuHint;
+        //    menuActive.SetActive(true);
+        //    statePause();
+        //}
     }
     
     bool checkLevel()

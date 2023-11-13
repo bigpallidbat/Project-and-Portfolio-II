@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -51,6 +52,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     [SerializeField] GameObject Mimic12Dying4;
     [SerializeField] GameObject Mimic13Open;
     int DiceRoll;
+    Vector3 shackPos = new Vector3(-1.817386f, -21.49f, 3.18f);
 
     [Header("----- sounds -----")]
     [SerializeField] AudioClip attckSound;
@@ -84,6 +86,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         }
         // else if (isActive && dying)
     }
+    
     void Attack()
     {
         Mimic3Idel.gameObject.SetActive(false);
@@ -91,84 +94,46 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         isAttacking = true;
         AimedShot();
         //for (float j = Startfire; j < Stopfire; j += StartfireSpeed) tomAttack(j, 15);
+        //StartCoroutine(endAttack());
         //isAttacking = false;
-        //DiceRoll = Random.Range(0, 8);
-        //switch (DiceRoll)
-        //{
-        //    case 0:
-        //        for (float j = -42.1875f; j < 45; j += 2.8125f) tomAttack(j, 15);
-        //        StartCoroutine(endAttack());
-        //        break;
-        //    case 1:
-        //        for (float j = -87.1875f; j < 90; j += 5.625f) tomAttack(j, 15);
-        //        StartCoroutine(endAttack());
-        //        break;
-        //    case 2:
-        //        for (float j = -90f; j < 0; j += 2.8125f) tomAttack(j, 5);
-        //        StartCoroutine(endAttack());
-        //        break;
-        //    case 3:
-        //        for (float j = 0f; j < 90; j += 2.8125f) tomAttack(j, 5);
-        //        StartCoroutine(endAttack());
-        //        break;
-        //    case 4:
-        //        for (float j = -45f; j < 45; j += 2.8125f) tomAttack(j, 5);
-        //        StartCoroutine(endAttack());
-        //        break;
-        //    default:
-        //        StartCoroutine(shockWave());
-        //        break;
-        //}
-    }
-    IEnumerator shockWave()
-    {
-        DiceRoll = Random.Range(0, 8);
+        DiceRoll = Random.Range(0, 3);
         switch (DiceRoll)
         {
             case 0:
-                for (int i = 0; i < 32; i++)
+                for (float j = -2f; j < 2; j += 0.05f) tomAttack(j, 15);
+                StartCoroutine(endAttack());
+                break;
+            case 1:
+                for (float j = -4; j < 4; j += 0.2f) tomAttack(j, 15);
+                StartCoroutine(endAttack());
+                break;
+            default:
+                StartCoroutine(shockWave());
+                break;
+        }
+    }
+    IEnumerator shockWave()
+    {
+        DiceRoll = Random.Range(0, 5);
+        switch (DiceRoll)
+        {
+            case 0:
+                for (int i = 0; i < 33; i++)
                 {
-                    float angle = i * 5.625f - 84.375f;
+                    float angle = i * 5.625f + 84.375f;
                     Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                    yield return new WaitForSeconds(0.028571f);
-                }
-                for (int i = 32; i > 0; i--)
-                {
-                    float angle = i * 5.625f - 87.1875f;
-                    Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                    yield return new WaitForSeconds(0.028571f);
+                    Instantiate(ShockWave, stompPos.position, rotation);
+                    yield return new WaitForSeconds(0.005f);
                 }
                 StartCoroutine(endAttack());
                 break;
             case 1:
-                for (int i = 32; i > 0; i--)
+                for (int i = 33; i > 0; i--)
                 {
-                    float angle = i * 5.625f - 84.375f;
+                    float angle = i * 5.625f + 84.375f;
                     Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                    yield return new WaitForSeconds(0.028571f);
-                }
-                for (int i = 0; i < 32; i++)
-                {
-                    float angle = i * 5.625f - 87.1875f;
-                    Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                    yield return new WaitForSeconds(0.028571f);
-                }
-                StartCoroutine(endAttack());
-                break;
-            case 2:
-                for (int i = 32; i > 0; i--)
-                {
-                    float angle = i * 5.625f - 84.375f;
-                    Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                    float anglej = i * -5.625f + 87.1875f;
-                    Quaternion rotationj = Quaternion.Euler(0, anglej, 0);
-                    Instantiate(ShockWave, transform.position + new Vector3(0, -1.75f, 0), rotationj);
-                    yield return new WaitForSeconds(0.028571f);
+                    Instantiate(ShockWave, stompPos.position, rotation);
+                    yield return new WaitForSeconds(0.005f);
                 }
                 StartCoroutine(endAttack());
                 break;
