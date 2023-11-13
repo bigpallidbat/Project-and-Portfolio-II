@@ -195,7 +195,7 @@ public class HorrorBoss : MonoBehaviour, IDamage
         huntPlayer = true;
         viewAngle = 100;
         Speed = 15;
-        agent.SetDestination(gameManager.Instance.player.transform.position);
+        //agent.SetDestination(gameManager.Instance.player.transform.position);
         agent.stoppingDistance = 7;
         defCol.enabled = true;
     }

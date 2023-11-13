@@ -80,8 +80,6 @@ public class gameManager : MonoBehaviour
         
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
-        Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (currentlevel != Levels.MainMenu)
         {
 
@@ -151,9 +149,7 @@ public class gameManager : MonoBehaviour
             {
                 if(mixer.SetFloat(mixerList[i], PlayerPrefs.GetFloat(mixerList[i])))
                 {
-                    float value;
-                    mixer.GetFloat(mixerList[i], out value);
-                    Debug.Log(value);
+                    
                 }
             }
         }

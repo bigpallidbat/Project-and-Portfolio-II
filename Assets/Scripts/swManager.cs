@@ -101,7 +101,6 @@ public class swManager : MonoBehaviour
                     StartCoroutine(wave5());
                     break;
                 case 6:
-                    gameManager.Instance.BossHPBar.gameObject.SetActive(true);
                     GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
                     break;
             }
