@@ -52,7 +52,7 @@ public class gameManager : MonoBehaviour
     [Header("-----  Music/sounds  -----")]
     [SerializeField] AudioSource themes;
     [SerializeField] AudioClip SFX;
-    [Range(0,1)[SerializeField] float SFXVOL;
+    [Range(0,1)][SerializeField] float SFXVOL;
     
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
