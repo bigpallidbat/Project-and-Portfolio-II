@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CreditsManager : MonoBehaviour
 {
@@ -26,8 +27,10 @@ public class CreditsManager : MonoBehaviour
             showCredits(i);
             yield return new WaitForSeconds(1.5f);
         }
+        backtoMain();
 
         yield return null;
+
     }
 
     void showCredits(int credits)
@@ -65,5 +68,10 @@ public class CreditsManager : MonoBehaviour
         {
             _Credits4.SetActive(false);
         }
+    }
+
+    void backtoMain()
+    {
+        SceneManager.LoadScene(0);
     }
 }
