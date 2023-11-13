@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GoalPickUp : MonoBehaviour
 {
+    bool isPicked; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +22,12 @@ public class GoalPickUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.Instance.minorUpdateGoal(-1);
-            Destroy(gameObject);
+            if (!isPicked)
+            {
+                isPicked = true;
+                gameManager.Instance.minorUpdateGoal(-1);
+                Destroy(gameObject);
+            }
         }
     }
 }
