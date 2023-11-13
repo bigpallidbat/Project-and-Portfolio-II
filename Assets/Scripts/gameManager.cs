@@ -135,6 +135,10 @@ public class gameManager : MonoBehaviour
         {
             return false;
         }
+        else if(sceneManager.scenechange && currentlevel == Levels.SpecialEnemy)
+        {
+            return false;
+        }
         else
         {
             return true;
