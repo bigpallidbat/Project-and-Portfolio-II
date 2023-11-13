@@ -1946,6 +1946,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 604488633781898852, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065650111051316627, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1146225406996517590, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1962,6 +1970,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3420262615384428957, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3487432853907770748, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1976,7 +1988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5989478539746328053, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7545990495710378985, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive
@@ -3700,7 +3712,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBombDoor: 0
   isMimic: 1
-  hitBox: {fileID: 0}
   shootPos: {fileID: 178614141}
   stompPos: {fileID: 0}
   Health: 2
@@ -3715,9 +3726,9 @@ MonoBehaviour:
   cameraX: {fileID: 0}
   Brothers: []
   MonsterDoors: []
-  Startfire: 0
-  Stopfire: 0
-  StartfireSpeed: 0
+  Startfire: -4
+  Stopfire: 0.2
+  StartfireSpeed: 4
   doorWay: {fileID: 1769382983}
   Mimic1Wake1: {fileID: 546081475}
   Mimic2Wake2: {fileID: 1870464883}
@@ -6567,6 +6578,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8819384232172267834, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_text
+      value: 'Monsters:'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -6611,6 +6626,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1493939926462108533, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049468987706544963, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2577268501320980457, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: pops
       value: 
@@ -6620,6 +6643,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1206777884}
     - target: {fileID: 2619785600380235854, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3724248181392886924, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -6637,7 +6664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7074459918356028746, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Goal Point
       objectReference: {fileID: 0}
     - target: {fileID: 7545990495710378985, guid: 0495209aafb260244a5e5fc3650c642d, type: 3}
       propertyPath: m_IsActive

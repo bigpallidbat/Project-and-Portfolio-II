@@ -10,7 +10,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
 
     [Header("----- Mimic stats -----")]
     [SerializeField] bool isMimic;
-    [SerializeField] Collider hitBox;
+    //[SerializeField] Collider hitBox;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform stompPos;
     [SerializeField] int Health;
@@ -279,13 +279,14 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         Mimic12Dying4.gameObject.SetActive(false);
         Mimic9Dying1.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.057142f);
-        foreach (GameObject BRO in Brothers)
-        {
-            if (BRO != null) BRO.GetComponent<DungenDoorWay>().lowerFireRate();
-        }
+        //foreach (GameObject BRO in Brothers)
+        //{
+        //    if (BRO != null) BRO.GetComponent<DungenDoorWay>().lowerFireRate();
+        //}
         isActive = false;
         Mimic9Dying1.gameObject.SetActive(false);
         Mimic13Open.gameObject.SetActive(true);
+        gameManager.Instance.minorUpdateGoal(-2);
     }
     public void wakeUp()
     {

@@ -48,7 +48,11 @@ public class DungeonDoor : MonoBehaviour, IInteract
             if (curPos.y <= startingPos)
             {
                 curPos.y = startingPos;
-                if (isMimic) mimic.GetComponent<DungenDoorWay>().wakeUp();
+                if (isMimic)
+                {
+                    mimic.GetComponent<DungenDoorWay>().wakeUp();
+                    StartCoroutine(destroyDoor());
+                }
             }
             transform.position = curPos;
         }
@@ -90,5 +94,10 @@ public class DungeonDoor : MonoBehaviour, IInteract
         {
             other.GetComponent<PlayerController>().SetActionable(this);
         }
+    }
+    IEnumerator destroyDoor()
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
     }
 }

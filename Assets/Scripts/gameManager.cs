@@ -113,9 +113,9 @@ public class gameManager : MonoBehaviour
         {
             setVolumes();
         }
-        else if(checkLevel())
+        else if (checkLevel())
         {
-          
+
             menuActive = menuHint;
             menuActive.SetActive(true);
             statePause();
@@ -398,7 +398,7 @@ public class gameManager : MonoBehaviour
 
     public IEnumerator youWin()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(true);
