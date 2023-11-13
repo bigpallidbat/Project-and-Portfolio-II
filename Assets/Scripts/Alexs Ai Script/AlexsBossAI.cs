@@ -176,16 +176,11 @@ public class AlexsBossAI : MonoBehaviour, IDamage
                     }
                     else if (slamDown)
                     {
+                        slamAttack();
                         doingAttack = false;
                         slamDown = false;
                         att2part4 = false;
                         agent.baseOffset = 1;
-                        for (int i = 0; i < 32; i++)
-                        {
-                            float angle = i * 11.25f;
-                            Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                            Instantiate(shockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
-                        }
                         StartCoroutine(endAttack());
                     }
                 }
@@ -207,6 +202,18 @@ public class AlexsBossAI : MonoBehaviour, IDamage
             }
         }
     }
+
+    void slamAttack()
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            float angle = i * 11.25f;
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+            Instantiate(shockWave, transform.position + new Vector3(0, -1.75f, 0), rotation);
+        }
+    }
+
+
     public void StartFight()
     {
         isInvincible = false;
@@ -506,6 +513,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
     {
         if (!isInvincible)
         {
+            doingAttack = false;
             agent.baseOffset = 1;
             Hp -= amount;
             updateHpUI();
@@ -544,15 +552,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
         VoxelRender.material = Black;
         yield return new WaitForSeconds(0.028571f);
         VoxelRender.material = Normal;
-        yield return new WaitForSeconds(0.028571f);
-        VoxelRender.material = White;
-        yield return new WaitForSeconds(0.028571f);
-        VoxelRender.material = Negive;
-        yield return new WaitForSeconds(0.028571f);
-        VoxelRender.material = Black;
-        yield return new WaitForSeconds(0.028571f);
-        VoxelRender.material = Normal;
-        yield return new WaitForSeconds(0.085714f);
+        yield return new WaitForSeconds(0.057142f);
         VoxelDamage.gameObject.SetActive(false);
         mainBodyV.gameObject.SetActive(true);
         StartCoroutine(attack());

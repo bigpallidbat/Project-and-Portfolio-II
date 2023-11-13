@@ -90,8 +90,8 @@ public class DungenDoorWay : MonoBehaviour, IDamage
         Mimic4Attack.gameObject.SetActive(true);
         isAttacking = true;
         AimedShot();
-        for (float j = Startfire; j < Stopfire; j += StartfireSpeed) tomAttack(j, 15);
-        isAttacking = false;
+        //for (float j = Startfire; j < Stopfire; j += StartfireSpeed) tomAttack(j, 15);
+        //isAttacking = false;
         //DiceRoll = Random.Range(0, 8);
         //switch (DiceRoll)
         //{
