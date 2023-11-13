@@ -343,7 +343,10 @@ public class gameManager : MonoBehaviour
         }
         else if (currentlevel == Levels.Voxel)
         {
+            enemiesRemaining += amount;
+            enemiesRemainingText.text = enemiesRemaining.ToString();
 
+            checkGoal();
         }
     }
 
@@ -373,7 +376,8 @@ public class gameManager : MonoBehaviour
         }
         else if(currentlevel == Levels.Voxel)
         {
-
+            GoalText.text = "Find The hidden enemy and destroy it.";
+            enemiesRemainingText.text = amount.ToString();
         }
     }
 
