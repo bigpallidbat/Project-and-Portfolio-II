@@ -179,6 +179,8 @@ public class HorrorBoss : MonoBehaviour, IDamage
         agent.SetDestination(transform.position);
         yield return new WaitForSeconds(0.8f);
         anim.SetBool("Dead", true);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
     
     IEnumerator flashDamage()
