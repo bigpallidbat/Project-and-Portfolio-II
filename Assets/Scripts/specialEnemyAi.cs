@@ -104,7 +104,7 @@ public class specialEnemyAi : MonoBehaviour, IDamage
     {
         HP -= damage;
         hitBoxCOL.enabled = false;
-        soundSFX.PlayOneShot(VpainSound);
+        //soundSFX.PlayOneShot(VpainSound);
         soundSFX.PlayOneShot(painSound);
         damageCOL.enabled = true;
  
@@ -122,6 +122,11 @@ public class specialEnemyAi : MonoBehaviour, IDamage
             agent.enabled = false;
             damageCOL.enabled = false;
             StartCoroutine(death());
+
+            if(swManager.instance != null && gameManager.Instance.waveCur != 6)
+            {
+                gameManager.Instance.minorUpdateGoal(-1);
+            }
         }
         else
         {

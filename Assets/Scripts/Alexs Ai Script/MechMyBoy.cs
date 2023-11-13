@@ -257,6 +257,7 @@ public class MechMyBoy : MonoBehaviour, IDamage
             {
                 soundSFX.PlayOneShot(deathSound, audDeathVol);
                 soundSFX.PlayOneShot(VdeathSound, audVdeathVol);
+                damageCOL.enabled = false;
                 mainBodyV.gameObject.SetActive(false);
                 VoxelDamage.gameObject.SetActive(false);
                 DeathOBJ.gameObject.SetActive(true);
@@ -266,8 +267,10 @@ public class MechMyBoy : MonoBehaviour, IDamage
             }
             else
             {
+                damageCOL.enabled = false;
                 anim.StopPlayback();
                 anim.SetBool("die", true);
+                agent.SetDestination(transform.position);
                 rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             }
 
@@ -276,6 +279,10 @@ public class MechMyBoy : MonoBehaviour, IDamage
             if (origin != null)
             {
                 origin.updateObjectNum();
+            }
+            if (swManager.instance != null && gameManager.Instance.waveCur != 6)
+            {
+                gameManager.Instance.minorUpdateGoal(-1);
             }
         }
         else
