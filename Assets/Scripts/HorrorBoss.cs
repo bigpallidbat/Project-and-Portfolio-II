@@ -198,7 +198,9 @@ public class HorrorBoss : MonoBehaviour, IDamage
         huntPlayer = true;
         viewAngle = 100;
         Speed = 15;
-        transform.position = new Vector3(newPos.position.x, newPos.position.y, newPos.position.z);
+        agent.enabled = false;
+        transform.position = Vector3.MoveTowards(transform.position, newPos.position, Vector3.Distance(transform.position, newPos.position));
+        agent.enabled = true;
         //agent.SetDestination(gameManager.Instance.player.transform.position);
         agent.stoppingDistance = 7;
         defCol.enabled = true;
