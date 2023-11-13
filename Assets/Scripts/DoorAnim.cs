@@ -26,7 +26,7 @@ public class DoorAnim : MonoBehaviour , IInteract
     private void Start()
     {
         isOpen = false;
-        rightOrig = Quaternion.identity; leftOrig = Quaternion.identity;
+        rightOrig = rotatorRight.transform.rotation; leftOrig = rotatorLeft.transform.rotation;
     }
 
     IEnumerator doorRotation(Quaternion targRot, GameObject obk)
