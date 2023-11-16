@@ -112,10 +112,10 @@ public class specialEnemyAi : MonoBehaviour, IDamage
         {
             if (gameObject.CompareTag("Goal Point"))
             {
-                gameManager.Instance.updateGameGoal();
+                gameManager.Instance.minorUpdateGoal(-1);
             }
             anim.SetTrigger("Death");
-            soundSFX.PlayOneShot(VdeathSound);
+            //soundSFX.PlayOneShot(VdeathSound);
             soundSFX.PlayOneShot(deathSound);
             StopAllCoroutines();
             faceTarget();

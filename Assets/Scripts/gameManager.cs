@@ -223,6 +223,16 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void tempturnoffmenu()
+    {
+        menuActive.SetActive(false);
+    }
+
+    public void turnonscreenagain()
+    {
+        menuActive.SetActive(true);
+    }
+
     public void statePause()
     {
         isPaused = !isPaused;

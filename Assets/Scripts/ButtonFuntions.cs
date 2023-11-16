@@ -69,12 +69,22 @@ public class ButtonFuntions : MonoBehaviour
 
     public void Back()
     {
+        if(gameManager.currentlevel != gameManager.Levels.MainMenu)
+        {
+            gameManager.Instance.turnonscreenagain();
+        }
+
         screenManager.Instance.setScreen(1);
         gameManager.Instance.playSFX();
     }
 
     public void settingsButton()
     {
+        if(gameManager.currentlevel != gameManager.Levels.MainMenu)
+        {
+            gameManager.Instance.tempturnoffmenu();
+        }
+
         screenManager.Instance.setScreen(3);
         gameManager.Instance.playSFX();
     }
@@ -89,5 +99,10 @@ public class ButtonFuntions : MonoBehaviour
     {
         screenManager.Instance.setScreen(3);
         gameManager.Instance.playSFX();
+    }
+    
+    public void Credits()
+    {
+        SceneManager.LoadScene(8);
     }
 }
