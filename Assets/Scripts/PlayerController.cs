@@ -185,21 +185,11 @@ public class PlayerController : MonoBehaviour, IDamage
         if (gunList[selectedGun].ammoCur > 0)
         {
             isShooting = true;
-            gunList[selectedGun].ammoCur--;
-
-
-            
-
-            PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
-            gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
-
- 
-
 
             RaycastHit hit;
             if (!gunList[selectedGun].IsRaycast)
             {
-                shootdist = 100;
+                shootdist = 10000;
             }
 
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
@@ -209,7 +199,9 @@ public class PlayerController : MonoBehaviour, IDamage
                     Vector3 toTarget =  (hit.point - shootPos.position).normalized;
 
                     gunList[selectedGun].projectile.GetComponent<Bullet>().dir = toTarget;
-
+                    gunList[selectedGun].ammoCur--;
+                    PlayerSounds.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootSoundVol);
+                    gameManager.Instance.updateAmmo(gunList[selectedGun].ammoCur, gunList[selectedGun].ammoReserve);
                 if (!gunList[selectedGun].IsRaycast)
                     Instantiate(gunList[selectedGun].projectile, shootPos.position, shootPos.transform.rotation);
                 else
@@ -451,7 +443,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Reload()
     {
-        if (Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload") && gunList[selectedGun].ammoCur != gunList[selectedGun].ammoMax)
         {
             if (gunList[selectedGun].ammoReserve > 0)
             {
@@ -520,10 +512,11 @@ public class PlayerController : MonoBehaviour, IDamage
             gunList.Add(stats.startingGunList[i]);
         }
         selectedGun = 0;
+        gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
+        gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
         changeGun();
         grenadeCount = stats.grenadeCount;
         medkitCount = stats.medkitCount;
-        gunList[selectedGun].ammoReserve = gunList[selectedGun].ammoReserveStart;
         gameManager.Instance.updateGrenade(grenadeCount);
         gameManager.Instance.updateMedkit(medkitCount);
 
@@ -536,7 +529,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gunList.Add(stats.gunList[i]);
         }
-        selectedGun = 0; 
+        selectedGun = 0;
+        gunList[selectedGun].ammoCur = gunList[selectedGun].ammoMax;
         changeGun();
         HP = stats.hpcur;
         HPMax = stats.hpmax;
