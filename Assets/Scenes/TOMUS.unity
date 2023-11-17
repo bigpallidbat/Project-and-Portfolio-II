@@ -6896,6 +6896,10 @@ PrefabInstance:
       propertyPath: m_margin.z
       value: -52.95343
       objectReference: {fileID: 0}
+    - target: {fileID: 6024615069377316189, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: Settings
+      value: 
+      objectReference: {fileID: 2023220808}
     - target: {fileID: 6858162620003686128, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9557,6 +9561,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6014077812084639230, guid: c877af076a5c34b44ad3fd36be9477ea, type: 3}
   m_PrefabInstance: {fileID: 2077060599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2023220808 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5654919162074487248, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1570105844}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2027546918 stripped
 Transform:

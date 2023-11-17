@@ -19,6 +19,7 @@ public class screenManager : MonoBehaviour
     [SerializeField] AudioClip MainTheme;
     [Range(0, 1)][SerializeField] float audMainVol;
     [SerializeField] RectTransform Settings;
+    //Vector3 newpos = new Vector3(0,0,0);
 
     private bool check;
     // Start is called before the first frame update
@@ -50,11 +51,10 @@ public class screenManager : MonoBehaviour
         screenImg.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.0001f);
         screenImg.gameObject.SetActive(false);
-        Settings.transform.position = new Vector3(0,0,0);
+        Settings.anchoredPosition = Vector2.zero;
         screenImg = null;
-
-
     }
+
 
     //run settings for milisecond to set audio prefs
     IEnumerator settingsrun()

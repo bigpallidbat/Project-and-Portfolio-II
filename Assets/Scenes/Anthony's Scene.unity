@@ -39172,6 +39172,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Level 3 The Creeping Woods
       objectReference: {fileID: 0}
+    - target: {fileID: 6024615069377316189, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: Settings
+      value: 
+      objectReference: {fileID: 1312307052}
     - target: {fileID: 6188416673293932811, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_Type
       value: 0
@@ -39249,6 +39253,11 @@ RectTransform:
 --- !u!1 &1312307051 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836400293039429907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1312307049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1312307052 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3912289843598990555, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
   m_PrefabInstance: {fileID: 1312307049}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1314045065 stripped

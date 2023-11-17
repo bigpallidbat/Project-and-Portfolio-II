@@ -79,11 +79,11 @@ public class gameManager : MonoBehaviour
     {
         Instance = this;
 
-        ScreenManager.GetComponent<screenManager>().setSettings();
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
         if (currentlevel != Levels.MainMenu)
         {
+        ScreenManager.GetComponent<screenManager>().setSettings();
 
 
             player = GameObject.FindWithTag("Player");

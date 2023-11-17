@@ -5616,6 +5616,7 @@ MonoBehaviour:
   themes: {fileID: 928139352125209631}
   MainTheme: {fileID: 8300000, guid: cfbfe67630148444094a3f90eb703190, type: 3}
   audMainVol: 0.5
+  Settings: {fileID: 5654919162074487248}
 --- !u!114 &895026903806356525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13965,8 +13966,8 @@ MonoBehaviour:
   menuHint: {fileID: 6858162620003686128}
   playerHpBar: {fileID: 8483832938929306930}
   playerStamBar: {fileID: 5012176589046412452}
-  BossHPBar: {fileID: 7132421582351981933}
-  BossHpFill: {fileID: 8091932176054092028}
+  BossHPBar: {fileID: 8091932176054092028}
+  BossHpFill: {fileID: 7132421582351981933}
   enemiesRemainingText: {fileID: 3746347457029596010}
   GoalText: {fileID: 5179067729941873383}
   WaveMax: {fileID: 0}
@@ -17641,7 +17642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemies Count:'
+  m_text: 'Enemies Remaining:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
