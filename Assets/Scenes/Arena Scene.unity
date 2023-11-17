@@ -606,6 +606,10 @@ PrefabInstance:
       propertyPath: GrenadeCount
       value: 
       objectReference: {fileID: 1525751608}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: ScreenManager
+      value: 
+      objectReference: {fileID: 1051350827}
     - target: {fileID: 8819384232172267834, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_text
       value: 'Enemies Remaining:'
@@ -615,6 +619,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+--- !u!1 &1051350827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2836400293039429907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1051350826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1092881155
 GameObject:
   m_ObjectHideFlags: 0

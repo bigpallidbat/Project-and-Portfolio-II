@@ -39213,6 +39213,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 301afa6ee52f1fc42a7b9bd80573258a, type: 3}
     - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: ScreenManager
+      value: 
+      objectReference: {fileID: 1312307051}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: playerSpawnPoint
       value: 
       objectReference: {fileID: 407014375}
@@ -39240,6 +39244,11 @@ PrefabInstance:
 --- !u!224 &1312307050 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1407638633994793659, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1312307049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1312307051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2836400293039429907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
   m_PrefabInstance: {fileID: 1312307049}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1314045065 stripped

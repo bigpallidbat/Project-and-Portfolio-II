@@ -18,6 +18,7 @@ public class screenManager : MonoBehaviour
     [SerializeField] AudioSource themes;
     [SerializeField] AudioClip MainTheme;
     [Range(0, 1)][SerializeField] float audMainVol;
+    [SerializeField] RectTransform Settings;
 
     private bool check;
     // Start is called before the first frame update
@@ -38,7 +39,22 @@ public class screenManager : MonoBehaviour
         }
     }
 
-    
+    public void setSettings()
+    {
+        StartCoroutine(SettinsSettings());
+    }
+    IEnumerator SettinsSettings()
+    {
+        new WaitForSeconds(0.004f);
+        screenImg = screenList[3];
+        screenImg.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.0001f);
+        screenImg.gameObject.SetActive(false);
+        Settings.transform.position = new Vector3(0,0,0);
+        screenImg = null;
+
+
+    }
 
     //run settings for milisecond to set audio prefs
     IEnumerator settingsrun()

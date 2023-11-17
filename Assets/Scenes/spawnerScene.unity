@@ -36258,6 +36258,10 @@ PrefabInstance:
       propertyPath: WaveMax
       value: 
       objectReference: {fileID: 6600121891047167514}
+    - target: {fileID: 7703714014594924597, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: ScreenManager
+      value: 
+      objectReference: {fileID: 1768965829}
     - target: {fileID: 8492415990459008051, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BackFromLevelSelect
@@ -36293,6 +36297,11 @@ PrefabInstance:
       addedObject: {fileID: 4428584121631959379}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+--- !u!1 &1768965829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2836400293039429907, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+  m_PrefabInstance: {fileID: 1768965828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1773898248
 PrefabInstance:
   m_ObjectHideFlags: 0

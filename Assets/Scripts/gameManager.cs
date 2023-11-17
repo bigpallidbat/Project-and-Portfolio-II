@@ -56,6 +56,7 @@ public class gameManager : MonoBehaviour
     
     [SerializeField] string[] mixerList;
     [SerializeField] AudioMixer mixer;
+    [SerializeField] GameObject ScreenManager;
 
     public enum Levels { MainMenu ,SpecialEnemy , SpawnerDestroy = 3, Boss, horror , Wave, Voxel, Credits , Devwork = 10 };
 
@@ -77,8 +78,8 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        
-        
+
+        ScreenManager.GetComponent<screenManager>().setSettings();
         timeScaleOrig = Time.timeScale;
         emergencyCheck();
         if (currentlevel != Levels.MainMenu)
@@ -114,11 +115,18 @@ public class gameManager : MonoBehaviour
         }
         else if (checkLevel())
         {
-
-            menuActive = menuHint;
-            menuActive.SetActive(true);
-            statePause();
+            StartCoroutine(playHint());
+            //menuActive = menuHint;
+            //menuActive.SetActive(true);
+            //statePause();
         }
+    }
+    IEnumerator playHint()
+    {
+        yield return new WaitForSeconds(0.005f);
+        menuActive = menuHint;
+        menuActive.SetActive(true);
+        statePause();
     }
     
     bool checkLevel()
