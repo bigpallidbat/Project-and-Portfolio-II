@@ -8077,6 +8077,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1963853483991809587, guid: 2e03d6e848bad98499231132297ccf8e, type: 3}
+      propertyPath: _audioClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963853483991809587, guid: 2e03d6e848bad98499231132297ccf8e, type: 3}
+      propertyPath: _audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ee4006c60086a4f4eae22d020d2cd3eb, type: 3}
+    - target: {fileID: 1963853483991809587, guid: 2e03d6e848bad98499231132297ccf8e, type: 3}
+      propertyPath: _audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: bc3bb10f6f1e20a4ba6ff8acc35e61d4, type: 3}
+    - target: {fileID: 1963853483991809587, guid: 2e03d6e848bad98499231132297ccf8e, type: 3}
+      propertyPath: _audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 52316bd7c0a0b9546a7bbaa25728079e, type: 3}
     - target: {fileID: 4262321168972973054, guid: 2e03d6e848bad98499231132297ccf8e, type: 3}
       propertyPath: m_Name
       value: MusicBoxEdard
