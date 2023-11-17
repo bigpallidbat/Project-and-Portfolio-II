@@ -69,6 +69,7 @@ MonoBehaviour:
   destroyTime: 3
   rb: {fileID: 1226105307101614278}
   explosion: {fileID: 5257125601354406171, guid: 0d94e52068c74c645adbece1b801face, type: 3}
+  grenadeCollider: {fileID: 5320904577448628093}
   player: {fileID: 0}
 --- !u!33 &7701437692461375127
 MeshFilter:
@@ -137,7 +138,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 2
   m_Height: 0.8

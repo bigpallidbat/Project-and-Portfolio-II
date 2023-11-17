@@ -11,6 +11,7 @@ public class grenade : MonoBehaviour
     //[SerializeField] float maxThrowAngle = 50.0f; // Maximum angle for upward arc
     [SerializeField] Rigidbody rb;
     [SerializeField] GameObject explosion;
+    [SerializeField] Collider grenadeCollider;
 
     public GameObject player;
 
@@ -44,6 +45,8 @@ public class grenade : MonoBehaviour
     }
     public void ThrowGrenade()
     {
+        grenadeCollider.enabled = false;
+
         // Calculate the player's position and direction
         Vector3 playerPosition = player.transform.position;
         
