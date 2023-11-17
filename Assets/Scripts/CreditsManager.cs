@@ -22,6 +22,8 @@ public class CreditsManager : MonoBehaviour
 
     IEnumerator Credits()
     {
+        yield return new WaitForSeconds(1);
+        
         for(int i = 1; i < 5; i++)
         {
             HideCredits(i - 1);
