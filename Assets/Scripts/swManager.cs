@@ -26,7 +26,7 @@ public class swManager : MonoBehaviour
     [Header("---------- UI ----------")]
     List<GameObject> entList = new List<GameObject>();
     private int waveCurrent = 0;
-    private int waveMax = 6;
+    private int waveMax = 4;
     private int enemiesRemaining;
     float timeBetweenSpawns = 0.3f;
 
@@ -95,13 +95,13 @@ public class swManager : MonoBehaviour
                     StartCoroutine(wave3());
                     break;
                 case 4:
-                    StartCoroutine(wave4());
+                    GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
                     break;
                 case 5:
                     StartCoroutine(wave5());
                     break;
                 case 6:
-                    GameObject objectClone = Instantiate(bossEnemy, bossSpawnLoc.transform);
+                    
                     break;
             }
             yield return new WaitForSeconds(5);
