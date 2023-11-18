@@ -107,15 +107,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint") && !isSprinting)
         {
             isSprinting = true;
-            playerSpeed *= SprintMod;
+            //playerSpeed *= SprintMod;
+            playerSpeed = 20;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") && isSprinting)
         {
             isSprinting = false;
-            playerSpeed /= SprintMod;
+            //playerSpeed /= SprintMod;
+            playerSpeed = 8;
         }
         if (isSprinting)
         {
@@ -253,6 +255,8 @@ public class PlayerController : MonoBehaviour, IDamage
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         //StartCoroutine(playerOn());
         controller.enabled = true;
+        isSprinting = false;
+        playerSpeed = 8;
     }
 
     public void spawnPlayer()
