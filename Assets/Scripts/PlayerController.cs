@@ -251,6 +251,7 @@ public class PlayerController : MonoBehaviour, IDamage
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
+        //StartCoroutine(playerOn());
         controller.enabled = true;
     }
 
@@ -278,7 +279,12 @@ public class PlayerController : MonoBehaviour, IDamage
         getSpawnStats(true);
         sceneManager.scenechange = false;
     }
-
+    IEnumerator playerOn()
+    {
+        yield return new WaitForSeconds(0.05f);
+        controller.enabled = true;
+        gameManager.Instance.stateUnpause();
+    }
     void UpdatePlayerUI()
     {
         gameManager.Instance.playerHpBar.fillAmount = (float)HP / HPMax;

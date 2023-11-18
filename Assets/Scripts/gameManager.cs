@@ -243,7 +243,7 @@ public class gameManager : MonoBehaviour
 
     public void statePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
@@ -251,7 +251,7 @@ public class gameManager : MonoBehaviour
 
     public void stateUnpauseWithCursor()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = timeScaleOrig;
         if (menuActive != null)
         {
@@ -262,7 +262,7 @@ public class gameManager : MonoBehaviour
 
     public void stateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -272,6 +272,7 @@ public class gameManager : MonoBehaviour
             menuActive = null;
         }
     }
+
 
     public void horrorEnd()
     {
