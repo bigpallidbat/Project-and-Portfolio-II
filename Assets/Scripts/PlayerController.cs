@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(0, 1)][SerializeField] float audStepsVol;
     [SerializeField] AudioClip[] audReload;
     [Range(0, 1)][SerializeField] float audReloadVol;
+    [SerializeField] AudioClip audWarnning;
+    [Range(0, 1)][SerializeField] float audWarningVol;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour, IDamage
     int selectedGun;
     bool footstepsPlaying;
     private IInteract actionable;
+    bool playedWarrning;
 
     private void Start()
     {
@@ -242,7 +245,11 @@ public class PlayerController : MonoBehaviour, IDamage
         StartCoroutine(gameManager.Instance.playerFlash());
 
         UpdatePlayerUI();
-
+        if (HP < 4 && !playedWarrning)
+        {
+            playedWarrning = true;
+            PlayerSounds.PlayOneShot(audWarnning, audWarningVol);
+        }
         if (HP <= 0)
             gameManager.Instance.YouLose();
     }
@@ -257,6 +264,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.enabled = true;
         isSprinting = false;
         playerSpeed = 8;
+        playedWarrning = false;
     }
 
     public void spawnPlayer()
@@ -267,6 +275,7 @@ public class PlayerController : MonoBehaviour, IDamage
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
         controller.enabled = true;
         getSpawnStats();
+        playedWarrning = false;
     }
     
     public void spawnPlayer(quaternion rot)
@@ -274,7 +283,6 @@ public class PlayerController : MonoBehaviour, IDamage
         if (HP > 0)
             stats.hpcur = HP;
         else HP = curHP;
-
         UpdatePlayerUI();
         controller.enabled = false;
         transform.position = gameManager.Instance.playerSpawnPoint.transform.position;
@@ -282,6 +290,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.enabled = true;
         getSpawnStats(true);
         sceneManager.scenechange = false;
+        playedWarrning = false;
     }
     IEnumerator playerOn()
     {
@@ -292,6 +301,11 @@ public class PlayerController : MonoBehaviour, IDamage
     void UpdatePlayerUI()
     {
         gameManager.Instance.playerHpBar.fillAmount = (float)HP / HPMax;
+        if (HP >= 8) gameManager.Instance.playerHpBar.color = Color.green;
+        else if (HP >= 7) gameManager.Instance.playerHpBar.color = Color.yellow;
+        else if (HP >= 4) gameManager.Instance.playerHpBar.color = Color.HSVToRGB(0.1f, 1, 1);
+        else if (HP >= 3) gameManager.Instance.playerHpBar.color = Color.red;
+        else gameManager.Instance.playerHpBar.color = Color.HSVToRGB(0, 1, 0.5f); 
         gameManager.Instance.playerStamBar.fillAmount = (float)Stamina / maxStam;
     }
 
@@ -489,7 +503,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Heal") && medkitCount > 0)
         {
             medkitCount--;
-
+            playedWarrning = false;
             int amountToHeal = (HPMax - HP);
             
 
