@@ -29,6 +29,7 @@ public class basicObjectMovement : MonoBehaviour
     //public simpleObjectSpawner orgin;
     private void Start()
     {
+        
         if (pingPongRotated == false)
         {
             pointA = transform.position;
@@ -52,7 +53,8 @@ public class basicObjectMovement : MonoBehaviour
             BasicMove();
             if (GameSounds != null)
             {
-                GameSounds.PlayOneShot(audObjMove, audObjMoveVol);
+                //GameSounds.PlayOneShot(audObjMove, audObjMoveVol);
+                gameManager.Instance.player.GetComponent<AudioSource>().PlayOneShot(audObjMove, audObjMoveVol);
             }
         }
         else if (rockSink == true && player == true)
@@ -105,7 +107,9 @@ public class basicObjectMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeSink);
         transform.position += -transform.right * speed * Time.deltaTime;
-        GameSounds.PlayOneShot(audObjMove , audObjMoveVol);
+        //GameSounds.PlayOneShot(audObjMove , audObjMoveVol);
+        gameManager.Instance.player.GetComponent<AudioSource>().PlayOneShot(audObjMove, audObjMoveVol);
+
         StartCoroutine(Destroy());
     }
 }
