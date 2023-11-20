@@ -205,6 +205,7 @@ public class AlexsBossAI : MonoBehaviour, IDamage
 
     void slamAttack()
     {
+        soundSFX.PlayOneShot(woosh, audWooshVol);
         for (int i = 0; i < 32; i++)
         {
             float angle = i * 11.25f;

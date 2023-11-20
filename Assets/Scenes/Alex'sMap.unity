@@ -6622,6 +6622,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 163002889879713498, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 184570649228467947, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 837036706460681922, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1649744722430014167, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6704,29 +6716,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3102298412380379744, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509989311943418710, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 3646350043635135255, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3679174102310953736, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4166469415534054474, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4467709280176255771, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4863852066705197380, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4869973462069157856, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4943319024688459587, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5064089248562638860, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784685578755612217, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -6752,7 +6780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8343958470264818541, guid: 55b55453350e96e4c94d0edfcf98787e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8666,10 +8694,6 @@ PrefabInstance:
     - target: {fileID: 5273950713120149270, guid: eb70defd0f057424080689defa2011ca, type: 3}
       propertyPath: m_Name
       value: BossTomus
-      objectReference: {fileID: 0}
-    - target: {fileID: 5273950713120149270, guid: eb70defd0f057424080689defa2011ca, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7027227989006660794, guid: eb70defd0f057424080689defa2011ca, type: 3}
       propertyPath: m_LocalPosition.x

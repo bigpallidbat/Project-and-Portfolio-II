@@ -2930,63 +2930,6 @@ PrefabInstance:
       addedObject: {fileID: 1607233957}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c877af076a5c34b44ad3fd36be9477ea, type: 3}
---- !u!1001 &604246194
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4988056034151114997, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_Name
-      value: Killer Rabbit (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 41.647102
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.7853875
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 111.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954217479874176792, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: baf33a388385726488ea8786f7f6b28c, type: 3}
 --- !u!1001 &607551880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4057,11 +4000,11 @@ MonoBehaviour:
   Mimic13Open: {fileID: 1178221313}
   attckSound: {fileID: 0}
   audAttackVol: 0
-  VpainSound: {fileID: 8300000, guid: 4ce6a7639e9eba24284304d9ad07fe32, type: 3}
+  VpainSound: {fileID: 8300000, guid: 80a9d1e2126754e4786c5f4efa1694ba, type: 3}
   audVpainVol: 1
   VBlowingUp: {fileID: 0}
   BlowUpVol: 0
-  seeSound: {fileID: 8300000, guid: 809b374373f679947a1da4b1ddd724ad, type: 3}
+  seeSound: {fileID: 8300000, guid: 1bbc7e8d08c86d743be88f2411d0baa8, type: 3}
   audSeeVol: 1
   ShockSound: {fileID: 0}
   ShockVol: 0
@@ -10631,4 +10574,3 @@ SceneRoots:
   - {fileID: 250772734}
   - {fileID: 39023850336094876}
   - {fileID: 1198220081}
-  - {fileID: 604246194}

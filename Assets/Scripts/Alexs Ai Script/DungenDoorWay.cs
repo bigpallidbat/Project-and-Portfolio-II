@@ -263,6 +263,7 @@ public class DungenDoorWay : MonoBehaviour, IDamage
     IEnumerator wakingUp()
     {
         isAwake = true;
+        soundSFX.PlayOneShot(seeSound, audSeeVol);
         doorWay.gameObject.SetActive(false);
         Mimic1Wake1.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.085714f);
