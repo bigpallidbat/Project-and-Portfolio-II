@@ -82,6 +82,7 @@ public class DoorAnim : MonoBehaviour , IInteract
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().SetActionable(this);
+            gameManager.Instance.E.gameObject.SetActive(true);
         }
     }
 
@@ -90,6 +91,7 @@ public class DoorAnim : MonoBehaviour , IInteract
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().SetActionable(null);
+            gameManager.Instance.E.gameObject.SetActive(false);
         }
     }
     

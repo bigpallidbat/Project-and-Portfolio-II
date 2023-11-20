@@ -28,6 +28,7 @@ public class gameManager : MonoBehaviour
     public Image playerStamBar;
     public Image BossHPBar;
     public Image BossHpFill;
+    public TMP_Text E;
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text GoalText;
     [SerializeField] TMP_Text WaveMax;
